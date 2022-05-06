@@ -11,6 +11,7 @@
     <None Include="..\..\Source\PlaygroundEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\Playground.sln.DotSettings.user" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -28,6 +29,12 @@
     </None>
     <None Include="..\..\Config\DefaultInput.ini">
       <Filter>Config</Filter>
+    </None>
+    <Filter Include="Config\HoloLens">
+      <UniqueIdentifier>{4C8DD267-CDE7-336F-8602-F5F485D22BAB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\HoloLens\HoloLensEngine.ini">
+      <Filter>Config\HoloLens</Filter>
     </None>
     <Filter Include="Source\Playground">
       <UniqueIdentifier>{C213B76F-9F8F-3438-B289-51EA7BBE86DB}</UniqueIdentifier>
@@ -52,6 +59,15 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\PlaygroundGameMode.h">
       <Filter>Source\Playground</Filter>
+    </ClInclude>
+    <Filter Include="Source\Playground\Controllers">
+      <UniqueIdentifier>{675C04E7-BD10-3519-8344-1C467A680BAF}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CharacterController.cpp">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CharacterController.h">
+      <Filter>Source\Playground\Controllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
