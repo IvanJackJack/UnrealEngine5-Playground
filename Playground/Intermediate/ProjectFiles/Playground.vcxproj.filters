@@ -11,7 +11,6 @@
     <None Include="..\..\Source\PlaygroundEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
-    <None Include="..\..\Playground.sln.DotSettings.user" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -60,6 +59,15 @@
     <ClInclude Include="..\..\Source\Playground\PlaygroundGameMode.h">
       <Filter>Source\Playground</Filter>
     </ClInclude>
+    <Filter Include="Source\Playground\AnimInstances">
+      <UniqueIdentifier>{AC6A6E5E-DA88-339E-8208-08218E408DFA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\AnimInstances\CharacterAnimInstance.cpp">
+      <Filter>Source\Playground\AnimInstances</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\AnimInstances\CharacterAnimInstance.h">
+      <Filter>Source\Playground\AnimInstances</Filter>
+    </ClInclude>
     <Filter Include="Source\Playground\Controllers">
       <UniqueIdentifier>{675C04E7-BD10-3519-8344-1C467A680BAF}</UniqueIdentifier>
     </Filter>
@@ -68,6 +76,75 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\Controllers\CharacterController.h">
       <Filter>Source\Playground\Controllers</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CharacterPlayerController.cpp">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CharacterPlayerController.h">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClInclude>
+    <Filter Include="Source\Playground\FiniteStateMachine">
+      <UniqueIdentifier>{DD189DE1-DDF7-3184-9A5C-E7C922153522}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\AirMovingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\AirMovingState.h">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\GroundMovingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\GroundMovingState.h">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\IdleState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\IdleState.h">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\Statebase.cpp">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\Statebase.h">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateMachine.cpp">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\StateMachine.h">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateMachineComponent.cpp">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\StateMachineComponent.h">
+      <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <Filter Include="Source\Playground\Interfaces">
+      <UniqueIdentifier>{89A8F69B-AE5F-3FC3-BF20-168AF77507B6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\Interfaces\IController.cpp">
+      <Filter>Source\Playground\Interfaces</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Interfaces\IController.h">
+      <Filter>Source\Playground\Interfaces</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\Interfaces\IMovementController.cpp">
+      <Filter>Source\Playground\Interfaces</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Interfaces\IMovementController.h">
+      <Filter>Source\Playground\Interfaces</Filter>
+    </ClInclude>
+    <Filter Include="Source\Playground\Utilities">
+      <UniqueIdentifier>{D980956D-C6F0-36D9-A667-2C4758E1DDFE}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\Utilities\CustomUtils.cpp">
+      <Filter>Source\Playground\Utilities</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Utilities\CustomUtils.h">
+      <Filter>Source\Playground\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
