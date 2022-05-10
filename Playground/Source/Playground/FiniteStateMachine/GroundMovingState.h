@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Statebase.h"
+#include "StateBase.h"
 #include "GroundMovingState.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class PLAYGROUND_API UGroundMovingState : public UStatebase
+UCLASS(Blueprintable)
+class PLAYGROUND_API UGroundMovingState : public UStateBase
 {
 	GENERATED_BODY()
 	

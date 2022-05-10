@@ -11,7 +11,7 @@ void EmptyLinkFunctionForGeneratedCodeGroundMovingState() {}
 // Cross Module References
 	PLAYGROUND_API UClass* Z_Construct_UClass_UGroundMovingState_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_UGroundMovingState();
-	PLAYGROUND_API UClass* Z_Construct_UClass_UStatebase();
+	PLAYGROUND_API UClass* Z_Construct_UClass_UStateBase();
 	UPackage* Z_Construct_UPackage__Script_Playground();
 // End Cross Module References
 	void UGroundMovingState::StaticRegisterNativesUGroundMovingState()
@@ -32,13 +32,15 @@ void EmptyLinkFunctionForGeneratedCodeGroundMovingState() {}
 		static const UECodeGen_Private::FClassParams ClassParams;
 	};
 	UObject* (*const Z_Construct_UClass_UGroundMovingState_Statics::DependentSingletons[])() = {
-		(UObject* (*)())Z_Construct_UClass_UStatebase,
+		(UObject* (*)())Z_Construct_UClass_UStateBase,
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGroundMovingState_Statics::Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
 		{ "Comment", "/**\n * \n */" },
 		{ "IncludePath", "FiniteStateMachine/GroundMovingState.h" },
+		{ "IsBlueprintBase", "true" },
 		{ "ModuleRelativePath", "FiniteStateMachine/GroundMovingState.h" },
 	};
 #endif
@@ -78,9 +80,9 @@ void EmptyLinkFunctionForGeneratedCodeGroundMovingState() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UGroundMovingState, UGroundMovingState::StaticClass, TEXT("UGroundMovingState"), &Z_Registration_Info_UClass_UGroundMovingState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGroundMovingState), 3304143973U) },
+		{ Z_Construct_UClass_UGroundMovingState, UGroundMovingState::StaticClass, TEXT("UGroundMovingState"), &Z_Registration_Info_UClass_UGroundMovingState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGroundMovingState), 3724682633U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_2772922382(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_1012651076(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

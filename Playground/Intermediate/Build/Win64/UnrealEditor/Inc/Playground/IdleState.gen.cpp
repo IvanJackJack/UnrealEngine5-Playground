@@ -11,7 +11,7 @@ void EmptyLinkFunctionForGeneratedCodeIdleState() {}
 // Cross Module References
 	PLAYGROUND_API UClass* Z_Construct_UClass_UIdleState_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_UIdleState();
-	PLAYGROUND_API UClass* Z_Construct_UClass_UStatebase();
+	PLAYGROUND_API UClass* Z_Construct_UClass_UStateBase();
 	UPackage* Z_Construct_UPackage__Script_Playground();
 // End Cross Module References
 	void UIdleState::StaticRegisterNativesUIdleState()
@@ -32,13 +32,15 @@ void EmptyLinkFunctionForGeneratedCodeIdleState() {}
 		static const UECodeGen_Private::FClassParams ClassParams;
 	};
 	UObject* (*const Z_Construct_UClass_UIdleState_Statics::DependentSingletons[])() = {
-		(UObject* (*)())Z_Construct_UClass_UStatebase,
+		(UObject* (*)())Z_Construct_UClass_UStateBase,
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UIdleState_Statics::Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
 		{ "Comment", "/**\n * \n */" },
 		{ "IncludePath", "FiniteStateMachine/IdleState.h" },
+		{ "IsBlueprintBase", "true" },
 		{ "ModuleRelativePath", "FiniteStateMachine/IdleState.h" },
 	};
 #endif
@@ -78,9 +80,9 @@ void EmptyLinkFunctionForGeneratedCodeIdleState() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UIdleState, UIdleState::StaticClass, TEXT("UIdleState"), &Z_Registration_Info_UClass_UIdleState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UIdleState), 1095562607U) },
+		{ Z_Construct_UClass_UIdleState, UIdleState::StaticClass, TEXT("UIdleState"), &Z_Registration_Info_UClass_UIdleState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UIdleState), 2980395735U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_439755169(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_3739159624(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

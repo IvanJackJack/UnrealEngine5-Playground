@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "StateMachineComponent.generated.h"
 
+class UStateBase;
+
 USTRUCT()
 struct FFSMContext {
 	GENERATED_BODY()
@@ -28,10 +30,10 @@ public:
 	FFSMContext context;
 
 	UPROPERTY(VisibleAnywhere)
-	class UStateBase* currentState;
+	UStateBase* currentState;
 
-	UPROPERTY(VisibleAnywhere)
-	TMap<FString, UStateBase*> statesMap;
+	UPROPERTY(EditAnywhere)
+	TMap<FString, TSubclassOf<UStateBase>> statesMap;
 
 protected:
 	// Called when the game starts
@@ -45,4 +47,6 @@ public:
 	FORCEINLINE void SetContext(FFSMContext newContext){ context = newContext; }
 
 	void InitializeStates();
+
+	void SetCurrentState(UStateBase* newState);
 };

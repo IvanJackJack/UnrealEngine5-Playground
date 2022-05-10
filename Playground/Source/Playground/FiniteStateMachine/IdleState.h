@@ -3,17 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Statebase.h"
+#include "StateBase.h"
 #include "IdleState.generated.h"
 
 
 /**
  * 
  */
-UCLASS()
-class PLAYGROUND_API UIdleState : public UStatebase
+UCLASS(Blueprintable)
+class PLAYGROUND_API UIdleState : public UStateBase
 {
 	GENERATED_BODY()
 
-
+public:
+	virtual void OnEnter() override;
+	virtual void OnTick() override;
+	virtual void OnExit() override;
 };

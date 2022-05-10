@@ -1,27 +1,30 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Statebase.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "StateBase.h"
 #include "StateMachineComponent.h"
 
-UStatebase::UStatebase() {
-	
-}
+//UStateBase::UStateBase() {
+//
+//}
 
-void UStatebase::Setup(FString newName, FFSMContext newContext) {
+void UStateBase::Setup(FString newName, FFSMContext newContext) {
 	name=newName;
 	*context = newContext;
 }
 
-void UStatebase::OnEnter() {
+void UStateBase::OnEnter() {
 
 }
 
-void UStatebase::OnTick() {
+void UStateBase::OnTick() {
 
 }
 
-void UStatebase::OnExit() {
+void UStateBase::OnExit() {
 
+}
+
+float UStateBase::CanTransition() {
+	return 0.0f;
 }

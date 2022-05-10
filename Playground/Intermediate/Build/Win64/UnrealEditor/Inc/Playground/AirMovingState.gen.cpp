@@ -11,7 +11,7 @@ void EmptyLinkFunctionForGeneratedCodeAirMovingState() {}
 // Cross Module References
 	PLAYGROUND_API UClass* Z_Construct_UClass_UAirMovingState_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_UAirMovingState();
-	PLAYGROUND_API UClass* Z_Construct_UClass_UStatebase();
+	PLAYGROUND_API UClass* Z_Construct_UClass_UStateBase();
 	UPackage* Z_Construct_UPackage__Script_Playground();
 // End Cross Module References
 	void UAirMovingState::StaticRegisterNativesUAirMovingState()
@@ -32,13 +32,15 @@ void EmptyLinkFunctionForGeneratedCodeAirMovingState() {}
 		static const UECodeGen_Private::FClassParams ClassParams;
 	};
 	UObject* (*const Z_Construct_UClass_UAirMovingState_Statics::DependentSingletons[])() = {
-		(UObject* (*)())Z_Construct_UClass_UStatebase,
+		(UObject* (*)())Z_Construct_UClass_UStateBase,
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UAirMovingState_Statics::Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
 		{ "Comment", "/**\n * \n */" },
 		{ "IncludePath", "FiniteStateMachine/AirMovingState.h" },
+		{ "IsBlueprintBase", "true" },
 		{ "ModuleRelativePath", "FiniteStateMachine/AirMovingState.h" },
 	};
 #endif
@@ -78,9 +80,9 @@ void EmptyLinkFunctionForGeneratedCodeAirMovingState() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_AirMovingState_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UAirMovingState, UAirMovingState::StaticClass, TEXT("UAirMovingState"), &Z_Registration_Info_UClass_UAirMovingState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAirMovingState), 567381193U) },
+		{ Z_Construct_UClass_UAirMovingState, UAirMovingState::StaticClass, TEXT("UAirMovingState"), &Z_Registration_Info_UClass_UAirMovingState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAirMovingState), 1668671854U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_AirMovingState_h_3942904834(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_AirMovingState_h_4201865843(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_AirMovingState_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_AirMovingState_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

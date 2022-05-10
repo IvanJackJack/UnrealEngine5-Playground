@@ -2,6 +2,8 @@
 
 
 #include "StateMachineComponent.h"
+#include "StateBase.h"
+#include "Playground/Utilities/CustomUtils.h"
 
 // Sets default values for this component's properties
 UStateMachineComponent::UStateMachineComponent()
@@ -11,6 +13,7 @@ UStateMachineComponent::UStateMachineComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
+	
 	
 }
 
@@ -22,6 +25,11 @@ void UStateMachineComponent::BeginPlay()
 
 	// ...
 	
+	UStateBase* state = nullptr;
+	state = statesMap.Find(TEXT("IdleState"))->GetDefaultObject();
+	if(state) {
+		SetCurrentState(state);
+	}
 }
 
 
@@ -31,8 +39,22 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+
+	if(currentState) {
+		currentState->OnTick();
+	}
 }
 
 void UStateMachineComponent::InitializeStates() {
+}
+
+void UStateMachineComponent::SetCurrentState(UStateBase* newState) {
+	if(currentState) {
+		currentState->OnExit();
+	}
+
+	currentState=newState;
+
+	currentState->OnEnter();
 }
 

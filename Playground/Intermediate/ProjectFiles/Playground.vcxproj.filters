@@ -104,16 +104,10 @@
     <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\IdleState.h">
       <Filter>Source\Playground\FiniteStateMachine</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\Statebase.cpp">
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateBase.cpp">
       <Filter>Source\Playground\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\Statebase.h">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateMachine.cpp">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\StateMachine.h">
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\StateBase.h">
       <Filter>Source\Playground\FiniteStateMachine</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateMachineComponent.cpp">

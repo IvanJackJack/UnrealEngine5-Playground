@@ -8,83 +8,85 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-#ifdef PLAYGROUND_Statebase_generated_h
-#error "Statebase.generated.h already included, missing '#pragma once' in Statebase.h"
+#ifdef PLAYGROUND_StateBase_generated_h
+#error "StateBase.generated.h already included, missing '#pragma once' in StateBase.h"
 #endif
-#define PLAYGROUND_Statebase_generated_h
+#define PLAYGROUND_StateBase_generated_h
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_SPARSE_DATA
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_RPC_WRAPPERS
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_RPC_WRAPPERS_NO_PURE_DECLS
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_INCLASS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_SPARSE_DATA
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_RPC_WRAPPERS
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesUStatebase(); \
-	friend struct Z_Construct_UClass_UStatebase_Statics; \
+	static void StaticRegisterNativesUStateBase(); \
+	friend struct Z_Construct_UClass_UStateBase_Statics; \
 public: \
-	DECLARE_CLASS(UStatebase, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
-	DECLARE_SERIALIZER(UStatebase)
+	DECLARE_CLASS(UStateBase, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
+	DECLARE_SERIALIZER(UStateBase)
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_INCLASS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_INCLASS \
 private: \
-	static void StaticRegisterNativesUStatebase(); \
-	friend struct Z_Construct_UClass_UStatebase_Statics; \
+	static void StaticRegisterNativesUStateBase(); \
+	friend struct Z_Construct_UClass_UStateBase_Statics; \
 public: \
-	DECLARE_CLASS(UStatebase, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
-	DECLARE_SERIALIZER(UStatebase)
+	DECLARE_CLASS(UStateBase, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
+	DECLARE_SERIALIZER(UStateBase)
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_STANDARD_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UStatebase(const FObjectInitializer& ObjectInitializer); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UStatebase) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UStatebase); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UStatebase); \
+	NO_API UStateBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
+	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UStateBase) \
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UStateBase); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UStateBase); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UStatebase(UStatebase&&); \
-	NO_API UStatebase(const UStatebase&); \
+	NO_API UStateBase(UStateBase&&); \
+	NO_API UStateBase(const UStateBase&); \
 public:
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_ENHANCED_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_ENHANCED_CONSTRUCTORS \
+	/** Standard constructor, called after all reflected properties have been initialized */ \
+	NO_API UStateBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UStatebase(UStatebase&&); \
-	NO_API UStatebase(const UStatebase&); \
+	NO_API UStateBase(UStateBase&&); \
+	NO_API UStateBase(const UStateBase&); \
 public: \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UStatebase); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UStatebase); \
-	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UStatebase)
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UStateBase); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UStateBase); \
+	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UStateBase)
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_12_PROLOG
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_GENERATED_BODY_LEGACY \
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_12_PROLOG
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_SPARSE_DATA \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_RPC_WRAPPERS \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_INCLASS \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_STANDARD_CONSTRUCTORS \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_SPARSE_DATA \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_RPC_WRAPPERS \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_INCLASS \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_GENERATED_BODY \
+#define FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_SPARSE_DATA \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_INCLASS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_15_ENHANCED_CONSTRUCTORS \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_SPARSE_DATA \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_INCLASS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> PLAYGROUND_API UClass* StaticClass<class UStatebase>();
+template<> PLAYGROUND_API UClass* StaticClass<class UStateBase>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h
+#define CURRENT_FILE_ID FID_Playground_Source_Playground_FiniteStateMachine_StateBase_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

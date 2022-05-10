@@ -21,7 +21,7 @@ private: \
 	static void StaticRegisterNativesUGroundMovingState(); \
 	friend struct Z_Construct_UClass_UGroundMovingState_Statics; \
 public: \
-	DECLARE_CLASS(UGroundMovingState, UStatebase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
+	DECLARE_CLASS(UGroundMovingState, UStateBase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
 	DECLARE_SERIALIZER(UGroundMovingState)
 
 
@@ -30,7 +30,7 @@ private: \
 	static void StaticRegisterNativesUGroundMovingState(); \
 	friend struct Z_Construct_UClass_UGroundMovingState_Statics; \
 public: \
-	DECLARE_CLASS(UGroundMovingState, UStatebase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
+	DECLARE_CLASS(UGroundMovingState, UStateBase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
 	DECLARE_SERIALIZER(UGroundMovingState)
 
 
@@ -49,7 +49,7 @@ public:
 
 #define FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_15_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UGroundMovingState() { }; \
+	NO_API UGroundMovingState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UGroundMovingState(UGroundMovingState&&); \
@@ -57,7 +57,7 @@ private: \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UGroundMovingState); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UGroundMovingState); \
-	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UGroundMovingState)
+	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UGroundMovingState)
 
 
 #define FID_Playground_Source_Playground_FiniteStateMachine_GroundMovingState_h_12_PROLOG

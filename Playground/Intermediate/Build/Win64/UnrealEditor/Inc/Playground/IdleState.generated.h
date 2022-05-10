@@ -21,7 +21,7 @@ private: \
 	static void StaticRegisterNativesUIdleState(); \
 	friend struct Z_Construct_UClass_UIdleState_Statics; \
 public: \
-	DECLARE_CLASS(UIdleState, UStatebase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
+	DECLARE_CLASS(UIdleState, UStateBase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
 	DECLARE_SERIALIZER(UIdleState)
 
 
@@ -30,7 +30,7 @@ private: \
 	static void StaticRegisterNativesUIdleState(); \
 	friend struct Z_Construct_UClass_UIdleState_Statics; \
 public: \
-	DECLARE_CLASS(UIdleState, UStatebase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
+	DECLARE_CLASS(UIdleState, UStateBase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/Playground"), NO_API) \
 	DECLARE_SERIALIZER(UIdleState)
 
 
@@ -49,7 +49,7 @@ public:
 
 #define FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_16_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UIdleState() { }; \
+	NO_API UIdleState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UIdleState(UIdleState&&); \
@@ -57,7 +57,7 @@ private: \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UIdleState); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UIdleState); \
-	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UIdleState)
+	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UIdleState)
 
 
 #define FID_Playground_Source_Playground_FiniteStateMachine_IdleState_h_13_PROLOG
