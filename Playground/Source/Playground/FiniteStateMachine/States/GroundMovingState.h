@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "StateBase.h"
-#include "AirMovingState.generated.h"
+#include "Playground/FiniteStateMachine/StateBase.h"
+#include "GroundMovingState.generated.h"
 
 /**
  * 
  */
 UCLASS(Blueprintable)
-class PLAYGROUND_API UAirMovingState : public UStateBase
+class PLAYGROUND_API UGroundMovingState : public UStateBase
 {
 	GENERATED_BODY()
 	

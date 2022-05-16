@@ -86,28 +86,10 @@
     <Filter Include="Source\Playground\FiniteStateMachine">
       <UniqueIdentifier>{DD189DE1-DDF7-3184-9A5C-E7C922153522}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\AirMovingState.cpp">
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\Statebase.cpp">
       <Filter>Source\Playground\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\AirMovingState.h">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\GroundMovingState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\GroundMovingState.h">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\IdleState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\IdleState.h">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateBase.cpp">
-      <Filter>Source\Playground\FiniteStateMachine</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\StateBase.h">
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\Statebase.h">
       <Filter>Source\Playground\FiniteStateMachine</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\StateMachineComponent.cpp">
@@ -115,6 +97,33 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\StateMachineComponent.h">
       <Filter>Source\Playground\FiniteStateMachine</Filter>
+    </ClInclude>
+    <Filter Include="Source\Playground\FiniteStateMachine\States">
+      <UniqueIdentifier>{5AC9DE27-DB53-3131-A6D2-B045DA4BE09B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\AirMovingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\AirMovingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\ClimbState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\ClimbState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\GroundMovingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\GroundMovingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\IdleState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\IdleState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\Interfaces">
       <UniqueIdentifier>{89A8F69B-AE5F-3FC3-BF20-168AF77507B6}</UniqueIdentifier>
