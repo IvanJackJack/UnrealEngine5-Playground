@@ -6,9 +6,9 @@
 #include "GameFramework/PlayerController.h"
 #include "CharacterPlayerController.generated.h"
 
-/**
- * 
- */
+
+class UCustomHUD;
+
 UCLASS()
 class PLAYGROUND_API ACharacterPlayerController : public APlayerController
 {
@@ -17,5 +17,13 @@ class PLAYGROUND_API ACharacterPlayerController : public APlayerController
 public:
 	ACharacterPlayerController();
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Widgets)
+	TSubclassOf<UCustomHUD> HUDOverlayAsset;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Widgets)
+	UCustomHUD* HudOverlay;
 
+protected:
+	virtual void BeginPlay() override; 
 };

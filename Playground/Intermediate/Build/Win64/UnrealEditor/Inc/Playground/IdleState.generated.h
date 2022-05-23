@@ -13,10 +13,18 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define PLAYGROUND_IdleState_generated_h
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_SPARSE_DATA
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_RPC_WRAPPERS
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_RPC_WRAPPERS_NO_PURE_DECLS
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_INCLASS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_SPARSE_DATA
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execTransitionToGroundMoving);
+
+
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execTransitionToGroundMoving);
+
+
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUIdleState(); \
 	friend struct Z_Construct_UClass_UIdleState_Statics; \
@@ -25,7 +33,7 @@ public: \
 	DECLARE_SERIALIZER(UIdleState)
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_INCLASS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_INCLASS \
 private: \
 	static void StaticRegisterNativesUIdleState(); \
 	friend struct Z_Construct_UClass_UIdleState_Statics; \
@@ -34,7 +42,7 @@ public: \
 	DECLARE_SERIALIZER(UIdleState)
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_STANDARD_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UIdleState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UIdleState) \
@@ -47,7 +55,7 @@ private: \
 public:
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_ENHANCED_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UIdleState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
@@ -60,25 +68,25 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UIdleState)
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_13_PROLOG
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_GENERATED_BODY_LEGACY \
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_9_PROLOG
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_SPARSE_DATA \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_RPC_WRAPPERS \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_INCLASS \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_STANDARD_CONSTRUCTORS \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_SPARSE_DATA \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_RPC_WRAPPERS \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_INCLASS \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_GENERATED_BODY \
+#define FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_SPARSE_DATA \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_INCLASS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_16_ENHANCED_CONSTRUCTORS \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_SPARSE_DATA \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_INCLASS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_FiniteStateMachine_States_IdleState_h_12_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

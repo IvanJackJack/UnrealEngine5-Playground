@@ -9,25 +9,28 @@
 
 struct FFSMContext;
 
-UCLASS()
+DECLARE_DELEGATE_RetVal(bool, BoolFunctionDelegate)
+
+UCLASS(Blueprintable)
 class PLAYGROUND_API UStateBase : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FString name;
-
+	
 	FFSMContext* context;
 
-public:
-	//UStateBase();
+	TMap< FString, BoolFunctionDelegate > Transitions;
 
+public:
 	virtual void Setup(FString newName, FFSMContext newContext);
 
 	virtual void OnEnter();
 	virtual void OnTick();
 	virtual void OnExit();
 
-	virtual float CanTransition();
+	virtual FString CheckTransition();
+
 };

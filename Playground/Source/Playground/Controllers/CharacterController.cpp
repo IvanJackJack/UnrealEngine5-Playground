@@ -7,7 +7,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
-
+#include "CharacterPlayerController.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 ACharacterController::ACharacterController()
 {
@@ -16,6 +18,8 @@ ACharacterController::ACharacterController()
 	Capsule=GetCapsuleComponent();
 	Capsule->InitCapsuleSize(27.5f, 92.5f);
 
+	//Movement=CreateDefaultSubobject<UCustomCharacterMovementComponent>(TEXT("MovementComponent"));
+	//Movement->SetUpdatedComponent(Capsule);
 	Movement=GetCharacterMovement();
 	Movement->bOrientRotationToMovement = true;
 
@@ -28,26 +32,41 @@ ACharacterController::ACharacterController()
 	Camera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); 
 	Camera->bUsePawnControlRotation = false; 
 
+	// OverlapCapsule=CreateDefaultSubobject<UCapsuleComponent>("OverlapCapsule");
+	// OverlapCapsule->SetupAttachment(RootComponent);
+	// OverlapCapsule->InitCapsuleSize(28.f, 90.f);
+
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	cameraRotationSpeed=100.f;
 	StateMachine=CreateDefaultSubobject<UStateMachineComponent>("State Machine");
-	StateMachine->SetContext(FFSMContext{this});
+
+	characterStatus.groundNormal=FVector::UpVector;
+	characterStatus.bIsGrounded=true;
 }
 
 void ACharacterController::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	CharacterPlayerController=Cast<ACharacterPlayerController>(GetController());
+
+	StateMachine->Setup(FFSMContext{this, StateMachine});
+
+	// UpdateLastVelocity();
+	// UCustomUtils::Print(characterStatus.moveVelocity);
 }
 
 void ACharacterController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	GroundCheck();
-	ApplyMovement();
+	characterStatus.characterRotation=Controller->GetControlRotation();
+
+
+	UpdateLastVelocity();
 }
 
 void ACharacterController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -59,6 +78,9 @@ void ACharacterController::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacterController::ReadJumpInputStart);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacterController::ReadJumpInputEnd);
 
+	PlayerInputComponent->BindAction("Wallrun", IE_Pressed, this, &ACharacterController::ReadWallrunInputStart);
+	PlayerInputComponent->BindAction("Wallrun", IE_Released, this, &ACharacterController::ReadWallrunInputEnd);
+	
 	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &ACharacterController::ReadMoveForwardInput);
 	PlayerInputComponent->BindAxis("Move Right / Left", this, &ACharacterController::ReadMoveSidewardInput);
 
@@ -88,36 +110,67 @@ void ACharacterController::ReadJumpInputStart() {
 }
 
 void ACharacterController::ReadJumpInputEnd() {
-	//StopJumping();
 	inputValues.bJumpInput=false;
 }
 
-void ACharacterController::ApplyMovement() {
-	if(characterStatus.bIsGrounded) {
-		if(inputValues.bJumpInput) {
-			Jump();
-		}	
+void ACharacterController::ReadWallrunInputStart() {
+	inputValues.bWallrunInput=true;
+}
+
+void ACharacterController::ReadWallrunInputEnd() {
+	inputValues.bWallrunInput=false;
+}
+
+void ACharacterController::ApplyGroundMovement() {
+	if(inputValues.bJumpInput) {
+		Jump();
 	}
 
-	if(inputValues.moveInput.X != 0.f) {
-		// find out which way is right
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+	if(inputValues.moveInput.Size() != 0.f) {
+		const FRotator YawRotation(0, characterStatus.characterRotation.Yaw, 0);
 	
-		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		// add movement in that direction
-		AddMovementInput(Direction, inputValues.moveInput.X);
+		const FVector SidewardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		const FVector SidewardMovement=inputValues.moveInput.X * SidewardDirection;
+
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		const FVector ForwardMovement=inputValues.moveInput.Y * ForwardDirection;
+
+		characterStatus.moveDirection=(ForwardMovement + SidewardMovement).GetSafeNormal();
+
+		AddMovementInput(characterStatus.moveDirection, inputValues.moveInput.Size());
+		
+	}else {
+		characterStatus.moveDirection=FVector::ZeroVector;
+	}
+}
+
+void ACharacterController::ApplyAirMovement() {
+	float airSidewardMovementMult=0.5f;
+
+	if(inputValues.moveInput.Size() != 0.f) {
+		const FRotator YawRotation(0, characterStatus.characterRotation.Yaw, 0);
+	
+		const FVector SidewardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		const FVector SidewardMovement=(inputValues.moveInput.X * airSidewardMovementMult) * SidewardDirection;
+
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		const FVector ForwardMovement=inputValues.moveInput.Y * ForwardDirection;
+
+		characterStatus.moveDirection=(ForwardMovement + SidewardMovement).GetSafeNormal();
+
+		AddMovementInput(characterStatus.moveDirection, inputValues.moveInput.Size());
+		
+	}else {
+		characterStatus.moveDirection=FVector::ZeroVector;
 	}
 
-	if(inputValues.moveInput.Y != 0.f) {
-		// find out which way is forward
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get forward vector
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		AddMovementInput(Direction, inputValues.moveInput.Y);
+}
+
+void ACharacterController::UpdateLastVelocity() {
+	if (characterStatus.moveVelocity != GetVelocity()) {
+		characterStatus.moveVelocity=GetVelocity();
+		// UCustomUtils::Print(characterStatus.moveVelocity);
 	}
 }
 
@@ -135,18 +188,11 @@ void ACharacterController::GroundCheck() {
 }
 
 void ACharacterController::GroundLeft() {
-	//if(GEngine)
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Ground left"));
-
-
-	//UCustomUtils::Print(TEXT("Ground left static lib"));
+	UCustomUtils::Print(TEXT("Ground left static lib"));
 }
 
 void ACharacterController::GroundLand() {
-	/*if(GEngine)	
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("GroundLand"));	*/
-
-	//UCustomUtils::Print(TEXT("Ground land static lib"));
+	UCustomUtils::Print(TEXT("Ground land static lib"));
 }
 
 

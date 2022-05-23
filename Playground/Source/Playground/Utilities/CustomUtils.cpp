@@ -10,8 +10,6 @@
 //}
 
 void UCustomUtils::Print(const FString& toPrint) {
-	/*FString text=toPrint.c_str();*/
-
 	if(GEngine)
 		GEngine->AddOnScreenDebugMessage(
 			-1, 
@@ -19,4 +17,16 @@ void UCustomUtils::Print(const FString& toPrint) {
 			FColor::Yellow, 
 			*toPrint
 		);
+}
+
+void UCustomUtils::Print(const float value) {
+	FString toPrint=FString::SanitizeFloat(value);
+
+	Print(toPrint);
+}
+
+void UCustomUtils::Print(const FVector vector) {
+	FString toPrint=vector.ToString();
+
+	Print(toPrint);
 }

@@ -42,7 +42,9 @@ void EmptyLinkFunctionForGeneratedCodeStatebase() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UStateBase_Statics::Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
 		{ "IncludePath", "FiniteStateMachine/Statebase.h" },
+		{ "IsBlueprintBase", "true" },
 		{ "ModuleRelativePath", "FiniteStateMachine/Statebase.h" },
 	};
 #endif
@@ -52,7 +54,7 @@ void EmptyLinkFunctionForGeneratedCodeStatebase() {}
 		{ "ModuleRelativePath", "FiniteStateMachine/Statebase.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UStateBase_Statics::NewProp_name = { "name", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UStateBase, name), METADATA_PARAMS(Z_Construct_UClass_UStateBase_Statics::NewProp_name_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UStateBase_Statics::NewProp_name_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UStateBase_Statics::NewProp_name = { "name", nullptr, (EPropertyFlags)0x0010000000010015, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UStateBase, name), METADATA_PARAMS(Z_Construct_UClass_UStateBase_Statics::NewProp_name_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UStateBase_Statics::NewProp_name_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UStateBase_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateBase_Statics::NewProp_name,
 	};
@@ -92,9 +94,9 @@ void EmptyLinkFunctionForGeneratedCodeStatebase() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UStateBase, UStateBase::StaticClass, TEXT("UStateBase"), &Z_Registration_Info_UClass_UStateBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UStateBase), 1267605426U) },
+		{ Z_Construct_UClass_UStateBase, UStateBase::StaticClass, TEXT("UStateBase"), &Z_Registration_Info_UClass_UStateBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UStateBase), 3180048511U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_50265143(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_1594077848(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_Statebase_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

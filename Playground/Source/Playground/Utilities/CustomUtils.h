@@ -14,4 +14,6 @@ class PLAYGROUND_API UCustomUtils : public UObject
 
 public:
 	static void Print(const FString& toPrint);
+	static void Print(const float value);
+	static void Print(const FVector vector);
 };

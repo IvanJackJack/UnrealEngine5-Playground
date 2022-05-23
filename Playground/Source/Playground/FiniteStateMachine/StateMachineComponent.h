@@ -7,13 +7,18 @@
 #include "StateMachineComponent.generated.h"
 
 class UStateBase;
+class ACharacterController;
+class UStateMachineComponent;
 
 USTRUCT()
 struct FFSMContext {
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere)
-	class ACharacterController* characterController;
+	ACharacterController* characterController;
+
+	UPROPERTY(VisibleAnywhere)
+	UStateMachineComponent* stateMachine;
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -29,10 +34,10 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	FFSMContext context;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStateBase* currentState;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSubclassOf<UStateBase>> statesMap;
 
 protected:
@@ -44,9 +49,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
-	FORCEINLINE void SetContext(FFSMContext newContext){ context = newContext; }
-
-	void InitializeStates();
+	void Setup(FFSMContext newContext);
 
 	void SetCurrentState(UStateBase* newState);
+
+	UFUNCTION(BlueprintCallable)
+	FString GetCurrentStateName();
 };

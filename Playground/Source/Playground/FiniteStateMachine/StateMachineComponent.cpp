@@ -3,49 +3,47 @@
 
 #include "StateMachineComponent.h"
 #include "StateBase.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Playground/Controllers/CharacterController.h"
 #include "Playground/Utilities/CustomUtils.h"
 
-// Sets default values for this component's properties
 UStateMachineComponent::UStateMachineComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
-	
 	
 }
 
-
-// Called when the game starts
 void UStateMachineComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
-	UStateBase* state = nullptr;
-	state = statesMap.Find(TEXT("IdleState"))->GetDefaultObject();
-	if(state) {
-		SetCurrentState(state);
-	}
 }
 
-
-// Called every frame
 void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	if(!currentState) {
+		return;
+	}
 
-	// ...
+	currentState->OnTick();
 
-	if(currentState) {
-		currentState->OnTick();
+	FString transitionName=currentState->CheckTransition();
+	if(statesMap.Contains(transitionName)) {
+		SetCurrentState(statesMap.Find(transitionName)->GetDefaultObject());
 	}
 }
 
-void UStateMachineComponent::InitializeStates() {
+void UStateMachineComponent::Setup(FFSMContext newContext) {
+	context=newContext;
+
+	for (auto kvp : statesMap) {
+		kvp.Value.GetDefaultObject()->Setup(kvp.Key, context);	
+	}
+
+	TArray<FString> names;
+	statesMap.GenerateKeyArray(names);
+	SetCurrentState(statesMap.Find(names[0])->GetDefaultObject());
 }
 
 void UStateMachineComponent::SetCurrentState(UStateBase* newState) {
@@ -56,5 +54,13 @@ void UStateMachineComponent::SetCurrentState(UStateBase* newState) {
 	currentState=newState;
 
 	currentState->OnEnter();
+}
+
+FString UStateMachineComponent::GetCurrentStateName() {
+	if(currentState) {
+		return currentState->name;
+	}
+
+	return FString("No state");
 }
 

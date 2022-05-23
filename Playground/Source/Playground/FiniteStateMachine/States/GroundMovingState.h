@@ -9,9 +9,21 @@
 /**
  * 
  */
-UCLASS(Blueprintable)
+UCLASS()
 class PLAYGROUND_API UGroundMovingState : public UStateBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual void Setup(FString newName, FFSMContext newContext) override;
+	virtual void OnEnter() override;
+	virtual void OnTick() override;
+	virtual void OnExit() override;
+
+public:
+	bool TransitionToGroundIdle();
+	// bool TransitionToAirMoving();
+	bool TransitionToAirRaising();
+	bool TransitionToAirFalling();
+
 };

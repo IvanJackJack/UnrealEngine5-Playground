@@ -11,7 +11,7 @@ void EmptyLinkFunctionForGeneratedCodeCharacterController() {}
 // Cross Module References
 	PLAYGROUND_API UScriptStruct* Z_Construct_UScriptStruct_FInput();
 	UPackage* Z_Construct_UPackage__Script_Playground();
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector2D();
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	PLAYGROUND_API UScriptStruct* Z_Construct_UScriptStruct_FStatus();
 	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterController_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterController();
@@ -21,6 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeCharacterController() {}
 	ENGINE_API UClass* Z_Construct_UClass_UCapsuleComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UCharacterMovementComponent_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_UStateMachineComponent_NoRegister();
+	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterPlayerController_NoRegister();
 // End Cross Module References
 	static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_Input;
 class UScriptStruct* FInput::StaticStruct()
@@ -50,6 +51,11 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FInput>()
 #endif
 		static void NewProp_bJumpInput_SetBit(void* Obj);
 		static const UECodeGen_Private::FBoolPropertyParams NewProp_bJumpInput;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bWallrunInput_MetaData[];
+#endif
+		static void NewProp_bWallrunInput_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bWallrunInput;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const UECodeGen_Private::FStructParams ReturnStructParams;
 	};
@@ -69,7 +75,7 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FInput>()
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput = { "moveInput", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FInput, moveInput), Z_Construct_UScriptStruct_FVector2D, METADATA_PARAMS(Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput_MetaData)) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput = { "moveInput", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FInput, moveInput), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FInput_Statics::NewProp_bJumpInput_MetaData[] = {
 		{ "Category", "Input" },
@@ -81,9 +87,21 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FInput>()
 		((FInput*)Obj)->bJumpInput = 1;
 	}
 	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FInput_Statics::NewProp_bJumpInput = { "bJumpInput", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(FInput), &Z_Construct_UScriptStruct_FInput_Statics::NewProp_bJumpInput_SetBit, METADATA_PARAMS(Z_Construct_UScriptStruct_FInput_Statics::NewProp_bJumpInput_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInput_Statics::NewProp_bJumpInput_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput_MetaData[] = {
+		{ "Category", "Input" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	void Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput_SetBit(void* Obj)
+	{
+		((FInput*)Obj)->bWallrunInput = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput = { "bWallrunInput", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(FInput), &Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput_SetBit, METADATA_PARAMS(Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FInput_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FInput_Statics::NewProp_moveInput,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FInput_Statics::NewProp_bJumpInput,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FInput_Statics::NewProp_bWallrunInput,
 	};
 	const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FInput_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
@@ -130,6 +148,14 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 		static void NewProp_bIsGrounded_SetBit(void* Obj);
 		static const UECodeGen_Private::FBoolPropertyParams NewProp_bIsGrounded;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_moveDirection_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_moveDirection;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_moveVelocity_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_moveVelocity;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const UECodeGen_Private::FStructParams ReturnStructParams;
 	};
@@ -153,9 +179,27 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 	{
 		((FStatus*)Obj)->bIsGrounded = 1;
 	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded = { "bIsGrounded", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(FStatus), &Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded_SetBit, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded_MetaData)) };
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded = { "bIsGrounded", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(FStatus), &Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded_SetBit, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection = { "moveDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, moveDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity_MetaData[] = {
+		{ "Category", "Status" },
+		{ "Comment", "//calcolata quando applico il movimento\n//devo provare a cambiare gli assi, usando la groundNormal\n" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+		{ "ToolTip", "calcolata quando applico il movimento\ndevo provare a cambiare gli assi, usando la groundNormal" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity = { "moveVelocity", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, moveVelocity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FStatus_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity,
 	};
 	const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FStatus_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
@@ -213,6 +257,10 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_StateMachine;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_CharacterPlayerController_MetaData[];
+#endif
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_CharacterPlayerController;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_inputValues_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_inputValues;
@@ -264,19 +312,30 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement_MetaData[] = {
 		{ "Category", "Component" },
+		{ "Comment", "// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)\n// class UCapsuleComponent* OverlapCapsule;\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+		{ "ToolTip", "UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)\nclass UCapsuleComponent* OverlapCapsule;" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement = { "Movement", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, Movement), Z_Construct_UClass_UCharacterMovementComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine_MetaData[] = {
 		{ "Category", "Component" },
+		{ "Comment", "//class UCustomCharacterMovementComponent* Movement;\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+		{ "ToolTip", "class UCustomCharacterMovementComponent* Movement;" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine = { "StateMachine", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, StateMachine), Z_Construct_UClass_UStateMachineComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_CharacterPlayerController_MetaData[] = {
+		{ "Category", "Component" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_CharacterPlayerController = { "CharacterPlayerController", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, CharacterPlayerController), Z_Construct_UClass_ACharacterPlayerController_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_CharacterPlayerController_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_CharacterPlayerController_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues_MetaData[] = {
 		{ "Category", "Structs" },
@@ -285,20 +344,21 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		{ "ToolTip", "Struct" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues = { "inputValues", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, inputValues), Z_Construct_UScriptStruct_FInput, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues_MetaData)) }; // 4040322450
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues = { "inputValues", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, inputValues), Z_Construct_UScriptStruct_FInput, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues_MetaData)) }; // 1454212551
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData[] = {
 		{ "Category", "Structs" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus = { "characterStatus", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, characterStatus), Z_Construct_UScriptStruct_FStatus, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData)) }; // 4139447921
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus = { "characterStatus", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, characterStatus), Z_Construct_UScriptStruct_FStatus, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData)) }; // 958934099
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ACharacterController_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_CameraBoom,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_Camera,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_Capsule,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_CharacterPlayerController,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus,
 	};
@@ -339,13 +399,13 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ScriptStructInfo[] = {
-		{ FInput::StaticStruct, Z_Construct_UScriptStruct_FInput_Statics::NewStructOps, TEXT("Input"), &Z_Registration_Info_UScriptStruct_Input, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FInput), 4040322450U) },
-		{ FStatus::StaticStruct, Z_Construct_UScriptStruct_FStatus_Statics::NewStructOps, TEXT("Status"), &Z_Registration_Info_UScriptStruct_Status, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FStatus), 4139447921U) },
+		{ FInput::StaticStruct, Z_Construct_UScriptStruct_FInput_Statics::NewStructOps, TEXT("Input"), &Z_Registration_Info_UScriptStruct_Input, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FInput), 1454212551U) },
+		{ FStatus::StaticStruct, Z_Construct_UScriptStruct_FStatus_Statics::NewStructOps, TEXT("Status"), &Z_Registration_Info_UScriptStruct_Status, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FStatus), 958934099U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ACharacterController, ACharacterController::StaticClass, TEXT("ACharacterController"), &Z_Registration_Info_UClass_ACharacterController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACharacterController), 1389809428U) },
+		{ Z_Construct_UClass_ACharacterController, ACharacterController::StaticClass, TEXT("ACharacterController"), &Z_Registration_Info_UClass_ACharacterController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACharacterController), 2427193131U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_784109477(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_2892513652(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ScriptStructInfo),
 		nullptr, 0);

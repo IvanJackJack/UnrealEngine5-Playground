@@ -83,6 +83,18 @@
     <ClInclude Include="..\..\Source\Playground\Controllers\CharacterPlayerController.h">
       <Filter>Source\Playground\Controllers</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CustomCharacterMovementComponent.cpp">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CustomCharacterMovementComponent.h">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CustomMovementComponent.cpp">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CustomMovementComponent.h">
+      <Filter>Source\Playground\Controllers</Filter>
+    </ClInclude>
     <Filter Include="Source\Playground\FiniteStateMachine">
       <UniqueIdentifier>{DD189DE1-DDF7-3184-9A5C-E7C922153522}</UniqueIdentifier>
     </Filter>
@@ -101,16 +113,34 @@
     <Filter Include="Source\Playground\FiniteStateMachine\States">
       <UniqueIdentifier>{5AC9DE27-DB53-3131-A6D2-B045DA4BE09B}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\AirFallingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\AirFallingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\AirMovingState.cpp">
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\AirMovingState.h">
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\AirRaisingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\AirRaisingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\ClimbState.cpp">
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\ClimbState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\GroundLandedState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\GroundLandedState.h">
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\GroundMovingState.cpp">
@@ -123,6 +153,18 @@
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\IdleState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunMovingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunMovingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunReadyState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunReadyState.h">
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\Interfaces">
@@ -139,6 +181,15 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\Interfaces\IMovementController.h">
       <Filter>Source\Playground\Interfaces</Filter>
+    </ClInclude>
+    <Filter Include="Source\Playground\UI">
+      <UniqueIdentifier>{B6693E14-E035-35AD-ABA5-535FCD8E9975}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\UI\CustomHUD.cpp">
+      <Filter>Source\Playground\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\UI\CustomHUD.h">
+      <Filter>Source\Playground\UI</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\Utilities">
       <UniqueIdentifier>{D980956D-C6F0-36D9-A667-2C4758E1DDFE}</UniqueIdentifier>
