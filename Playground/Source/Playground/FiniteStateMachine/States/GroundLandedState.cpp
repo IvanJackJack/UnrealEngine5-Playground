@@ -22,10 +22,9 @@ void UGroundLandedState::OnEnter() {
 
 	if(context->characterController->characterStatus.bIsGrounded) {
 		return;
-
 	}
+
 	context->characterController->GroundLand();
-	context->characterController->characterStatus.bIsGrounded=true;
 }
 
 void UGroundLandedState::OnTick() {

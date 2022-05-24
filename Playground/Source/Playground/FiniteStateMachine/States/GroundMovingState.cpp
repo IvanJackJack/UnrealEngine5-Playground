@@ -2,6 +2,7 @@
 
 
 #include "GroundMovingState.h"
+
 #include "Playground/Controllers/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
@@ -23,6 +24,9 @@ void UGroundMovingState::Setup(FString newName, FFSMContext newContext) {
 	Transitions.Add(stateName, BoolFunctionDelegate() );
 	Transitions[stateName].BindUObject(this, &UGroundMovingState::TransitionToAirFalling);
 
+	stateName=FString("WallrunMovingState");
+	Transitions.Add(stateName, BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UGroundMovingState::TransitionToWallrunMoving);
 	// Transitions.Add( "AirMovingState", BoolFunctionDelegate() );
 	// Transitions["AirMovingState"].BindUObject(this, &UGroundMovingState::TransitionToAirMoving);
 }
@@ -48,7 +52,7 @@ bool UGroundMovingState::TransitionToGroundIdle() {
 }
 
 bool UGroundMovingState::TransitionToAirRaising() {
-	if(context->characterController->GetVelocity().Z > 0.f) {
+	if(context->characterController->inputValues.bJumpInput) {
 		return true;
 	}
 
@@ -62,9 +66,12 @@ bool UGroundMovingState::TransitionToAirFalling() {
 
 	return false;
 }
-// bool UGroundMovingState::TransitionToAirMoving() {
-// 	if(!context->characterController->characterStatus.bIsGrounded) {
-// 		return true;
-// 	}
-// 	return false;
-// }
+
+bool UGroundMovingState::TransitionToWallrunMoving() {
+	if(context->characterController->characterStatus.bIsOverlappingPlatform 
+		&& context->characterController->inputValues.bWallrunInput) {
+		return true;
+	}
+
+	return false;
+}

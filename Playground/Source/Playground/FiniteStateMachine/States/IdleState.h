@@ -20,11 +20,7 @@ public:
 public:
 	UFUNCTION()
 	bool TransitionToGroundMoving();
-	//
-	// UFUNCTION()
-	// bool TransitionToAirMoving();
-
 	bool TransitionToAirRaising();
-
 	bool TransitionToAirFalling();
+	bool TransitionToWallrunMoving();
 };

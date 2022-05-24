@@ -10,17 +10,21 @@
 void UIdleState::Setup(FString newName, FFSMContext newContext) {
 	Super::Setup(newName, newContext);
 
+	FString stateName;
+
+	stateName=FString("WallrunMovingState");
+	Transitions.Add(stateName, BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UIdleState::TransitionToWallrunMoving);
+
 	Transitions.Add( "GroundMovingState", BoolFunctionDelegate() );
 	Transitions["GroundMovingState"].BindUObject(this, &UIdleState::TransitionToGroundMoving);
 
-	// Transitions.Add( "AirMovingState", BoolFunctionDelegate() );
-	// Transitions["AirMovingState"].BindUObject(this, &UIdleState::TransitionToAirMoving);
 
+	// AddTransition("GroundMovingState", &UIdleState::TransitionToGroundMoving);
+	
 	Transitions.Add( "AirRaisingState", BoolFunctionDelegate() );
 	Transitions["AirRaisingState"].BindUObject(this, &UIdleState::TransitionToAirRaising);
-
-	// Transitions.Add( "AirFallingState", BoolFunctionDelegate() );
-	// Transitions["AirFallingState"].BindUObject(this, &UIdleState::TransitionToAirFalling);
+	
 }
 
 void UIdleState::OnEnter() {
@@ -51,7 +55,7 @@ bool UIdleState::TransitionToGroundMoving() {
 // }
 
 bool UIdleState::TransitionToAirRaising() {
-	if(context->characterController->GetVelocity().Z > 0.f) {
+	if(context->characterController->inputValues.bJumpInput) {
 		return true;
 	}
 
@@ -60,6 +64,15 @@ bool UIdleState::TransitionToAirRaising() {
 
 bool UIdleState::TransitionToAirFalling() {
 	if(context->characterController->GetVelocity().Z < 0.f) {
+		return true;
+	}
+
+	return false;
+}
+
+bool UIdleState::TransitionToWallrunMoving() {
+	if(context->characterController->characterStatus.bIsOverlappingPlatform 
+		&& context->characterController->inputValues.bWallrunInput) {
 		return true;
 	}
 

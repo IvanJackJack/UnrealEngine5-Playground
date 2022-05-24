@@ -26,8 +26,25 @@ struct FStatus {
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsGrounded;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsWallrunning;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsOverlappingPlatform;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float overlapBodyCount;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector groundNormal;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector groundForward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector groundSideward;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector characterForward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector characterSideward;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector moveDirection; //calcolata quando applico il movimento
@@ -38,6 +55,8 @@ struct FStatus {
 	FRotator characterRotation;
 
 	float stamina;
+
+	
 };
 
 UCLASS()
@@ -56,8 +75,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	
+	UFUNCTION()
+	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION()
+	virtual void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 #pragma endregion
 
@@ -101,29 +127,6 @@ public: //Variables
 	float cameraRotationSpeed = 50.f;
 	float maxStamina;
 
-	//Ground
-    float groundSpeed = 4.f;
-    float grounAccel = 20.f;
-
-    //Air
-    float airSpeed = 3.f;
-    float airAccel = 20.f;
-
-    //Jump
-    float jumpUpSpeed = 9.2f;
-    float dashSpeed = 6.f;
-
-    //Wall
-    float wallSpeed = 10.f;
-    float wallClimbSpeed = 4.f;
-    float wallAccel = 20.f;
-    float wallRunTime = 3.f;
-    float wallStickiness = 20.f;
-    float wallStickDistance = 1.f;
-    float wallFloorBarrier = 40.f;
-    float wallBanTime = 4.f;
-    FVector bannedGroundNormal;
-
 #pragma endregion
 
 #pragma region GettersSetters
@@ -156,7 +159,9 @@ public: //Input Functions
 
 #pragma endregion
 
-#pragma region StatusCheckFunctions
+#pragma region StatusFunctions
+	void UpdateStatus();
+
 	void UpdateLastVelocity();
 
 	void GroundCheck();
@@ -164,6 +169,14 @@ public: //Input Functions
 	void GroundLeft();
 
 	void GroundLand();
+
+	void PlatformOverlap();
+
+	void PlatformLeft();
+
+	void WallAxisUpdateOnHit(const FHitResult& Hit);
+
+	bool CanWallrun();
 
 #pragma endregion
 
@@ -173,6 +186,12 @@ public: //Movement Functions
 	void ApplyGroundMovement();
 
 	void ApplyAirMovement();
+
+	void ApplyWallrunMovement();
+
+	void ApplyGroundJump();
+
+	void ApplyWallrunJump();
 
 #pragma endregion
 

@@ -17,4 +17,7 @@ public:
 	virtual void OnTick() override;
 	virtual void OnExit() override;
 
+public:
+	bool TransitionToGroundMoving();
+	bool TransitionToGroundIdle();
 };

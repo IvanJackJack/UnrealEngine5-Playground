@@ -33,4 +33,8 @@ public:
 
 	virtual FString CheckTransition();
 
+	virtual void AddTransition(FString destinationState, BoolFunctionDelegate& checkFunction) {
+		Transitions.Add(destinationState, checkFunction);
+	}
+
 };
