@@ -48,6 +48,7 @@ void UStateMachineComponent::Setup(FFSMContext newContext) {
 
 void UStateMachineComponent::SetCurrentState(UStateBase* newState) {
 	if(currentState) {
+		previousState=currentState;
 		currentState->OnExit();
 	}
 

@@ -8,6 +8,7 @@
 
 
 struct FFSMContext;
+// class StateTransitions;
 
 DECLARE_DELEGATE_RetVal(bool, BoolFunctionDelegate)
 
@@ -33,8 +34,19 @@ public:
 
 	virtual FString CheckTransition();
 
-	virtual void AddTransition(FString destinationState, BoolFunctionDelegate& checkFunction) {
-		Transitions.Add(destinationState, checkFunction);
-	}
+	// virtual void AddTransition(FString destinationState, UObject* owner, ) {
+	// 	Transitions.Add(destinationState, BoolFunctionDelegate());
+	// 	Transitions[destinationState].BindUObject(owner, checkFunction);
+	// }
+
+	// BoolFunctionDelegate AddTransition(FString destinationState) {
+	// 	Transitions.Add(destinationState, BoolFunctionDelegate());
+	// 	return Transitions[destinationState];
+	// }
+	//
+	// void AddTra(FString destinationState, UStateBase* owner, TMemFunPtrType<false, TSubclassOf<UStateBase>&, bool()>::Type func) {
+	// 	Transitions.Add(destinationState, BoolFunctionDelegate());
+	// 	Transitions[destinationState].BindUObject(owner, func);
+	// }
 
 };

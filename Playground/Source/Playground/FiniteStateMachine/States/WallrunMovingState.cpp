@@ -12,44 +12,49 @@ void UWallrunMovingState::Setup(FString newName, FFSMContext newContext) {
 
 	FString stateName;
 
-	stateName=FString("GroundMovingState");
+	stateName=FString("AirFallingState");
 	Transitions.Add(stateName, BoolFunctionDelegate() );
-	Transitions[stateName].BindUObject(this, &UWallrunMovingState::TransitionToGroundMoving);
+	Transitions[stateName].BindUObject(this, &UWallrunMovingState::TransitionToAirFalling);
 
-	stateName=FString("GroundIdleState");
+	stateName=FString("AirRaisingState");
 	Transitions.Add(stateName, BoolFunctionDelegate() );
-	Transitions[stateName].BindUObject(this, &UWallrunMovingState::TransitionToGroundIdle);
+	Transitions[stateName].BindUObject(this, &UWallrunMovingState::TransitionToAirRaising);
 }
 
 void UWallrunMovingState::OnEnter() {
 	Super::OnEnter();
+	
+	context->characterController->WallrunLand();
 
-	context->characterController->characterStatus.bIsWallrunning=true;
+	context->characterController->BeginWallrun();
 }
 
 void UWallrunMovingState::OnTick() {
 	context->characterController->ApplyWallrunMovement();
+
+	context->characterController->UpdateWallrunAndInfoIfRayHit();
+
+	// context->characterController->UpdateWallrunMovement();
+
 }
 
 void UWallrunMovingState::OnExit() {
-	context->characterController->characterStatus.bIsWallrunning=true;
+	context->characterController->EndWallrun();
 }
 
-bool UWallrunMovingState::TransitionToGroundMoving() {
-	if(!context->characterController->characterStatus.bIsOverlappingPlatform 
-		|| !context->characterController->inputValues.bWallrunInput) {
+bool UWallrunMovingState::TransitionToAirFalling() {
+	if(context->characterController->ShouldEndWallrun()) {
 		return true;
 	}
 
 	return false;
 }
 
-bool UWallrunMovingState::TransitionToGroundIdle() {
-	if((!context->characterController->characterStatus.bIsOverlappingPlatform 
-		|| !context->characterController->inputValues.bWallrunInput)
-		&& context->characterController->GetVelocity().IsNearlyZero()
-		) {
+bool UWallrunMovingState::TransitionToAirRaising() {
+	if(context->characterController->inputValues.bJumpInput) {
+		context->characterController->SetLastEndreason(EWallrunEndreason::Jump);
 		return true;
 	}
+
 	return false;
 }

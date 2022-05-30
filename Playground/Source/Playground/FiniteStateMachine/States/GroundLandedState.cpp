@@ -9,20 +9,20 @@
 
 void UGroundLandedState::Setup(FString newName, FFSMContext newContext) {
 	Super::Setup(newName, newContext);
+	FString stateName;
 
-	Transitions.Add( "GroundMovingState", BoolFunctionDelegate() );
-	Transitions["GroundMovingState"].BindUObject(this, &UGroundLandedState::TransitionToGroundMoving);
+	stateName=FString("GroundIdleState");
+	Transitions.Add(stateName, BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UGroundLandedState::TransitionToGroundIdle);
 
-	Transitions.Add( "GroundIdleState", BoolFunctionDelegate() );
-	Transitions["GroundIdleState"].BindUObject(this, &UGroundLandedState::TransitionToGroundIdle);
+	stateName=FString("GroundMovingState");
+	Transitions.Add( stateName, BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UGroundLandedState::TransitionToGroundMoving);
+	
 }
 
 void UGroundLandedState::OnEnter() {
 	Super::OnEnter();
-
-	if(context->characterController->characterStatus.bIsGrounded) {
-		return;
-	}
 
 	context->characterController->GroundLand();
 }

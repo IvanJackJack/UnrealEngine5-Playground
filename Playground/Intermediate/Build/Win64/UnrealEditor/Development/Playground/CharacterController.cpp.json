@@ -51,7 +51,15 @@
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\finitestatemachine\\statemachinecomponent.h",
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\statemachinecomponent.generated.h",
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\controllers\\characterplayercontroller.h",
-            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\characterplayercontroller.generated.h"
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\characterplayercontroller.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetsystemlibrary.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\kismetsystemlibrary.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystatics.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\sound\\dialoguetypes.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\dialoguetypes.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystaticstypes.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystaticstypes.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystatics.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

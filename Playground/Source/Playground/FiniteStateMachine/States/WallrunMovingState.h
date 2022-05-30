@@ -18,6 +18,6 @@ public:
 	virtual void OnExit() override;
 
 public:
-	bool TransitionToGroundMoving();
-	bool TransitionToGroundIdle();
+	bool TransitionToAirFalling();
+	bool TransitionToAirRaising();
 };

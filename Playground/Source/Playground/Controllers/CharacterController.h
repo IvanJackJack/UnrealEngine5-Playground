@@ -6,6 +6,21 @@
 #include "GameFramework/Character.h"
 #include "CharacterController.generated.h"
 
+UENUM(BlueprintType)
+enum class EWallrunSide : uint8 {
+	Left UMETA(DisplayName = "Left"),
+	Right UMETA(DisplayName = "Right")
+};
+
+UENUM(BlueprintType)
+enum class EWallrunEndreason : uint8 {
+	Fall UMETA(DisplayName = "Fall"),
+	Jump UMETA(DisplayName = "Jump"),
+	WrongDirection UMETA(DisplayName = "WrongDirection"),
+	SideChange UMETA(DisplayName = "SideChange"),
+	NoWallhit UMETA(DisplayName = "NoWallhit")
+};
+
 USTRUCT(BlueprintType)
 struct FInput {
 	GENERATED_BODY()
@@ -28,35 +43,52 @@ struct FStatus {
 	bool bIsGrounded;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsWallrunning;
+	bool bWasWallrunning;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsOverlappingPlatform;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float overlapBodyCount;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector groundNormal;
-	
+	FVector wallNormal;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector groundForward;
+	FVector wallUpward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector groundSideward;
+	FVector wallSideward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FHitResult lastValidHit;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector playerToWallDirection;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector characterForward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector characterSideward;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector moveDirectionAlongWallAxis;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector moveDirection; //calcolata quando applico il movimento
-							//devo provare a cambiare gli assi, usando la groundNormal
+	FVector moveDirection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector moveVelocity; //in teoria se la normalizzo ottengo moveDirection
+	FVector wallrunMoveDirection;
 
 	FRotator characterRotation;
 
 	float stamina;
 
-	
+	bool wallrunTimerExpired;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	int jumpsLeft;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	EWallrunSide wallrunSide; //da che parte, rispetto al muro, sono
+	EWallrunSide startingWallrunSide;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector lookingDirection;
+
+	EWallrunEndreason lastEndReason;
 };
 
 UCLASS()
@@ -85,6 +117,9 @@ public:
 	UFUNCTION()
 	virtual void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
+	UFUNCTION()
+	virtual void Landed(const FHitResult& Hit) override;
+
 #pragma endregion
 
 #pragma region Components
@@ -98,12 +133,8 @@ public: //Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class UCapsuleComponent* Capsule;
 
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
-	// class UCapsuleComponent* OverlapCapsule;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class UCharacterMovementComponent* Movement;
-	//class UCustomCharacterMovementComponent* Movement;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)
 	class UStateMachineComponent* StateMachine;
@@ -121,11 +152,18 @@ public: //Struct
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Structs)
 	FStatus characterStatus;
 #pragma endregion
-	
+
 #pragma region Parameters
 public: //Variables
 	float cameraRotationSpeed = 50.f;
 	float maxStamina;
+	int jumpsMax = 2;
+	float initialAirControl=0.25f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float wallrunDelay=0.75f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float checkWallRayLEngth;
+	FTimerHandle wallrunDelayTimer;
 
 #pragma endregion
 
@@ -136,6 +174,18 @@ public: //Getters and Setters
 
 	FORCEINLINE
 	class UCameraComponent* GetCamera() const { return Camera; }
+
+	FORCEINLINE
+	FVector GetHorizontalVelocity() const { return FVector(GetVelocity().X, GetVelocity().Y, 0.f); }
+
+	void SetHorizontalVelocity(FVector velocity);
+
+	void SetVelocity(FVector velocity);
+
+	FORCEINLINE
+	void SetLastEndreason(EWallrunEndreason endReason) { characterStatus.lastEndReason = endReason; }
+
+	void ResetWallrunTimer();
 
 #pragma endregion
 
@@ -153,31 +203,52 @@ public: //Input Functions
 
 	void ReadJumpInputEnd();
 
-	void ReadWallrunInputStart();
+	void ReadSprintInputStart();
 
-	void ReadWallrunInputEnd();
+	void ReadSprintInputEnd();
 
 #pragma endregion
 
 #pragma region StatusFunctions
-	void UpdateStatus();
+	void UpdateCharacterAxis();
 
-	void UpdateLastVelocity();
+	void ClampVelocity();
 
-	void GroundCheck();
-
-	void GroundLeft();
-
-	void GroundLand();
+	void ClampHorizontalVelocity();
 
 	void PlatformOverlap();
 
-	void PlatformLeft();
+	void PlatformOverlapLeft();
 
-	void WallAxisUpdateOnHit(const FHitResult& Hit);
+	void UpdateWallInfo();
+
+	void ResetHitAndWallInfo();
+
+	void UpdateMoveDirection();
+
+
+#pragma endregion
+
+#pragma region WallrunFunctions
 
 	bool CanWallrun();
 
+	bool ShouldEndWallrun();
+
+	bool CanSurfaceBeWallran(FVector surfaceNormal);
+
+	bool MovingTowardsWallForRun();
+
+	void UpdateWallrunAndInfoIfRayHit();
+
+	void BeginWallrun();
+
+	void EndWallrun();
+
+	void UpdateWallrunSide();
+
+	void UpdateWallrunDirection();
+	
 #pragma endregion
 
 #pragma region MovementFunctions
@@ -189,11 +260,59 @@ public: //Movement Functions
 
 	void ApplyWallrunMovement();
 
+#pragma endregion
+
+#pragma region JumpFunctions
 	void ApplyGroundJump();
+
+	void ApplyAirJump();
 
 	void ApplyWallrunJump();
 
+	bool ConsumeJump();
+
+	void ResetJumpCount(int jumps);
+
+	void GroundLeft();
+
+	void GroundLand();
+
+	void WallrunLand();
+
 #pragma endregion
 
-
 };
+
+
+
+
+
+
+
+
+
+
+
+	// void UpdateLastVelocity();
+	//
+	// void GroundCheck();
+	//
+	// void ACharacterController::UpdateLastVelocity() {
+	// 	if (characterStatus.moveVelocity != GetVelocity()) {
+	// 		characterStatus.moveVelocity=GetVelocity();
+	// 		// UCustomUtils::Print(characterStatus.moveVelocity);
+	// 	}
+	// }
+	//
+	// void ACharacterController::GroundCheck() {
+	// 	bool bGrounded=!Movement->IsFalling();
+	// 	if(bGrounded != characterStatus.bIsGrounded) {
+	// 		if(!bGrounded) {
+	// 			GroundLeft();
+	// 		}else {
+	// 			GroundLand();
+	// 		}
+	//
+	// 		characterStatus.bIsGrounded=bGrounded;
+	// 	}
+	// }

@@ -9,16 +9,18 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeCharacterController() {}
 // Cross Module References
-	PLAYGROUND_API UScriptStruct* Z_Construct_UScriptStruct_FInput();
+	PLAYGROUND_API UEnum* Z_Construct_UEnum_Playground_EWallrunSide();
 	UPackage* Z_Construct_UPackage__Script_Playground();
+	PLAYGROUND_API UEnum* Z_Construct_UEnum_Playground_EWallrunEndreason();
+	PLAYGROUND_API UScriptStruct* Z_Construct_UScriptStruct_FInput();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	PLAYGROUND_API UScriptStruct* Z_Construct_UScriptStruct_FStatus();
+	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterController_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterController();
 	ENGINE_API UClass* Z_Construct_UClass_ACharacter();
 	ENGINE_API UClass* Z_Construct_UClass_UPrimitiveComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
-	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 	ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UCapsuleComponent_NoRegister();
@@ -26,6 +28,125 @@ void EmptyLinkFunctionForGeneratedCodeCharacterController() {}
 	PLAYGROUND_API UClass* Z_Construct_UClass_UStateMachineComponent_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterPlayerController_NoRegister();
 // End Cross Module References
+	static FEnumRegistrationInfo Z_Registration_Info_UEnum_EWallrunSide;
+	static UEnum* EWallrunSide_StaticEnum()
+	{
+		if (!Z_Registration_Info_UEnum_EWallrunSide.OuterSingleton)
+		{
+			Z_Registration_Info_UEnum_EWallrunSide.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_Playground_EWallrunSide, Z_Construct_UPackage__Script_Playground(), TEXT("EWallrunSide"));
+		}
+		return Z_Registration_Info_UEnum_EWallrunSide.OuterSingleton;
+	}
+	template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunSide>()
+	{
+		return EWallrunSide_StaticEnum();
+	}
+	struct Z_Construct_UEnum_Playground_EWallrunSide_Statics
+	{
+		static const UECodeGen_Private::FEnumeratorParam Enumerators[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FEnumParams EnumParams;
+	};
+	const UECodeGen_Private::FEnumeratorParam Z_Construct_UEnum_Playground_EWallrunSide_Statics::Enumerators[] = {
+		{ "EWallrunSide::Left", (int64)EWallrunSide::Left },
+		{ "EWallrunSide::Right", (int64)EWallrunSide::Right },
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UEnum_Playground_EWallrunSide_Statics::Enum_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "Left.DisplayName", "Left" },
+		{ "Left.Name", "EWallrunSide::Left" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+		{ "Right.DisplayName", "Right" },
+		{ "Right.Name", "EWallrunSide::Right" },
+	};
+#endif
+	const UECodeGen_Private::FEnumParams Z_Construct_UEnum_Playground_EWallrunSide_Statics::EnumParams = {
+		(UObject*(*)())Z_Construct_UPackage__Script_Playground,
+		nullptr,
+		"EWallrunSide",
+		"EWallrunSide",
+		Z_Construct_UEnum_Playground_EWallrunSide_Statics::Enumerators,
+		UE_ARRAY_COUNT(Z_Construct_UEnum_Playground_EWallrunSide_Statics::Enumerators),
+		RF_Public|RF_Transient|RF_MarkAsNative,
+		EEnumFlags::None,
+		(uint8)UEnum::ECppForm::EnumClass,
+		METADATA_PARAMS(Z_Construct_UEnum_Playground_EWallrunSide_Statics::Enum_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UEnum_Playground_EWallrunSide_Statics::Enum_MetaDataParams))
+	};
+	UEnum* Z_Construct_UEnum_Playground_EWallrunSide()
+	{
+		if (!Z_Registration_Info_UEnum_EWallrunSide.InnerSingleton)
+		{
+			UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_EWallrunSide.InnerSingleton, Z_Construct_UEnum_Playground_EWallrunSide_Statics::EnumParams);
+		}
+		return Z_Registration_Info_UEnum_EWallrunSide.InnerSingleton;
+	}
+	static FEnumRegistrationInfo Z_Registration_Info_UEnum_EWallrunEndreason;
+	static UEnum* EWallrunEndreason_StaticEnum()
+	{
+		if (!Z_Registration_Info_UEnum_EWallrunEndreason.OuterSingleton)
+		{
+			Z_Registration_Info_UEnum_EWallrunEndreason.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_Playground_EWallrunEndreason, Z_Construct_UPackage__Script_Playground(), TEXT("EWallrunEndreason"));
+		}
+		return Z_Registration_Info_UEnum_EWallrunEndreason.OuterSingleton;
+	}
+	template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunEndreason>()
+	{
+		return EWallrunEndreason_StaticEnum();
+	}
+	struct Z_Construct_UEnum_Playground_EWallrunEndreason_Statics
+	{
+		static const UECodeGen_Private::FEnumeratorParam Enumerators[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FEnumParams EnumParams;
+	};
+	const UECodeGen_Private::FEnumeratorParam Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enumerators[] = {
+		{ "EWallrunEndreason::Fall", (int64)EWallrunEndreason::Fall },
+		{ "EWallrunEndreason::Jump", (int64)EWallrunEndreason::Jump },
+		{ "EWallrunEndreason::WrongDirection", (int64)EWallrunEndreason::WrongDirection },
+		{ "EWallrunEndreason::SideChange", (int64)EWallrunEndreason::SideChange },
+		{ "EWallrunEndreason::NoWallhit", (int64)EWallrunEndreason::NoWallhit },
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enum_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "Fall.DisplayName", "Fall" },
+		{ "Fall.Name", "EWallrunEndreason::Fall" },
+		{ "Jump.DisplayName", "Jump" },
+		{ "Jump.Name", "EWallrunEndreason::Jump" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+		{ "NoWallhit.DisplayName", "NoWallhit" },
+		{ "NoWallhit.Name", "EWallrunEndreason::NoWallhit" },
+		{ "SideChange.DisplayName", "SideChange" },
+		{ "SideChange.Name", "EWallrunEndreason::SideChange" },
+		{ "WrongDirection.DisplayName", "WrongDirection" },
+		{ "WrongDirection.Name", "EWallrunEndreason::WrongDirection" },
+	};
+#endif
+	const UECodeGen_Private::FEnumParams Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::EnumParams = {
+		(UObject*(*)())Z_Construct_UPackage__Script_Playground,
+		nullptr,
+		"EWallrunEndreason",
+		"EWallrunEndreason",
+		Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enumerators,
+		UE_ARRAY_COUNT(Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enumerators),
+		RF_Public|RF_Transient|RF_MarkAsNative,
+		EEnumFlags::None,
+		(uint8)UEnum::ECppForm::EnumClass,
+		METADATA_PARAMS(Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enum_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enum_MetaDataParams))
+	};
+	UEnum* Z_Construct_UEnum_Playground_EWallrunEndreason()
+	{
+		if (!Z_Registration_Info_UEnum_EWallrunEndreason.InnerSingleton)
+		{
+			UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_EWallrunEndreason.InnerSingleton, Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::EnumParams);
+		}
+		return Z_Registration_Info_UEnum_EWallrunEndreason.InnerSingleton;
+	}
 	static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_Input;
 class UScriptStruct* FInput::StaticStruct()
 {
@@ -166,17 +287,25 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_overlapBodyCount;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_groundNormal_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallNormal_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_groundNormal;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_wallNormal;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_groundForward_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallUpward_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_groundForward;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_wallUpward;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_groundSideward_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallSideward_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_groundSideward;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_wallSideward;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_lastValidHit_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_lastValidHit;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_playerToWallDirection_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_playerToWallDirection;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_characterForward_MetaData[];
 #endif
@@ -186,13 +315,30 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_characterSideward;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_moveDirectionAlongWallAxis_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_moveDirectionAlongWallAxis;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_moveDirection_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_moveDirection;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_moveVelocity_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunMoveDirection_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_moveVelocity;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_wallrunMoveDirection;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_jumpsLeft_MetaData[];
+#endif
+		static const UECodeGen_Private::FUnsizedIntPropertyParams NewProp_jumpsLeft;
+		static const UECodeGen_Private::FBytePropertyParams NewProp_wallrunSide_Underlying;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunSide_MetaData[];
+#endif
+		static const UECodeGen_Private::FEnumPropertyParams NewProp_wallrunSide;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_lookingDirection_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_lookingDirection;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const UECodeGen_Private::FStructParams ReturnStructParams;
 	};
@@ -247,26 +393,40 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_overlapBodyCount = { "overlapBodyCount", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, overlapBodyCount), METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_overlapBodyCount_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_overlapBodyCount_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundNormal_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallNormal_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundNormal = { "groundNormal", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, groundNormal), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundNormal_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundNormal_MetaData)) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallNormal = { "wallNormal", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, wallNormal), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallNormal_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallNormal_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundForward_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallUpward_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundForward = { "groundForward", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, groundForward), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundForward_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundForward_MetaData)) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallUpward = { "wallUpward", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, wallUpward), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallUpward_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallUpward_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundSideward_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallSideward_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundSideward = { "groundSideward", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, groundSideward), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundSideward_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundSideward_MetaData)) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallSideward = { "wallSideward", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, wallSideward), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallSideward_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallSideward_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lastValidHit_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lastValidHit = { "lastValidHit", nullptr, (EPropertyFlags)0x0010008000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, lastValidHit), Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lastValidHit_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lastValidHit_MetaData)) }; // 1416937132
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_playerToWallDirection_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_playerToWallDirection = { "playerToWallDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, playerToWallDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_playerToWallDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_playerToWallDirection_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_characterForward_MetaData[] = {
 		{ "Category", "Status" },
@@ -282,6 +442,13 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_characterSideward = { "characterSideward", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, characterSideward), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_characterSideward_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_characterSideward_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirectionAlongWallAxis_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirectionAlongWallAxis = { "moveDirectionAlongWallAxis", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, moveDirectionAlongWallAxis), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirectionAlongWallAxis_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirectionAlongWallAxis_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
@@ -289,26 +456,53 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #endif
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection = { "moveDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, moveDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunMoveDirection_MetaData[] = {
 		{ "Category", "Status" },
-		{ "Comment", "//calcolata quando applico il movimento\n//devo provare a cambiare gli assi, usando la groundNormal\n" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
-		{ "ToolTip", "calcolata quando applico il movimento\ndevo provare a cambiare gli assi, usando la groundNormal" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity = { "moveVelocity", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, moveVelocity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity_MetaData)) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunMoveDirection = { "wallrunMoveDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, wallrunMoveDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunMoveDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunMoveDirection_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_jumpsLeft_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_jumpsLeft = { "jumpsLeft", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, jumpsLeft), METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_jumpsLeft_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_jumpsLeft_MetaData)) };
+	const UECodeGen_Private::FBytePropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide = { "wallrunSide", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, wallrunSide), Z_Construct_UEnum_Playground_EWallrunSide, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide_MetaData)) }; // 317264150
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lookingDirection_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lookingDirection = { "lookingDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, lookingDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lookingDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lookingDirection_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FStatus_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsGrounded,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsWallrunning,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_bIsOverlappingPlatform,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_overlapBodyCount,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundNormal,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundForward,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_groundSideward,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallNormal,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallUpward,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallSideward,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lastValidHit,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_playerToWallDirection,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_characterForward,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_characterSideward,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirectionAlongWallAxis,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveDirection,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_moveVelocity,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunMoveDirection,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_jumpsLeft,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide_Underlying,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_wallrunSide,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_lookingDirection,
 	};
 	const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FStatus_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
@@ -320,7 +514,7 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		Z_Construct_UScriptStruct_FStatus_Statics::PropPointers,
 		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::PropPointers),
 		RF_Public|RF_Transient|RF_MarkAsNative,
-		EStructFlags(0x00000001),
+		EStructFlags(0x00000005),
 		METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::Struct_MetaDataParams))
 	};
 	UScriptStruct* Z_Construct_UScriptStruct_FStatus()
@@ -330,6 +524,14 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 			UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_Status.InnerSingleton, Z_Construct_UScriptStruct_FStatus_Statics::ReturnStructParams);
 		}
 		return Z_Registration_Info_UScriptStruct_Status.InnerSingleton;
+	}
+	DEFINE_FUNCTION(ACharacterController::execLanded)
+	{
+		P_GET_STRUCT_REF(FHitResult,Z_Param_Out_Hit);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->Landed(Z_Param_Out_Hit);
+		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(ACharacterController::execOnHit)
 	{
@@ -371,11 +573,52 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 	{
 		UClass* Class = ACharacterController::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "Landed", &ACharacterController::execLanded },
 			{ "OnBeginOverlap", &ACharacterController::execOnBeginOverlap },
 			{ "OnEndOverlap", &ACharacterController::execOnEndOverlap },
 			{ "OnHit", &ACharacterController::execOnHit },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_ACharacterController_Landed_Statics
+	{
+		struct CharacterController_eventLanded_Parms
+		{
+			FHitResult Hit;
+		};
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Hit_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_Hit;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ACharacterController_Landed_Statics::NewProp_Hit_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ACharacterController_Landed_Statics::NewProp_Hit = { "Hit", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CharacterController_eventLanded_Parms, Hit), Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(Z_Construct_UFunction_ACharacterController_Landed_Statics::NewProp_Hit_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_ACharacterController_Landed_Statics::NewProp_Hit_MetaData)) }; // 1416937132
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ACharacterController_Landed_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ACharacterController_Landed_Statics::NewProp_Hit,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ACharacterController_Landed_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ACharacterController_Landed_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ACharacterController, nullptr, "Landed", nullptr, nullptr, sizeof(Z_Construct_UFunction_ACharacterController_Landed_Statics::CharacterController_eventLanded_Parms), Z_Construct_UFunction_ACharacterController_Landed_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ACharacterController_Landed_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00420400, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ACharacterController_Landed_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ACharacterController_Landed_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ACharacterController_Landed()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ACharacterController_Landed_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_ACharacterController_OnBeginOverlap_Statics
 	{
@@ -634,6 +877,14 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_characterStatus_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_characterStatus;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunDelay_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunDelay;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_checkWallRayLEngth_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_checkWallRayLEngth;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -643,6 +894,7 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ACharacterController_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_ACharacterController_Landed, "Landed" }, // 3648858308
 		{ &Z_Construct_UFunction_ACharacterController_OnBeginOverlap, "OnBeginOverlap" }, // 1163189281
 		{ &Z_Construct_UFunction_ACharacterController_OnEndOverlap, "OnEndOverlap" }, // 1919840801
 		{ &Z_Construct_UFunction_ACharacterController_OnHit, "OnHit" }, // 2375937013
@@ -683,20 +935,16 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement_MetaData[] = {
 		{ "Category", "Component" },
-		{ "Comment", "// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)\n// class UCapsuleComponent* OverlapCapsule;\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
-		{ "ToolTip", "UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Component)\nclass UCapsuleComponent* OverlapCapsule;" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement = { "Movement", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, Movement), Z_Construct_UClass_UCharacterMovementComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_Movement_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine_MetaData[] = {
 		{ "Category", "Component" },
-		{ "Comment", "//class UCustomCharacterMovementComponent* Movement;\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
-		{ "ToolTip", "class UCustomCharacterMovementComponent* Movement;" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine = { "StateMachine", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, StateMachine), Z_Construct_UClass_UStateMachineComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_StateMachine_MetaData)) };
@@ -722,7 +970,21 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus = { "characterStatus", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, characterStatus), Z_Construct_UScriptStruct_FStatus, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData)) }; // 465488745
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus = { "characterStatus", nullptr, (EPropertyFlags)0x0010008000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, characterStatus), Z_Construct_UScriptStruct_FStatus, METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus_MetaData)) }; // 2872572856
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_wallrunDelay_MetaData[] = {
+		{ "Category", "CharacterController" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_wallrunDelay = { "wallrunDelay", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, wallrunDelay), METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_wallrunDelay_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_wallrunDelay_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterController_Statics::NewProp_checkWallRayLEngth_MetaData[] = {
+		{ "Category", "CharacterController" },
+		{ "ModuleRelativePath", "Controllers/CharacterController.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ACharacterController_Statics::NewProp_checkWallRayLEngth = { "checkWallRayLEngth", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterController, checkWallRayLEngth), METADATA_PARAMS(Z_Construct_UClass_ACharacterController_Statics::NewProp_checkWallRayLEngth_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterController_Statics::NewProp_checkWallRayLEngth_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ACharacterController_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_CameraBoom,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_Camera,
@@ -732,6 +994,8 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_CharacterPlayerController,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_inputValues,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_characterStatus,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_wallrunDelay,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ACharacterController_Statics::NewProp_checkWallRayLEngth,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_ACharacterController_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<ACharacterController>::IsAbstract,
@@ -766,18 +1030,23 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FStatus>()
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ACharacterController);
 	struct Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics
 	{
+		static const FEnumRegisterCompiledInInfo EnumInfo[];
 		static const FStructRegisterCompiledInInfo ScriptStructInfo[];
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
+	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::EnumInfo[] = {
+		{ EWallrunSide_StaticEnum, TEXT("EWallrunSide"), &Z_Registration_Info_UEnum_EWallrunSide, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 317264150U) },
+		{ EWallrunEndreason_StaticEnum, TEXT("EWallrunEndreason"), &Z_Registration_Info_UEnum_EWallrunEndreason, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1282844072U) },
+	};
 	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ScriptStructInfo[] = {
 		{ FInput::StaticStruct, Z_Construct_UScriptStruct_FInput_Statics::NewStructOps, TEXT("Input"), &Z_Registration_Info_UScriptStruct_Input, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FInput), 1454212551U) },
-		{ FStatus::StaticStruct, Z_Construct_UScriptStruct_FStatus_Statics::NewStructOps, TEXT("Status"), &Z_Registration_Info_UScriptStruct_Status, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FStatus), 465488745U) },
+		{ FStatus::StaticStruct, Z_Construct_UScriptStruct_FStatus_Statics::NewStructOps, TEXT("Status"), &Z_Registration_Info_UScriptStruct_Status, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FStatus), 2872572856U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ACharacterController, ACharacterController::StaticClass, TEXT("ACharacterController"), &Z_Registration_Info_UClass_ACharacterController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACharacterController), 4193350686U) },
+		{ Z_Construct_UClass_ACharacterController, ACharacterController::StaticClass, TEXT("ACharacterController"), &Z_Registration_Info_UClass_ACharacterController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACharacterController), 357411462U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_1771703768(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_76594578(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::ScriptStructInfo),
-		nullptr, 0);
+		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CharacterController_h_Statics::EnumInfo));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

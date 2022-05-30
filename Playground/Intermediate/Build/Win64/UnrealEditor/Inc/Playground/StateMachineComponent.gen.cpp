@@ -164,6 +164,10 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FFSMContext>()
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_currentState_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_currentState;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_previousState_MetaData[];
+#endif
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_previousState;
 		static const UECodeGen_Private::FClassPropertyParams NewProp_statesMap_ValueProp;
 		static const UECodeGen_Private::FStrPropertyParams NewProp_statesMap_Key_KeyProp;
 #if WITH_METADATA
@@ -203,6 +207,13 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FFSMContext>()
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_currentState = { "currentState", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UStateMachineComponent, currentState), Z_Construct_UClass_UStateBase_NoRegister, METADATA_PARAMS(Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_currentState_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_currentState_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_previousState_MetaData[] = {
+		{ "Category", "StateMachineComponent" },
+		{ "ModuleRelativePath", "FiniteStateMachine/StateMachineComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_previousState = { "previousState", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UStateMachineComponent, previousState), Z_Construct_UClass_UStateBase_NoRegister, METADATA_PARAMS(Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_previousState_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_previousState_MetaData)) };
 	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_statesMap_ValueProp = { "statesMap", nullptr, (EPropertyFlags)0x0004000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, 1, Z_Construct_UClass_UStateBase_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(nullptr, 0) };
 	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_statesMap_Key_KeyProp = { "statesMap_Key", nullptr, (EPropertyFlags)0x0000000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
@@ -215,6 +226,7 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FFSMContext>()
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UStateMachineComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_context,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_currentState,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_previousState,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_statesMap_ValueProp,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_statesMap_Key_KeyProp,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UStateMachineComponent_Statics::NewProp_statesMap,
@@ -259,9 +271,9 @@ template<> PLAYGROUND_API UScriptStruct* StaticStruct<FFSMContext>()
 		{ FFSMContext::StaticStruct, Z_Construct_UScriptStruct_FFSMContext_Statics::NewStructOps, TEXT("FSMContext"), &Z_Registration_Info_UScriptStruct_FSMContext, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FFSMContext), 3293635755U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UStateMachineComponent, UStateMachineComponent::StaticClass, TEXT("UStateMachineComponent"), &Z_Registration_Info_UClass_UStateMachineComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UStateMachineComponent), 345812956U) },
+		{ Z_Construct_UClass_UStateMachineComponent, UStateMachineComponent::StaticClass, TEXT("UStateMachineComponent"), &Z_Registration_Info_UClass_UStateMachineComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UStateMachineComponent), 843257805U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_135192198(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_1999647241(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_FiniteStateMachine_StateMachineComponent_h_Statics::ScriptStructInfo),
 		nullptr, 0);

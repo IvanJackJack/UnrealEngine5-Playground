@@ -22,8 +22,6 @@ public:
 
 public:
 	bool TransitionToGroundIdle();
-	// bool TransitionToAirMoving();
 	bool TransitionToAirRaising();
 	bool TransitionToAirFalling();
-	bool TransitionToWallrunMoving();
 };

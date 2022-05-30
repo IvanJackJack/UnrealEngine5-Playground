@@ -37,6 +37,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStateBase* currentState;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStateBase* previousState;
+
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSubclassOf<UStateBase>> statesMap;
 

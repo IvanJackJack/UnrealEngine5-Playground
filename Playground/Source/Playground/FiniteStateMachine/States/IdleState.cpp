@@ -9,22 +9,20 @@
 
 void UIdleState::Setup(FString newName, FFSMContext newContext) {
 	Super::Setup(newName, newContext);
-
 	FString stateName;
 
-	stateName=FString("WallrunMovingState");
-	Transitions.Add(stateName, BoolFunctionDelegate() );
-	Transitions[stateName].BindUObject(this, &UIdleState::TransitionToWallrunMoving);
+	stateName=FString("GroundMovingState");
+	Transitions.Add(stateName , BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UIdleState::TransitionToGroundMoving);
 
-	Transitions.Add( "GroundMovingState", BoolFunctionDelegate() );
-	Transitions["GroundMovingState"].BindUObject(this, &UIdleState::TransitionToGroundMoving);
-
-
-	// AddTransition("GroundMovingState", &UIdleState::TransitionToGroundMoving);
+	stateName=FString("AirRaisingState");
+	Transitions.Add(stateName , BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UIdleState::TransitionToAirRaising);
 	
-	Transitions.Add( "AirRaisingState", BoolFunctionDelegate() );
-	Transitions["AirRaisingState"].BindUObject(this, &UIdleState::TransitionToAirRaising);
-	
+	stateName=FString("AirFallingState");
+	Transitions.Add(stateName , BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UIdleState::TransitionToAirFalling);
+
 }
 
 void UIdleState::OnEnter() {
@@ -47,16 +45,11 @@ bool UIdleState::TransitionToGroundMoving() {
 	return false;
 }
 
-// bool UIdleState::TransitionToAirMoving() {
-// 	if(!context->characterController->characterStatus.bIsGrounded) {
-// 		return true;
-// 	}
-// 	return false;
-// }
-
 bool UIdleState::TransitionToAirRaising() {
 	if(context->characterController->inputValues.bJumpInput) {
-		return true;
+		if(context->characterController->ConsumeJump()) {
+			return true;
+		}
 	}
 
 	return false;
@@ -64,15 +57,6 @@ bool UIdleState::TransitionToAirRaising() {
 
 bool UIdleState::TransitionToAirFalling() {
 	if(context->characterController->GetVelocity().Z < 0.f) {
-		return true;
-	}
-
-	return false;
-}
-
-bool UIdleState::TransitionToWallrunMoving() {
-	if(context->characterController->characterStatus.bIsOverlappingPlatform 
-		&& context->characterController->inputValues.bWallrunInput) {
 		return true;
 	}
 

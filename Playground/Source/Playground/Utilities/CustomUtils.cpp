@@ -3,17 +3,21 @@
 
 #include "CustomUtils.h"
 
-//UCustomUtils::UCustomUtils(const FObjectInitializer& ObjectInitializer)
-//	: Super(ObjectInitializer)
-//{
-//	
-//}
-
 void UCustomUtils::Print(const FString& toPrint) {
 	if(GEngine)
 		GEngine->AddOnScreenDebugMessage(
 			-1, 
-			15.0f, 
+			5.0f, 
+			FColor::Yellow, 
+			*toPrint
+		);
+}
+
+void UCustomUtils::Print(const FString& toPrint, float time) {
+	if(GEngine)
+		GEngine->AddOnScreenDebugMessage(
+			-1, 
+			time, 
 			FColor::Yellow, 
 			*toPrint
 		);
