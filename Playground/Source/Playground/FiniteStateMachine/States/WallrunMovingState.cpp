@@ -33,13 +33,12 @@ void UWallrunMovingState::OnTick() {
 	context->characterController->ApplyWallrunMovement();
 
 	context->characterController->UpdateWallrunAndInfoIfRayHit();
-
-	// context->characterController->UpdateWallrunMovement();
-
 }
 
 void UWallrunMovingState::OnExit() {
 	context->characterController->EndWallrun();
+
+	UCustomUtils::Print("Wallrun end cause of: " + UEnum::GetDisplayValueAsText(context->characterController->wallInfo.lastEndReason).ToString());
 }
 
 bool UWallrunMovingState::TransitionToAirFalling() {

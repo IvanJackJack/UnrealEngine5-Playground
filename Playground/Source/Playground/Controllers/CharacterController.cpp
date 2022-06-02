@@ -40,7 +40,7 @@ ACharacterController::ACharacterController() {
 	StateMachine=CreateDefaultSubobject<UStateMachineComponent>("State Machine");
 	
 	characterStatus.bIsGrounded=true;
-	characterStatus.wallrunTimerExpired=true;
+	wallInfo.wallrunTimerExpired=true;
 }
 
 void ACharacterController::BeginPlay()
@@ -58,15 +58,27 @@ void ACharacterController::BeginPlay()
 	Movement->SetPlaneConstraintEnabled(true);
 
 	ResetJumpCount(jumpsMax);
-	checkWallRayLEngth=Capsule->GetScaledCapsuleRadius() * 2.f;
+	checkWallRayLength=Capsule->GetScaledCapsuleRadius() * 2.f;
 }
 
 void ACharacterController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UpdateCharacterAxis();
-	UpdateMoveDirection();
+	if(!characterStatus.bIsWallrunning) {
+		FVector vecToWall;
+		vecToWall=(-wallInfo.wallNormal)*checkWallRayLength;
+		vecToWall = GetActorLocation()+vecToWall;
+		
+		FCollisionQueryParams collisionParams;
+		collisionParams.AddIgnoredActor(this);
+
+		FHitResult Hit;
+		if(!RaycastFromCapsule(Hit, vecToWall)) {
+			ResetHitAndWallInfo();
+		}
+	}
+	
 }
 
 void ACharacterController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -108,36 +120,38 @@ void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* Othe
 
 	characterStatus.lastValidHit = Hit;
 	UpdateWallInfo();
-	// UCustomUtils::Print("Update HIT from OnHit");
 }
 
 void ACharacterController::Landed(const FHitResult& Hit) {
-	// UCustomUtils::Print("Landed unreal event");
+	
 }
 
 #pragma endregion
 
 #pragma region InputHandlingFunctions
 
-void ACharacterController::ResetWallrunTimer() {
-	characterStatus.wallrunTimerExpired=true;
-	characterStatus.wallrunMoveDirection=FVector::ZeroVector;
-}
-
 void ACharacterController::ReadMoveForwardInput(float value) {
 	inputValues.moveInput.X=value;
+
+	UpdateMoveDirection();
 }
 
 void ACharacterController::ReadMoveSidewardInput(float value) {
 	inputValues.moveInput.Y=value;
+
+	UpdateMoveDirection();
 }
 
 void ACharacterController::TurnCamera(float Rate) {
 	AddControllerYawInput(Rate * cameraRotationSpeed * GetWorld()->GetDeltaSeconds());
+
+	UpdateCharacterAxis();
 }
 
 void ACharacterController::LookUpCamera(float Rate) {
 	AddControllerPitchInput(Rate * cameraRotationSpeed * GetWorld()->GetDeltaSeconds());
+
+	UpdateCharacterAxis();
 }
 
 void ACharacterController::ReadJumpInputStart() {
@@ -163,50 +177,38 @@ void ACharacterController::ReadSprintInputEnd() {
 void ACharacterController::ApplyGroundMovement() {
 	if(inputValues.moveInput.Size() != 0.f) {
 		AddMovementInput(characterStatus.moveDirection, inputValues.moveInput.Size());
-		
-	}else {
-		characterStatus.moveDirection=FVector::ZeroVector;
 	}
 }
 
 void ACharacterController::ApplyAirMovement() {
 	if(inputValues.moveInput.Size() != 0.f) {
-		FVector SidewardMovement=(inputValues.moveInput.X) * characterStatus.characterSideward;
-		FVector ForwardMovement=inputValues.moveInput.Y * characterStatus.characterForward;
-		
-		characterStatus.moveDirection=(ForwardMovement + SidewardMovement).GetSafeNormal();
-
 		AddMovementInput(characterStatus.moveDirection, inputValues.moveInput.Size());
-		
-	}else {
-		characterStatus.moveDirection=FVector::ZeroVector;
 	}
-
-
 }
 
 void ACharacterController::ApplyWallrunMovement() {
 	if(inputValues.moveInput.Size() != 0.f) {
+		FVector wallrunVelocity;
 		
-
-		FVector wallrunVelocity=characterStatus.wallrunMoveDirection*Movement->MaxFlySpeed;
-		// SetVelocity(wallrunVelocity);
-		SetHorizontalVelocity(wallrunVelocity);
-
-		// FHitResult Hit;
-		// GetMovementComponent()->SlideAlongSurface(
-		// 	characterStatus.moveDirectionAlongWallAxis*Movement->MaxFlySpeed*100.f, 
-		// 	1.f-characterStatus.lastValidHit.Time, 
-		// 	characterStatus.lastValidHit.ImpactNormal,
-		// 	Hit
-		// 	);
-
-		const FVector SidewardMovementAlongWallAxis=-inputValues.moveInput.Y * characterStatus.wallSideward;
-		const FVector UpwardMovementAlongWallAxis=inputValues.moveInput.X * characterStatus.wallUpward;
-		characterStatus.moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
-	}else {
-		// characterStatus.wallrunMoveDirection=FVector::ZeroVector;
-		characterStatus.moveDirectionAlongWallAxis=FVector::ZeroVector;
+		switch (wallInfo.wallrunMode) {
+			case EWallrunMode::Horizontal:
+				wallrunVelocity=wallInfo.wallrunMoveDirection*Movement->MaxFlySpeed;
+				SetVelocity(wallrunVelocity);
+				break;
+			case EWallrunMode::Vertical:
+				wallrunVelocity=wallInfo.wallUpward*Movement->MaxFlySpeed;
+				SetVelocity(wallrunVelocity);
+				break;
+			case EWallrunMode::Omnidiretional:
+				wallrunVelocity=wallInfo.moveDirectionAlongWallAxis*Movement->MaxFlySpeed;
+				SetVelocity(wallrunVelocity);
+				break;
+			case EWallrunMode::Visual:
+				wallrunVelocity=wallInfo.lookingMoveDirectionAlongWallAxis*Movement->MaxFlySpeed;
+				SetVelocity(wallrunVelocity);
+				break;
+		}
+		
 	}
 }
 
@@ -223,6 +225,8 @@ void ACharacterController::ApplyGroundJump() {
 
 	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
 
+	StartWallrunDelayTimer(wallrunDelay);
+
 	LaunchCharacter(launchVelocity, false, true); 
 }
 
@@ -235,6 +239,8 @@ void ACharacterController::ApplyAirJump() {
 
 	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
 
+	StartWallrunDelayTimer(wallrunDelay);
+
 	LaunchCharacter(launchVelocity, false, true); 
 }
 
@@ -245,7 +251,7 @@ void ACharacterController::ApplyWallrunJump() {
 	inputValues.bJumpInput=false;
 	
 	FVector wallVerticalAxis;
-	switch (characterStatus.wallrunSide) {
+	switch (wallInfo.wallrunSide) {
 		case EWallrunSide::Left:
 			wallVerticalAxis=FVector(0.f, 0.f, 1.f);
 			break;
@@ -254,10 +260,7 @@ void ACharacterController::ApplyWallrunJump() {
 			break;
 	}
 	
-	FVector awayFromWallDirection=FVector::CrossProduct(characterStatus.wallrunMoveDirection, wallVerticalAxis).GetSafeNormal();
-	//
-	// awayFromWallDirection=characterStatus.moveDirection;
-	// awayFromWallDirection.Y *= -1;
+	FVector awayFromWallDirection=FVector::CrossProduct(wallInfo.wallrunMoveDirection, wallVerticalAxis).GetSafeNormal();
 
 	FVector launchDirection=(awayFromWallDirection+FVector::UpVector).GetSafeNormal();
 
@@ -327,18 +330,16 @@ bool ACharacterController::CanSurfaceBeWallran(FVector surfaceNormal) {
 }
 
 bool ACharacterController::CanWallrun() {
-	if(!characterStatus.wallrunTimerExpired) {
+	if(!wallInfo.wallrunTimerExpired) {
 		return false;
 	}
 
 	if(!characterStatus.lastValidHit.bBlockingHit) {
-		// UCustomUtils::Print("Cannot wallrun: no hit", 10);
 		return false;
 	}
 
 	UpdateWallrunSide();
-	if(!MovingTowardsWallForRun()) {
-		// UCustomUtils::Print("Cannot wallrun: keys not valid", 10);
+	if(!MoveDirectionTowardsWall()) {
 		return false;
 	}
 	
@@ -346,180 +347,263 @@ bool ACharacterController::CanWallrun() {
 }
 
 bool ACharacterController::ShouldEndWallrun() {
-	if(!MovingTowardsWallForRun()) {
-		// EndWallrun(EWallrunEndreason::Fall);
-		SetLastEndreason(EWallrunEndreason::WrongDirection);
+	if(!MoveDirectionTowardsWall()) {
+		SetLastEndreason(EWallrunEndreason::WrongKeys);
 		return true;
 	}
-
 
 	if(!characterStatus.lastValidHit.bBlockingHit) {
-		SetLastEndreason(EWallrunEndreason::NoWallhit);
+		SetLastEndreason(EWallrunEndreason::NoHit);
 		return true;
 	}
 
-	if(characterStatus.startingWallrunSide != characterStatus.wallrunSide) {
-		UCustomUtils::Print("Side changed during wallrun");
-		// EndWallrun(EWallrunEndreason::Fall);
+	if(wallInfo.startingWallrunSide != wallInfo.wallrunSide) {
 		SetLastEndreason(EWallrunEndreason::SideChange);
 		return true;
 	}
-	
-	// if(!UpdateWallrunAndInfoIfRayHit()) {
-	// 	return true;
-	// }
 
 	return false;
 }
 
-void ACharacterController::UpdateWallrunAndInfoIfRayHit() {
-
-
-	FVector vecToWall;
-
-	if(characterStatus.wallrunSide==EWallrunSide::Right) {
-		characterStatus.playerToWallDirection=FVector::CrossProduct(characterStatus.wallrunMoveDirection, FVector::UpVector).GetSafeNormal();
-	}else {
-		characterStatus.playerToWallDirection=FVector::CrossProduct(characterStatus.wallrunMoveDirection, FVector::DownVector).GetSafeNormal();
+void ACharacterController::UpdateWallrunModeOnInputKeys() {
+	if(inputValues.moveInput.IsNearlyZero() || inputValues.moveInput.X < -0.1f) {
+		return;
 	}
-	
-	vecToWall=characterStatus.playerToWallDirection*checkWallRayLEngth;
-	
-	FCollisionQueryParams collisionParams;
-	collisionParams.AddIgnoredActor(this);
 
-	FHitResult Hit;
-	if( GetWorld()->LineTraceSingleByChannel(
-		Hit, 
-		GetActorLocation(), 
-		GetActorLocation()+vecToWall,
-		ECC_Visibility,
-		collisionParams,
-		FCollisionResponseParams::DefaultResponseParam ) 
-		) 
-	{
-		characterStatus.lastValidHit=Hit;
-		UpdateWallInfo();
-
-		UpdateWallrunSide();
-		UpdateWallrunDirection();
-		// UCustomUtils::Print("Update HIT from Ray");
+	if(inputValues.moveInput.Y != 0.f) {
+		if(inputValues.moveInput.X != 0) {
+			// premo W + A o D
+			if(wallInfo.bUseVisualWallrun) {
+				wallInfo.wallrunMode=EWallrunMode::Visual;
+			}else {
+				wallInfo.wallrunMode=EWallrunMode::Omnidiretional;
+			}
 			
+		}else{
+			// premo A o D
+			wallInfo.wallrunMode=EWallrunMode::Horizontal;
+		}
+		
+	}else {
+		// premo W
+		wallInfo.wallrunMode=EWallrunMode::Vertical;
 	}
-	else {
-		ResetHitAndWallInfo();
-
-	}
-
 	
 }
-
-void ACharacterController::BeginWallrun() {
-	characterStatus.bIsWallrunning=true;
-
-	UpdateWallrunSide();
-	UpdateWallrunDirection();
-
-	Movement->AirControl=1;
-	Movement->GravityScale=0;
-	Movement->SetPlaneConstraintNormal(FVector::UpVector);
-	
-	inputValues.bJumpInput=false;
-	characterStatus.startingWallrunSide=characterStatus.wallrunSide;
-
-}
-
-void ACharacterController::EndWallrun() {
-	EWallrunEndreason endreason = characterStatus.lastEndReason;
-	UCustomUtils::Print("Wallrun end cause of: " + UEnum::GetDisplayValueAsText(endreason).ToString());
-
-	characterStatus.bWasWallrunning=true;
-	characterStatus.bIsWallrunning=false;
-	Movement->AirControl=initialAirControl;
-	Movement->GravityScale=1;
-	Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
-
-	if(characterStatus.lastValidHit.bBlockingHit) {
-			ResetHitAndWallInfo();
-	}
-
-	characterStatus.wallrunTimerExpired=false;
-	GetWorldTimerManager().SetTimer(wallrunDelayTimer, this, &ACharacterController::ResetWallrunTimer, wallrunDelay);
-	// characterStatus.lastValidHit=FHitResult();
-}
-
-
 
 void ACharacterController::UpdateWallrunSide() {
-	FVector2D wallNormal2D=FVector2D(characterStatus.wallNormal);
-	FVector2D characterAxis2D=FVector2D(characterStatus.characterForward);
+	//2D per il casi di muri inclinati
+	FVector2D wallNormal2D=FVector2D(wallInfo.wallNormal);
+	FVector2D characterAxis2D=FVector2D(characterStatus.characterSideward);
 
 	float dotSide=FVector2D::DotProduct(wallNormal2D, characterAxis2D);
 
-	// UCustomUtils::Print("Wallside dot: " + FString::SanitizeFloat(dotSide));
-
-	if(dotSide>0.f) {
-		characterStatus.wallrunSide=EWallrunSide::Right;
-	}else {
-		characterStatus.wallrunSide=EWallrunSide::Left;
+	float sideChangeTolerance=0.125f;
+	
+	switch (wallInfo.wallrunSide) {
+		case EWallrunSide::Right:
+			if(dotSide < -sideChangeTolerance) {
+				wallInfo.wallrunSide=EWallrunSide::Left;
+			}
+			break;
+		
+		case EWallrunSide::Left:
+			if(dotSide > sideChangeTolerance) {
+				wallInfo.wallrunSide=EWallrunSide::Right;
+			}
+			break;
 	}
+	
 }
 
 void ACharacterController::UpdateWallrunDirection() {
 	FVector sideVerticalDirection;
 
-	if(characterStatus.wallrunSide==EWallrunSide::Right) {
+	if(wallInfo.wallrunSide==EWallrunSide::Right) {
 		sideVerticalDirection=FVector::UpVector;
 	}else {
 		sideVerticalDirection=FVector::DownVector;
 	}
 
 	// characterStatus.moveDirection=FVector::CrossProduct(characterStatus.wallNormal, sideVerticalDirection).GetSafeNormal();
-	characterStatus.wallrunMoveDirection=FVector::CrossProduct(characterStatus.wallNormal, sideVerticalDirection).GetSafeNormal();
+	wallInfo.wallrunMoveDirection=FVector::CrossProduct(wallInfo.wallNormal, sideVerticalDirection).GetSafeNormal();
 
 	
 
 	// Movement->SetPlaneConstraintNormal(characterStatus.wallNormal);
 }
 
-bool ACharacterController::MovingTowardsWallForRun() {
-	if(inputValues.moveInput.X < -0.1f || inputValues.moveInput.IsNearlyZero()) {
-		// UCustomUtils::Print("Keys not valid for wallrun");
+bool ACharacterController::MoveDirectionTowardsWall() {
+	if(inputValues.moveInput.X < -0.1f) {
 		return false;
 	}
-	//
-	// bool forwardPressed=(inputValues.moveInput.X>0.1f); 
-	//
-	// if(!forwardPressed) {
-	// 	return false;
-	// }
-	//
 
-	// float dotValue=FVector::DotProduct(-characterStatus.moveDirection, characterStatus.wallNormal);
-	// UCustomUtils::Print(dotValue);
+	bool correctMoveDirection;
 
-	// if(dotValue<=0.25) {
-	// 	return false;
-	// }
-	//
-	// return true;
-
-	bool correctSidewardKeyPressed;
-	switch (characterStatus.wallrunSide) {
-	case EWallrunSide::Right:
-		correctSidewardKeyPressed=(inputValues.moveInput.Y<-0.1f);
-		break;
-	
-	case EWallrunSide::Left:
-		correctSidewardKeyPressed=(inputValues.moveInput.Y>0.1f);
-		break;
+	if(inputValues.moveInput.IsNearlyZero()) {
+		correctMoveDirection = false;
 	}
+	else {
+
+		float dotVal=FVector::DotProduct(-wallInfo.wallNormal, characterStatus.moveDirection);
 	
-	if(!correctSidewardKeyPressed) {
+		if(dotVal>0) {
+			correctMoveDirection=true;
+		}else {
+			correctMoveDirection=false;
+		}
+	}
+
+	return correctMoveDirection;
+}
+
+bool ACharacterController::MoveKeysTowardsWall() {
+	if(inputValues.moveInput.X < -0.1f) {
 		return false;
 	}
+
+	bool correctMoveKeys = false;
+
+	if(inputValues.moveInput.IsNearlyZero()) {
+		correctMoveKeys = false;
+	}
+	else {
+		bool correctMoveKeyPressed;
+		
+		switch (wallInfo.wallrunSide) {
+			case EWallrunSide::Right:
+				correctMoveKeyPressed=(inputValues.moveInput.Y<-0.1f);
+				break;
+			
+			case EWallrunSide::Left:
+				correctMoveKeyPressed=(inputValues.moveInput.Y>0.1f);
+				break;
+		
+			case EWallrunSide::Front:
+				correctMoveKeyPressed=(inputValues.moveInput.X>0.1f);
+				break;
+		}
+		
+		if(correctMoveKeyPressed) {
+			correctMoveKeys = true;
+		}
+		else {
+			correctMoveKeys=false;
+		}
+		
+	}
+
+	return correctMoveKeys;
+}
+
+void ACharacterController::UpdateWallrunAndInfoIfRayHit() {
+	FVector vecToWall;
+	vecToWall=(-wallInfo.wallNormal)*checkWallRayLength;
+	vecToWall = GetActorLocation()+vecToWall;
+
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
+
+	FHitResult Hit;
+	// if( GetWorld()->LineTraceSingleByChannel(
+	// 	Hit, 
+	// 	GetActorLocation(), 
+	// 	vecToWall,
+	// 	ECC_Visibility,
+	// 	collisionParams,
+	// 	FCollisionResponseParams::DefaultResponseParam ) 
+	// 	)
+	if(RaycastFromCapsule(Hit, vecToWall))
+	{
+		characterStatus.lastValidHit=Hit;
+		UpdateWallInfo();
+
+		UpdateWallrunModeOnInputKeys();
+		UpdateWallrunSide();
+		UpdateWallrunDirection();
+
+	}
+	else {
+		ResetHitAndWallInfo();
+	}
+}
+
+void ACharacterController::BeginWallrun() {
+	characterStatus.bIsWallrunning=true;
+
+	UpdateWallrunModeOnInputKeys();
+	UpdateWallrunSide();
+	UpdateWallrunDirection();
+
+	Movement->AirControl=1;
+	Movement->GravityScale=0;
+
+	//remove vertical velocity component at start
+	SetVelocity(GetHorizontalVelocity());
+
+	// Movement->SetPlaneConstraintNormal(FVector::UpVector);
+	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
 	
-	return true;
+	wallInfo.startingWallrunSide=wallInfo.wallrunSide;
+}
+
+void ACharacterController::EndWallrun() {
+	EWallrunEndreason endreason = wallInfo.lastEndReason;
+	
+	characterStatus.bIsWallrunning=false;
+	Movement->AirControl=initialAirControl;
+	Movement->GravityScale=1;
+
+	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
+
+	if(characterStatus.lastValidHit.bBlockingHit) {
+		ResetHitAndWallInfo();
+	}
+	
+	switch (endreason) {
+		case EWallrunEndreason::Jump:
+			StartWallrunDelayTimer(wallrunDelay);
+			break;
+	
+		case EWallrunEndreason::SideChange:
+			StartWallrunDelayTimer(wallrunDelay * 0.5f);
+			break;
+	
+		case EWallrunEndreason::WrongKeys:
+			StartWallrunDelayTimer(wallrunDelay * 0.5f);
+			break;
+	
+		default:
+			break;
+	}
+}
+
+void ACharacterController::ResetWallrunTimer() {
+	wallInfo.wallrunTimerExpired=true;
+}
+
+void ACharacterController::KeysTimerFinished() {
+	wallInfo.wrongKeysTimeElapsed=true;
+	GetWorldTimerManager().ClearTimer(keysDelayTimer);
+}
+
+void ACharacterController::ActivateWrongKeysTimer() {
+	if(!(GetWorldTimerManager().IsTimerActive(keysDelayTimer))) {
+		wallInfo.wrongKeysTimeElapsed=false;
+		GetWorldTimerManager().SetTimer(keysDelayTimer, this, &ACharacterController::KeysTimerFinished, wrongMoveKeysDelay);
+	}
+}
+
+void ACharacterController::ClearWrongKeysTimer() {
+	if(GetWorldTimerManager().IsTimerActive(keysDelayTimer)) {
+		wallInfo.wrongKeysTimeElapsed=true;
+		GetWorldTimerManager().ClearTimer(keysDelayTimer);
+	}
+}
+
+void ACharacterController::StartWallrunDelayTimer(float time) {
+	wallInfo.wallrunTimerExpired=false;
+	GetWorldTimerManager().SetTimer(wallrunDelayTimer, this, &ACharacterController::ResetWallrunTimer, time);
 }
 
 #pragma endregion
@@ -530,12 +614,10 @@ void ACharacterController::UpdateCharacterAxis() {
 	characterStatus.characterRotation=Controller->GetControlRotation();
 	const FRotator YawRotation(0, characterStatus.characterRotation.Yaw, 0);
 
-	characterStatus.characterSideward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	characterStatus.characterForward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	characterStatus.characterSideward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	characterStatus.characterForward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-	// FVector lookingDir=FVector(Camera->GetComponentRotation().Vector());
-	// characterStatus.lookingDirection = lookingDir.GetSafeNormal();
-
+	characterStatus.lookingDirection = Camera->GetComponentRotation().Vector();
 }
 
 void ACharacterController::ClampVelocity() {
@@ -559,39 +641,67 @@ void ACharacterController::PlatformOverlapLeft() {
 	}
 }
 
+bool ACharacterController::HasValidHit() {
+	return characterStatus.lastValidHit.bBlockingHit;
+}
+
+bool ACharacterController::RaycastFromCapsule(FHitResult& Hit, FVector End) {
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
+
+	return GetWorld()->LineTraceSingleByChannel(
+		Hit, 
+		GetActorLocation(), 
+		End,
+		ECC_Visibility,
+		collisionParams,
+		FCollisionResponseParams::DefaultResponseParam );
+}
+
 void ACharacterController::UpdateWallInfo() {
 	FHitResult Hit=characterStatus.lastValidHit;
 
-	characterStatus.wallNormal=Hit.ImpactNormal;
-	characterStatus.wallSideward=FVector::CrossProduct(characterStatus.wallNormal, FVector::UpVector).GetSafeNormal();
-	characterStatus.wallUpward=FVector::CrossProduct(characterStatus.wallSideward, characterStatus.wallNormal).GetSafeNormal();
+	wallInfo.wallNormal=Hit.ImpactNormal;
+	wallInfo.wallSideward=FVector::CrossProduct(wallInfo.wallNormal, FVector::UpVector).GetSafeNormal();
+	wallInfo.wallUpward=FVector::CrossProduct(wallInfo.wallSideward, wallInfo.wallNormal).GetSafeNormal();
 }
 
 void ACharacterController::ResetHitAndWallInfo() {
-	UCustomUtils::Print("No more hit detedcted, reset Hit");
-
 	characterStatus.lastValidHit = FHitResult();
 
-	characterStatus.wallNormal=FVector::ZeroVector;
-	characterStatus.wallSideward=FVector::ZeroVector;
-	characterStatus.wallUpward=FVector::ZeroVector;
+	wallInfo.wallNormal=FVector::ZeroVector;
+	wallInfo.wallSideward=FVector::ZeroVector;
+	wallInfo.wallUpward=FVector::ZeroVector;
 
-	// characterStatus.wallrunMoveDirection=FVector::ZeroVector;
-	// characterStatus.moveDirectionAlongWallAxis=FVector::ZeroVector;
-	characterStatus.playerToWallDirection=FVector::ZeroVector;
+	wallInfo.wallrunMoveDirection=FVector::ZeroVector;
+	wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
+	wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
 }
 
 void ACharacterController::UpdateMoveDirection() {
 	if(inputValues.moveInput.Size() != 0.f) {
 
-		FVector SidewardMovement=inputValues.moveInput.X * characterStatus.characterSideward;
-		FVector ForwardMovement=inputValues.moveInput.Y * characterStatus.characterForward;
-		
+		FVector SidewardMovement=inputValues.moveInput.Y * characterStatus.characterSideward;
+		FVector ForwardMovement=inputValues.moveInput.X * characterStatus.characterForward;
 		characterStatus.moveDirection=(ForwardMovement + SidewardMovement).GetSafeNormal();
+
+		if(!wallInfo.wallNormal.IsNearlyZero()) {
+			const FVector SidewardMovementAlongWallAxis=-inputValues.moveInput.Y * wallInfo.wallSideward;
+			const FVector UpwardMovementAlongWallAxis=inputValues.moveInput.X * wallInfo.wallUpward;
+			wallInfo.moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
+
+			wallInfo.lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(characterStatus.lookingDirection, wallInfo.wallNormal).GetSafeNormal();
+			// wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(0.f, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
+		}else {
+			wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
+			wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
+		}
 		
 		
 	}else {
 		characterStatus.moveDirection=FVector::ZeroVector;
+		wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
+		wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
 	}
 }
 

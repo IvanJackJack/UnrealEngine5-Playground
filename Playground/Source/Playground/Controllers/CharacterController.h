@@ -9,16 +9,25 @@
 UENUM(BlueprintType)
 enum class EWallrunSide : uint8 {
 	Left UMETA(DisplayName = "Left"),
-	Right UMETA(DisplayName = "Right")
+	Right UMETA(DisplayName = "Right"),
+	Front UMETA(DisplayName = "Front")
 };
 
 UENUM(BlueprintType)
 enum class EWallrunEndreason : uint8 {
 	Fall UMETA(DisplayName = "Fall"),
 	Jump UMETA(DisplayName = "Jump"),
-	WrongDirection UMETA(DisplayName = "WrongDirection"),
+	WrongKeys UMETA(DisplayName = "WrongKeys"),
 	SideChange UMETA(DisplayName = "SideChange"),
-	NoWallhit UMETA(DisplayName = "NoWallhit")
+	NoHit UMETA(DisplayName = "NoHit")
+};
+
+UENUM(BlueprintType)
+enum class EWallrunMode : uint8 {
+	Horizontal UMETA(DisplayName = "Horizontal"),
+	Vertical UMETA(DisplayName = "Vertical"),
+	Omnidiretional UMETA(DisplayName = "Omnidiretional"),
+	Visual UMETA(DisplayName = "Visual")
 };
 
 USTRUCT(BlueprintType)
@@ -43,11 +52,38 @@ struct FStatus {
 	bool bIsGrounded;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsWallrunning;
-	bool bWasWallrunning;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsOverlappingPlatform;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float overlapBodyCount;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FHitResult lastValidHit;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector characterForward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector characterSideward;
+
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector moveDirection;
+
+	FRotator characterRotation;
+
+	float stamina;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	int jumpsLeft;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector lookingDirection;
+	
+};
+
+USTRUCT(BlueprintType)
+struct FWallrun {
+	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector wallNormal;
@@ -55,40 +91,28 @@ struct FStatus {
 	FVector wallUpward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector wallSideward;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FHitResult lastValidHit;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector playerToWallDirection;
+	
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	// FVector playerToWallDirection;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector characterForward;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector characterSideward;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	FVector moveDirectionAlongWallAxis;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector moveDirection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector wallrunMoveDirection;
-
-	FRotator characterRotation;
-
-	float stamina;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector moveDirectionAlongWallAxis;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector lookingMoveDirectionAlongWallAxis;
 
 	bool wallrunTimerExpired;
+	bool wrongKeysTimeElapsed;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	int jumpsLeft;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	EWallrunSide wallrunSide; //da che parte, rispetto al muro, sono
+	EWallrunSide wallrunSide;
 	EWallrunSide startingWallrunSide;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	FVector lookingDirection;
-
 	EWallrunEndreason lastEndReason;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	EWallrunMode wallrunMode;
+
+	bool bUseVisualWallrun;
 };
 
 UCLASS()
@@ -151,6 +175,9 @@ public: //Struct
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Structs)
 	FStatus characterStatus;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Structs)
+	FWallrun wallInfo;
 #pragma endregion
 
 #pragma region Parameters
@@ -162,8 +189,17 @@ public: //Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float wallrunDelay=0.75f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float checkWallRayLEngth;
+	float wrongMoveKeysDelay=0.25f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float checkWallRayLength;
+	
+
+#pragma endregion
+
+#pragma region Timers
+
 	FTimerHandle wallrunDelayTimer;
+	FTimerHandle keysDelayTimer;
 
 #pragma endregion
 
@@ -183,10 +219,8 @@ public: //Getters and Setters
 	void SetVelocity(FVector velocity);
 
 	FORCEINLINE
-	void SetLastEndreason(EWallrunEndreason endReason) { characterStatus.lastEndReason = endReason; }
-
-	void ResetWallrunTimer();
-
+	void SetLastEndreason(EWallrunEndreason endReason) { wallInfo.lastEndReason = endReason; }
+	
 #pragma endregion
 
 #pragma region InputHandlingFunctions
@@ -212,6 +246,8 @@ public: //Input Functions
 #pragma region StatusFunctions
 	void UpdateCharacterAxis();
 
+	void UpdateMoveDirection();
+
 	void ClampVelocity();
 
 	void ClampHorizontalVelocity();
@@ -220,16 +256,17 @@ public: //Input Functions
 
 	void PlatformOverlapLeft();
 
-	void UpdateWallInfo();
+	bool HasValidHit();
 
-	void ResetHitAndWallInfo();
-
-	void UpdateMoveDirection();
-
+	bool RaycastFromCapsule(FHitResult& Hit, FVector End);
 
 #pragma endregion
 
 #pragma region WallrunFunctions
+
+	void ResetHitAndWallInfo();
+
+	void UpdateWallInfo();
 
 	bool CanWallrun();
 
@@ -237,7 +274,11 @@ public: //Input Functions
 
 	bool CanSurfaceBeWallran(FVector surfaceNormal);
 
-	bool MovingTowardsWallForRun();
+	bool MoveDirectionTowardsWall();
+
+	bool MoveKeysTowardsWall();
+
+	void UpdateWallrunModeOnInputKeys();
 
 	void UpdateWallrunAndInfoIfRayHit();
 
@@ -248,6 +289,16 @@ public: //Input Functions
 	void UpdateWallrunSide();
 
 	void UpdateWallrunDirection();
+
+	void ResetWallrunTimer();
+
+	void KeysTimerFinished();
+
+	void ActivateWrongKeysTimer();
+
+	void ClearWrongKeysTimer();
+
+	void StartWallrunDelayTimer(float time);
 	
 #pragma endregion
 
@@ -282,37 +333,3 @@ public: //Movement Functions
 #pragma endregion
 
 };
-
-
-
-
-
-
-
-
-
-
-
-	// void UpdateLastVelocity();
-	//
-	// void GroundCheck();
-	//
-	// void ACharacterController::UpdateLastVelocity() {
-	// 	if (characterStatus.moveVelocity != GetVelocity()) {
-	// 		characterStatus.moveVelocity=GetVelocity();
-	// 		// UCustomUtils::Print(characterStatus.moveVelocity);
-	// 	}
-	// }
-	//
-	// void ACharacterController::GroundCheck() {
-	// 	bool bGrounded=!Movement->IsFalling();
-	// 	if(bGrounded != characterStatus.bIsGrounded) {
-	// 		if(!bGrounded) {
-	// 			GroundLeft();
-	// 		}else {
-	// 			GroundLand();
-	// 		}
-	//
-	// 		characterStatus.bIsGrounded=bGrounded;
-	// 	}
-	// }

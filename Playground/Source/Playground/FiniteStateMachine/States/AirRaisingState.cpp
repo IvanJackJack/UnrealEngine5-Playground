@@ -33,12 +33,21 @@ void UAirRaisingState::OnEnter() {
 		context->characterController->GroundLeft();
 	}
 	else {
-		if(!context->characterController->characterStatus.bWasWallrunning) {
-			context->characterController->ApplyAirJump();
+		if(context->stateMachine->previousState == context->stateMachine->statesMap[FString("WallrunMovingState")].GetDefaultObject()) {
+			if(context->characterController->wallInfo.lastEndReason==EWallrunEndreason::Jump) {
+				context->characterController->ApplyWallrunJump();
+				context->characterController->GroundLeft();
+			}
+			if(context->characterController->wallInfo.lastEndReason==EWallrunEndreason::NoHit 
+				&& context->characterController->inputValues.moveInput == FVector::UpVector) {
+
+				context->characterController->ApplyGroundJump();
+				context->characterController->GroundLeft();
+			}
+			
+			// context->characterController->characterStatus.bWasWallrunning=false;
 		}else {
-			context->characterController->ApplyWallrunJump();
-			context->characterController->GroundLeft();
-			context->characterController->characterStatus.bWasWallrunning=false;
+			context->characterController->ApplyAirJump();
 		}
 	}
 	

@@ -34,9 +34,9 @@ void UAirFallingState::OnEnter() {
 		// context->characterController->ConsumeJump();
 	}
 
-	if(context->characterController->characterStatus.bWasWallrunning) {
-		context->characterController->characterStatus.bWasWallrunning=false;
-	}
+	// if(context->characterController->characterStatus.bWasWallrunning) {
+	// 	context->characterController->characterStatus.bWasWallrunning=false;
+	// }
 }
 
 void UAirFallingState::OnTick() {
