@@ -42,7 +42,7 @@ void UWallrunMovingState::OnExit() {
 }
 
 bool UWallrunMovingState::TransitionToAirFalling() {
-	if(context->characterController->ShouldEndWallrun()) {
+	if(context->characterController->ShouldEndWallrun() && context->characterController->GetVelocity().Z <= 0.f) {
 		return true;
 	}
 
@@ -52,6 +52,10 @@ bool UWallrunMovingState::TransitionToAirFalling() {
 bool UWallrunMovingState::TransitionToAirRaising() {
 	if(context->characterController->inputValues.bJumpInput) {
 		context->characterController->SetLastEndreason(EWallrunEndreason::Jump);
+		return true;
+	}
+
+	if(context->characterController->ShouldEndWallrun() && context->characterController->GetVelocity().Z > 0.f) {
 		return true;
 	}
 
