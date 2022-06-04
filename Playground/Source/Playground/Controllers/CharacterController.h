@@ -19,15 +19,18 @@ enum class EWallrunEndreason : uint8 {
 	Jump UMETA(DisplayName = "Jump"),
 	WrongKeys UMETA(DisplayName = "WrongKeys"),
 	SideChange UMETA(DisplayName = "SideChange"),
-	NoHit UMETA(DisplayName = "NoHit")
+	NoHit UMETA(DisplayName = "NoHit"),
+	WrongDirection UMETA(DisplayName = "WrongDirection")
 };
 
 UENUM(BlueprintType)
 enum class EWallrunMode : uint8 {
 	Horizontal UMETA(DisplayName = "Horizontal"),
 	Vertical UMETA(DisplayName = "Vertical"),
-	Omnidiretional UMETA(DisplayName = "Omnidiretional"),
-	Visual UMETA(DisplayName = "Visual")
+	Diagonal UMETA(DisplayName = "Diagonal"),
+	Visual UMETA(DisplayName = "Visual"),
+
+	None UMETA(DisplayName = "None")
 };
 
 USTRUCT(BlueprintType)
@@ -59,7 +62,8 @@ struct FStatus {
 	float overlapBodyCount;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FHitResult lastValidHit;
+	FHitResult currentValidHit;
+	FVector lastValidNormal;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector characterForward;
@@ -73,10 +77,10 @@ struct FStatus {
 	FRotator characterRotation;
 
 	float stamina;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int jumpsLeft;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector lookingDirection;
 	
 };
@@ -91,28 +95,23 @@ struct FWallrun {
 	FVector wallUpward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector wallSideward;
-	
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	// FVector playerToWallDirection;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector wallrunMoveDirection;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector moveDirectionAlongWallAxis;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector lookingMoveDirectionAlongWallAxis;
 
 	bool wallrunTimerExpired;
 	bool wrongKeysTimeElapsed;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EWallrunSide wallrunSide;
 	EWallrunSide startingWallrunSide;
 	EWallrunEndreason lastEndReason;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EWallrunMode wallrunMode;
-
-	bool bUseVisualWallrun;
 };
 
 UCLASS()
@@ -182,17 +181,35 @@ public: //Struct
 
 #pragma region Parameters
 public: //Variables
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float cameraRotationSpeed = 50.f;
-	float maxStamina;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float maxStamina=100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	int jumpsMax = 2;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float initialAirControl=0.25f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float wallrunDelay=0.75f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float wrongMoveKeysDelay=0.25f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float checkWallRayLength;
-	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float checkWallRayLength=75.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float minimalVisualVerticalValue=0.25f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float vectorMoveTowardsRatio=100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float movementAcceleration=100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float movementDeceleration=100.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	EWallrunMode desiredHorizontalMode = EWallrunMode::Horizontal;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	EWallrunMode desiredVerticalMode = EWallrunMode::Vertical;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	EWallrunMode desiredDiagonalMode = EWallrunMode::None;
 
 #pragma endregion
 
@@ -259,6 +276,8 @@ public: //Input Functions
 	bool HasValidHit();
 
 	bool RaycastFromCapsule(FHitResult& Hit, FVector End);
+
+	FVector MoveTowardsVector(FVector vector, FVector target, float accel);
 
 #pragma endregion
 
@@ -333,3 +352,4 @@ public: //Movement Functions
 #pragma endregion
 
 };
+

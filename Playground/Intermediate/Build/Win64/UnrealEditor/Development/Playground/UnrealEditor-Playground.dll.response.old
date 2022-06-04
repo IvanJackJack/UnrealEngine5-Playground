@@ -35,7 +35,6 @@
 /FUNCTIONPADMIN
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\PlaygroundEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CharacterAnimInstance.cpp.obj"
-"C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CharacterController.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CharacterPlayerController.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CustomCharacterMovementComponent.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CustomMovementComponent.cpp.obj"
@@ -58,6 +57,7 @@
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\Playground.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\PlaygroundCharacter.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\PlaygroundGameMode.cpp.obj"
+"C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CharacterController.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\AirFallingState.gen.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\AirRaisingState.gen.cpp.obj"
 "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\CharacterAnimInstance.gen.cpp.obj"

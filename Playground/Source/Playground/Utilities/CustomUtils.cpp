@@ -34,3 +34,16 @@ void UCustomUtils::Print(const FVector vector) {
 
 	Print(toPrint);
 }
+
+bool UCustomUtils::Raycast(FHitResult& Hit, FVector Start, FVector End, const AActor* Ignored) {
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(Ignored);
+
+	return GetWorld()->LineTraceSingleByChannel(
+		Hit, 
+		Start, 
+		End,
+		ECC_Visibility,
+		collisionParams,
+		FCollisionResponseParams::DefaultResponseParam );
+}

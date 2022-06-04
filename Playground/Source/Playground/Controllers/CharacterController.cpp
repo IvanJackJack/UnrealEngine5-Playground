@@ -65,6 +65,10 @@ void ACharacterController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// UCustomUtils::Print("velocity");
+	// UCustomUtils::Print(GetVelocity());
+	// UCustomUtils::Print("---");
+
 	if(!characterStatus.bIsWallrunning) {
 		FVector vecToWall;
 		vecToWall=(-wallInfo.wallNormal)*checkWallRayLength;
@@ -110,7 +114,7 @@ void ACharacterController::OnEndOverlap(UPrimitiveComponent* OverlappedComponent
 }
 
 void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
-	if(characterStatus.bIsWallrunning && characterStatus.lastValidHit.bBlockingHit) {
+	if(characterStatus.bIsWallrunning && characterStatus.currentValidHit.bBlockingHit) {
 		return;
 	}
 
@@ -118,7 +122,7 @@ void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* Othe
 		return;
 	}
 
-	characterStatus.lastValidHit = Hit;
+	characterStatus.currentValidHit = Hit;
 	UpdateWallInfo();
 }
 
@@ -134,12 +138,14 @@ void ACharacterController::ReadMoveForwardInput(float value) {
 	inputValues.moveInput.X=value;
 
 	UpdateMoveDirection();
+	UpdateWallrunModeOnInputKeys();
 }
 
 void ACharacterController::ReadMoveSidewardInput(float value) {
 	inputValues.moveInput.Y=value;
 
 	UpdateMoveDirection();
+	UpdateWallrunModeOnInputKeys();
 }
 
 void ACharacterController::TurnCamera(float Rate) {
@@ -189,26 +195,16 @@ void ACharacterController::ApplyAirMovement() {
 void ACharacterController::ApplyWallrunMovement() {
 	if(inputValues.moveInput.Size() != 0.f) {
 		FVector wallrunVelocity;
+		wallrunVelocity=wallInfo.wallrunMoveDirection*Movement->MaxFlySpeed;
 		
-		switch (wallInfo.wallrunMode) {
-			case EWallrunMode::Horizontal:
-				wallrunVelocity=wallInfo.wallrunMoveDirection*Movement->MaxFlySpeed;
-				SetVelocity(wallrunVelocity);
-				break;
-			case EWallrunMode::Vertical:
-				wallrunVelocity=wallInfo.wallUpward*Movement->MaxFlySpeed;
-				SetVelocity(wallrunVelocity);
-				break;
-			case EWallrunMode::Omnidiretional:
-				wallrunVelocity=wallInfo.moveDirectionAlongWallAxis*Movement->MaxFlySpeed;
-				SetVelocity(wallrunVelocity);
-				break;
-			case EWallrunMode::Visual:
-				wallrunVelocity=wallInfo.lookingMoveDirectionAlongWallAxis*Movement->MaxFlySpeed;
-				SetVelocity(wallrunVelocity);
-				break;
-		}
-		
+		FVector newVelocity=MoveTowardsVector(
+			GetVelocity(),
+			wallrunVelocity, 
+			movementAcceleration
+		);
+
+		SetVelocity(newVelocity);
+		// SetVelocity(wallrunVelocity);
 	}
 }
 
@@ -246,23 +242,15 @@ void ACharacterController::ApplyAirJump() {
 
 void ACharacterController::ApplyWallrunJump() {
 	UCustomUtils::Print("Wallrun Jump");
-
-	// ResetHitAndWallInfo();
-	inputValues.bJumpInput=false;
 	
-	FVector wallVerticalAxis;
-	switch (wallInfo.wallrunSide) {
-		case EWallrunSide::Left:
-			wallVerticalAxis=FVector(0.f, 0.f, 1.f);
-			break;
-		case EWallrunSide::Right:
-			wallVerticalAxis=FVector(0.f, 0.f, -1.f);
-			break;
+	inputValues.bJumpInput=false;
+
+	FVector wallNormal=wallInfo.wallNormal;
+	if(wallNormal.IsNearlyZero()) {
+		wallNormal=characterStatus.lastValidNormal;
 	}
 	
-	FVector awayFromWallDirection=FVector::CrossProduct(wallInfo.wallrunMoveDirection, wallVerticalAxis).GetSafeNormal();
-
-	FVector launchDirection=(awayFromWallDirection+FVector::UpVector).GetSafeNormal();
+	FVector launchDirection=(wallNormal+FVector::UpVector).GetSafeNormal();
 
 	FVector launchVelocity=launchDirection * Movement->MaxFlySpeed * 2.f;
 
@@ -280,7 +268,7 @@ void ACharacterController::GroundLand() {
 
 void ACharacterController::WallrunLand() {
 	characterStatus.bIsGrounded=true;
-	ResetJumpCount(jumpsMax-1);
+	ResetJumpCount(FMath::Max(1,jumpsMax-1));
 }
 
 bool ACharacterController::ConsumeJump() {
@@ -334,7 +322,7 @@ bool ACharacterController::CanWallrun() {
 		return false;
 	}
 
-	if(!characterStatus.lastValidHit.bBlockingHit) {
+	if(!characterStatus.currentValidHit.bBlockingHit) {
 		return false;
 	}
 
@@ -348,11 +336,11 @@ bool ACharacterController::CanWallrun() {
 
 bool ACharacterController::ShouldEndWallrun() {
 	if(!MoveDirectionTowardsWall()) {
-		SetLastEndreason(EWallrunEndreason::WrongKeys);
+		SetLastEndreason(EWallrunEndreason::WrongDirection);
 		return true;
 	}
 
-	if(!characterStatus.lastValidHit.bBlockingHit) {
+	if(!characterStatus.currentValidHit.bBlockingHit) {
 		SetLastEndreason(EWallrunEndreason::NoHit);
 		return true;
 	}
@@ -373,20 +361,17 @@ void ACharacterController::UpdateWallrunModeOnInputKeys() {
 	if(inputValues.moveInput.Y != 0.f) {
 		if(inputValues.moveInput.X != 0) {
 			// premo W + A o D
-			if(wallInfo.bUseVisualWallrun) {
-				wallInfo.wallrunMode=EWallrunMode::Visual;
-			}else {
-				wallInfo.wallrunMode=EWallrunMode::Omnidiretional;
+			if(desiredDiagonalMode!=EWallrunMode::None) {
+				wallInfo.wallrunMode=desiredDiagonalMode;
 			}
-			
 		}else{
 			// premo A o D
-			wallInfo.wallrunMode=EWallrunMode::Horizontal;
+			wallInfo.wallrunMode=desiredHorizontalMode;
 		}
 		
 	}else {
 		// premo W
-		wallInfo.wallrunMode=EWallrunMode::Vertical;
+		wallInfo.wallrunMode=desiredVerticalMode;
 	}
 	
 }
@@ -418,19 +403,45 @@ void ACharacterController::UpdateWallrunSide() {
 
 void ACharacterController::UpdateWallrunDirection() {
 	FVector sideVerticalDirection;
+	FVector SidewardMovementAlongWallAxis;
+	FVector UpwardMovementAlongWallAxis;
 
-	if(wallInfo.wallrunSide==EWallrunSide::Right) {
-		sideVerticalDirection=FVector::UpVector;
-	}else {
-		sideVerticalDirection=FVector::DownVector;
+	switch (wallInfo.wallrunMode) {
+		case EWallrunMode::Horizontal:
+			if(wallInfo.wallrunSide==EWallrunSide::Right) {
+				sideVerticalDirection=FVector::UpVector;
+			}else {
+				sideVerticalDirection=FVector::DownVector;
+			}
+
+			wallInfo.wallrunMoveDirection=FVector::CrossProduct(wallInfo.wallNormal, sideVerticalDirection).GetSafeNormal();
+			break;
+
+		case EWallrunMode::Vertical:
+			wallInfo.wallrunMoveDirection=wallInfo.wallUpward;
+			break;
+
+		case EWallrunMode::Diagonal:
+			SidewardMovementAlongWallAxis=-inputValues.moveInput.Y * wallInfo.wallSideward;
+			UpwardMovementAlongWallAxis=inputValues.moveInput.X * wallInfo.wallUpward;
+			wallInfo.moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
+
+			// FVector::MirrorByPlane()
+			
+
+			wallInfo.wallrunMoveDirection=wallInfo.moveDirectionAlongWallAxis;
+			break;
+
+		case EWallrunMode::Visual:
+			wallInfo.lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(characterStatus.lookingDirection, wallInfo.wallNormal).GetSafeNormal();
+			wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(minimalVisualVerticalValue, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
+
+			wallInfo.wallrunMoveDirection=wallInfo.lookingMoveDirectionAlongWallAxis;
+			break;
+
+		default:
+			break;
 	}
-
-	// characterStatus.moveDirection=FVector::CrossProduct(characterStatus.wallNormal, sideVerticalDirection).GetSafeNormal();
-	wallInfo.wallrunMoveDirection=FVector::CrossProduct(wallInfo.wallNormal, sideVerticalDirection).GetSafeNormal();
-
-	
-
-	// Movement->SetPlaneConstraintNormal(characterStatus.wallNormal);
 }
 
 bool ACharacterController::MoveDirectionTowardsWall() {
@@ -505,20 +516,12 @@ void ACharacterController::UpdateWallrunAndInfoIfRayHit() {
 	collisionParams.AddIgnoredActor(this);
 
 	FHitResult Hit;
-	// if( GetWorld()->LineTraceSingleByChannel(
-	// 	Hit, 
-	// 	GetActorLocation(), 
-	// 	vecToWall,
-	// 	ECC_Visibility,
-	// 	collisionParams,
-	// 	FCollisionResponseParams::DefaultResponseParam ) 
-	// 	)
 	if(RaycastFromCapsule(Hit, vecToWall))
 	{
-		characterStatus.lastValidHit=Hit;
+		characterStatus.currentValidHit=Hit;
 		UpdateWallInfo();
 
-		UpdateWallrunModeOnInputKeys();
+		// UpdateWallrunModeOnInputKeys();
 		UpdateWallrunSide();
 		UpdateWallrunDirection();
 
@@ -531,7 +534,7 @@ void ACharacterController::UpdateWallrunAndInfoIfRayHit() {
 void ACharacterController::BeginWallrun() {
 	characterStatus.bIsWallrunning=true;
 
-	UpdateWallrunModeOnInputKeys();
+	// UpdateWallrunModeOnInputKeys();
 	UpdateWallrunSide();
 	UpdateWallrunDirection();
 
@@ -556,7 +559,7 @@ void ACharacterController::EndWallrun() {
 
 	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
 
-	if(characterStatus.lastValidHit.bBlockingHit) {
+	if(characterStatus.currentValidHit.bBlockingHit) {
 		ResetHitAndWallInfo();
 	}
 	
@@ -620,8 +623,53 @@ void ACharacterController::UpdateCharacterAxis() {
 	characterStatus.lookingDirection = Camera->GetComponentRotation().Vector();
 }
 
-void ACharacterController::ClampVelocity() {
+void ACharacterController::UpdateMoveDirection() {
+	if(inputValues.moveInput.Size() != 0.f) {
 
+		FVector SidewardMovement=inputValues.moveInput.Y * characterStatus.characterSideward;
+		FVector ForwardMovement=inputValues.moveInput.X * characterStatus.characterForward;
+		characterStatus.moveDirection=(ForwardMovement + SidewardMovement).GetSafeNormal();
+
+		// if(HasValidHit()) {
+		// 	const FVector SidewardMovementAlongWallAxis=-inputValues.moveInput.Y * wallInfo.wallSideward;
+		// 	const FVector UpwardMovementAlongWallAxis=inputValues.moveInput.X * wallInfo.wallUpward;
+		// 	wallInfo.moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
+		//
+		// 	wallInfo.lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(characterStatus.lookingDirection, wallInfo.wallNormal).GetSafeNormal();
+		// 	wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(minimalVisualVerticalValue, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
+		// }else {
+		// 	wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
+		// 	wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
+		// }
+		
+		
+	}else {
+		characterStatus.moveDirection=FVector::ZeroVector;
+		// wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
+		// wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
+
+		
+	}
+}
+
+void ACharacterController::ClampVelocity() {
+	if(Movement->IsFalling()) {
+		float currentToMaxRatio=GetVelocity().Size() / Movement->MaxFlySpeed;
+		if(currentToMaxRatio>1) {
+			FVector velocity=GetVelocity()/currentToMaxRatio;
+			SetVelocity(velocity);
+		}
+	}
+}
+
+void ACharacterController::ClampHorizontalVelocity() {
+	if(Movement->IsFalling()) {
+		float currentToMaxRatio=GetHorizontalVelocity().Size() / Movement->MaxFlySpeed;
+		if(currentToMaxRatio>1) {
+			FVector velocity=GetHorizontalVelocity()/currentToMaxRatio;
+			SetHorizontalVelocity(velocity);
+		}
+	}
 }
 
 void ACharacterController::PlatformOverlap() {
@@ -635,14 +683,14 @@ void ACharacterController::PlatformOverlapLeft() {
 
 		characterStatus.bIsOverlappingPlatform=false;
 
-		if(characterStatus.lastValidHit.bBlockingHit) {
+		if(characterStatus.currentValidHit.bBlockingHit) {
 			ResetHitAndWallInfo();
 		}
 	}
 }
 
 bool ACharacterController::HasValidHit() {
-	return characterStatus.lastValidHit.bBlockingHit;
+	return characterStatus.currentValidHit.bBlockingHit;
 }
 
 bool ACharacterController::RaycastFromCapsule(FHitResult& Hit, FVector End) {
@@ -659,7 +707,7 @@ bool ACharacterController::RaycastFromCapsule(FHitResult& Hit, FVector End) {
 }
 
 void ACharacterController::UpdateWallInfo() {
-	FHitResult Hit=characterStatus.lastValidHit;
+	FHitResult Hit=characterStatus.currentValidHit;
 
 	wallInfo.wallNormal=Hit.ImpactNormal;
 	wallInfo.wallSideward=FVector::CrossProduct(wallInfo.wallNormal, FVector::UpVector).GetSafeNormal();
@@ -667,7 +715,9 @@ void ACharacterController::UpdateWallInfo() {
 }
 
 void ACharacterController::ResetHitAndWallInfo() {
-	characterStatus.lastValidHit = FHitResult();
+	characterStatus.lastValidNormal=wallInfo.wallNormal;
+
+	characterStatus.currentValidHit = FHitResult();
 
 	wallInfo.wallNormal=FVector::ZeroVector;
 	wallInfo.wallSideward=FVector::ZeroVector;
@@ -678,33 +728,6 @@ void ACharacterController::ResetHitAndWallInfo() {
 	wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
 }
 
-void ACharacterController::UpdateMoveDirection() {
-	if(inputValues.moveInput.Size() != 0.f) {
-
-		FVector SidewardMovement=inputValues.moveInput.Y * characterStatus.characterSideward;
-		FVector ForwardMovement=inputValues.moveInput.X * characterStatus.characterForward;
-		characterStatus.moveDirection=(ForwardMovement + SidewardMovement).GetSafeNormal();
-
-		if(!wallInfo.wallNormal.IsNearlyZero()) {
-			const FVector SidewardMovementAlongWallAxis=-inputValues.moveInput.Y * wallInfo.wallSideward;
-			const FVector UpwardMovementAlongWallAxis=inputValues.moveInput.X * wallInfo.wallUpward;
-			wallInfo.moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
-
-			wallInfo.lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(characterStatus.lookingDirection, wallInfo.wallNormal).GetSafeNormal();
-			// wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(0.f, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
-		}else {
-			wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
-			wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
-		}
-		
-		
-	}else {
-		characterStatus.moveDirection=FVector::ZeroVector;
-		wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
-		wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
-	}
-}
-
 void ACharacterController::SetHorizontalVelocity(FVector velocity) {
 	Movement->Velocity=FVector(velocity.X, velocity.Y, GetVelocity().Z);
 }
@@ -713,15 +736,25 @@ void ACharacterController::SetVelocity(FVector velocity) {
 	Movement->Velocity=velocity;
 }
 
-void ACharacterController::ClampHorizontalVelocity() {
-	if(Movement->IsFalling()) {
-		float currentToMaxRatio=GetHorizontalVelocity().Size() / Movement->MaxFlySpeed;
-		if(currentToMaxRatio>1) {
-			FVector velocity=GetHorizontalVelocity()/currentToMaxRatio;
-			SetHorizontalVelocity(velocity);
-		}
-	}
+FVector ACharacterController::MoveTowardsVector(FVector vector, FVector target, float accel) {
+	float bonusMult=1000.f;
+	FVector temp;
+
+	temp=FVector(
+		(target.X > vector.X) ? 
+			FMath::Min(target.X, vector.X + accel * bonusMult) : 
+			FMath::Max(target.X, vector.X - accel * bonusMult),
+		(target.Y > vector.Y) ? 
+			FMath::Min(target.Y, vector.Y + accel * bonusMult) : 
+			FMath::Max(target.Y, vector.Y - accel * bonusMult),
+		(target.Z > vector.Z) ? 
+			FMath::Min(target.Z, vector.Z + accel * bonusMult) : 
+			FMath::Max(target.Z, vector.Z - accel * bonusMult)
+	);
+	
+	return temp;
 }
+
 
 #pragma endregion
 
