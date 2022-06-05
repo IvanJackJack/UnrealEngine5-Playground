@@ -16,45 +16,49 @@ class AActor;
 #endif
 #define PLAYGROUND_CharacterController_generated_h
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_38_GENERATED_BODY \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_41_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInput_Statics; \
 	PLAYGROUND_API static class UScriptStruct* StaticStruct();
 
 
 template<> PLAYGROUND_API UScriptStruct* StaticStruct<struct FInput>();
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_52_GENERATED_BODY \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_55_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FStatus_Statics; \
 	PLAYGROUND_API static class UScriptStruct* StaticStruct();
 
 
 template<> PLAYGROUND_API UScriptStruct* StaticStruct<struct FStatus>();
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_90_GENERATED_BODY \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_93_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FWallrun_Statics; \
 	PLAYGROUND_API static class UScriptStruct* StaticStruct();
 
 
 template<> PLAYGROUND_API UScriptStruct* StaticStruct<struct FWallrun>();
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_SPARSE_DATA
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_RPC_WRAPPERS \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_SPARSE_DATA
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execGetWallSide); \
+	DECLARE_FUNCTION(execGetStaminaRatio); \
 	DECLARE_FUNCTION(execLanded); \
 	DECLARE_FUNCTION(execOnHit); \
 	DECLARE_FUNCTION(execOnEndOverlap); \
 	DECLARE_FUNCTION(execOnBeginOverlap);
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execGetWallSide); \
+	DECLARE_FUNCTION(execGetStaminaRatio); \
 	DECLARE_FUNCTION(execLanded); \
 	DECLARE_FUNCTION(execOnHit); \
 	DECLARE_FUNCTION(execOnEndOverlap); \
 	DECLARE_FUNCTION(execOnBeginOverlap);
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_INCLASS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesACharacterController(); \
 	friend struct Z_Construct_UClass_ACharacterController_Statics; \
@@ -63,7 +67,7 @@ public: \
 	DECLARE_SERIALIZER(ACharacterController)
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_INCLASS \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_INCLASS \
 private: \
 	static void StaticRegisterNativesACharacterController(); \
 	friend struct Z_Construct_UClass_ACharacterController_Statics; \
@@ -72,7 +76,7 @@ public: \
 	DECLARE_SERIALIZER(ACharacterController)
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_STANDARD_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ACharacterController(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ACharacterController) \
@@ -85,7 +89,7 @@ private: \
 public:
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_ENHANCED_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ACharacterController(ACharacterController&&); \
@@ -96,25 +100,25 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ACharacterController)
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_117_PROLOG
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_GENERATED_BODY_LEGACY \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_122_PROLOG
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_SPARSE_DATA \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_RPC_WRAPPERS \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_INCLASS \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_STANDARD_CONSTRUCTORS \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_SPARSE_DATA \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_RPC_WRAPPERS \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_INCLASS \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Playground_Source_Playground_Controllers_CharacterController_h_120_GENERATED_BODY \
+#define FID_Playground_Source_Playground_Controllers_CharacterController_h_125_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_SPARSE_DATA \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_INCLASS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_Controllers_CharacterController_h_120_ENHANCED_CONSTRUCTORS \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_SPARSE_DATA \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_INCLASS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_Controllers_CharacterController_h_125_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -128,7 +132,8 @@ template<> PLAYGROUND_API UClass* StaticClass<class ACharacterController>();
 #define FOREACH_ENUM_EWALLRUNSIDE(op) \
 	op(EWallrunSide::Left) \
 	op(EWallrunSide::Right) \
-	op(EWallrunSide::Front) 
+	op(EWallrunSide::Front) \
+	op(EWallrunSide::None) 
 
 enum class EWallrunSide : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunSide>();
@@ -139,7 +144,8 @@ template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunSide>();
 	op(EWallrunEndreason::WrongKeys) \
 	op(EWallrunEndreason::SideChange) \
 	op(EWallrunEndreason::NoHit) \
-	op(EWallrunEndreason::WrongDirection) 
+	op(EWallrunEndreason::WrongDirection) \
+	op(EWallrunEndreason::WrongMode) 
 
 enum class EWallrunEndreason : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunEndreason>();

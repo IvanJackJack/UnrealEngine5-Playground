@@ -15,10 +15,10 @@ class PLAYGROUND_API UCustomHUD : public UUserWidget
 	GENERATED_BODY()
 public:
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ACharacterController* CharacterController;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UStateMachineComponent* StateMachine;
 
 	virtual void NativePreConstruct() override;

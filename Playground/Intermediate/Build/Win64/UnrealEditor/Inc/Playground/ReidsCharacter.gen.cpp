@@ -384,7 +384,7 @@ void EmptyLinkFunctionForGeneratedCodeReidsCharacter() {}
 		{ "ModuleRelativePath", "Reids/Wallrun/ReidsCharacter.h" },
 	};
 #endif
-	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_AReidsCharacter_Statics::NewProp_wallrunSide = { "wallrunSide", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AReidsCharacter, wallrunSide), Z_Construct_UEnum_Playground_EWallrunSide, METADATA_PARAMS(Z_Construct_UClass_AReidsCharacter_Statics::NewProp_wallrunSide_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AReidsCharacter_Statics::NewProp_wallrunSide_MetaData)) }; // 2692715493
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_AReidsCharacter_Statics::NewProp_wallrunSide = { "wallrunSide", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AReidsCharacter, wallrunSide), Z_Construct_UEnum_Playground_EWallrunSide, METADATA_PARAMS(Z_Construct_UClass_AReidsCharacter_Statics::NewProp_wallrunSide_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AReidsCharacter_Statics::NewProp_wallrunSide_MetaData)) }; // 3052503450
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AReidsCharacter_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AReidsCharacter_Statics::NewProp_CameraBoom,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AReidsCharacter_Statics::NewProp_Camera,
@@ -438,9 +438,9 @@ void EmptyLinkFunctionForGeneratedCodeReidsCharacter() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_AReidsCharacter, AReidsCharacter::StaticClass, TEXT("AReidsCharacter"), &Z_Registration_Info_UClass_AReidsCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AReidsCharacter), 1684254032U) },
+		{ Z_Construct_UClass_AReidsCharacter, AReidsCharacter::StaticClass, TEXT("AReidsCharacter"), &Z_Registration_Info_UClass_AReidsCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AReidsCharacter), 1205476976U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_3141751430(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_1790731401(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

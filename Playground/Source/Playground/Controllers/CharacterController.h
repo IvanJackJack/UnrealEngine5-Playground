@@ -10,7 +10,9 @@ UENUM(BlueprintType)
 enum class EWallrunSide : uint8 {
 	Left UMETA(DisplayName = "Left"),
 	Right UMETA(DisplayName = "Right"),
-	Front UMETA(DisplayName = "Front")
+	Front UMETA(DisplayName = "Front"),
+
+	None UMETA(DisplayName = "None")
 };
 
 UENUM(BlueprintType)
@@ -20,7 +22,8 @@ enum class EWallrunEndreason : uint8 {
 	WrongKeys UMETA(DisplayName = "WrongKeys"),
 	SideChange UMETA(DisplayName = "SideChange"),
 	NoHit UMETA(DisplayName = "NoHit"),
-	WrongDirection UMETA(DisplayName = "WrongDirection")
+	WrongDirection UMETA(DisplayName = "WrongDirection"),
+	WrongMode UMETA(DisplayName = "WrongMode")
 };
 
 UENUM(BlueprintType)
@@ -75,7 +78,7 @@ struct FStatus {
 	FVector moveDirection;
 
 	FRotator characterRotation;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float stamina;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int jumpsLeft;
@@ -108,7 +111,9 @@ struct FWallrun {
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EWallrunSide wallrunSide;
-	EWallrunSide startingWallrunSide;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	EWallrunSide startingLateralWallSide;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EWallrunEndreason lastEndReason;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EWallrunMode wallrunMode;
@@ -277,7 +282,13 @@ public: //Input Functions
 
 	bool RaycastFromCapsule(FHitResult& Hit, FVector End);
 
-	FVector MoveTowardsVector(FVector vector, FVector target, float accel);
+	FVector MoveTowardsVector(FVector current, FVector target, float accel);
+
+	UFUNCTION(BlueprintCallable)
+	float GetStaminaRatio();
+
+	UFUNCTION(BlueprintCallable)
+	FString GetWallSide();
 
 #pragma endregion
 
