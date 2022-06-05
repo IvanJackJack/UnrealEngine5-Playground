@@ -22,4 +22,7 @@ public:
 	class UStateMachineComponent* StateMachine;
 
 	virtual void NativePreConstruct() override;
+
+	UFUNCTION(BlueprintCallable)
+	float GetStaminaRatio();
 };

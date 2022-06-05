@@ -39,10 +39,12 @@ void UAirRaisingState::OnEnter() {
 				context->characterController->GroundLeft();
 			}
 			if(context->characterController->wallInfo.lastEndReason==EWallrunEndreason::NoHit 
-				&& context->characterController->inputValues.moveInput == FVector::UpVector) {
-
-				context->characterController->ApplyGroundJump();
+				&& context->characterController->inputValues.moveInput.X > 0.9f) {
+				// UCustomUtils::Print("Salto dopo wallrun per no hit");
+				// context->characterController->ApplyGroundJump();
+				context->characterController->ApplyWallrunEndingJump();
 				context->characterController->GroundLeft();
+
 			}
 			
 			// context->characterController->characterStatus.bWasWallrunning=false;

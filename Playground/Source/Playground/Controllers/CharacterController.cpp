@@ -35,8 +35,6 @@ ACharacterController::ACharacterController() {
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	cameraRotationSpeed=100.f;
-
 	StateMachine=CreateDefaultSubobject<UStateMachineComponent>("State Machine");
 	
 	characterStatus.bIsGrounded=true;
@@ -70,21 +68,12 @@ void ACharacterController::BeginPlay()
 void ACharacterController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	if(!characterStatus.bIsWallrunning && HasValidHit()) {
-		FVector vecToWall;
-		vecToWall=(-wallInfo.wallNormal)*checkWallRayLength;
-		vecToWall = GetActorLocation()+vecToWall;
-		
-		FCollisionQueryParams collisionParams;
-		collisionParams.AddIgnoredActor(this);
 
-		FHitResult Hit;
-		if(!RaycastFromCapsule(Hit, vecToWall)) {
-			ResetHitAndWallInfo();
-		}
+	if(!characterStatus.bIsWallrunning) {
+		RecoverStamina();
+	}else {
+		ConsumeStamina();
 	}
-	
 }
 
 void ACharacterController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -116,7 +105,7 @@ void ACharacterController::OnEndOverlap(UPrimitiveComponent* OverlappedComponent
 }
 
 void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
-	if(characterStatus.bIsWallrunning && characterStatus.currentValidHit.bBlockingHit) {
+	if(characterStatus.bIsWallrunning || !wallInfo.wallrunTimerExpired) {
 		return;
 	}
 
@@ -124,8 +113,11 @@ void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* Othe
 		return;
 	}
 
+	// UCustomUtils::Print("Object OnHit: " + Hit.GetActor()->GetActorNameOrLabel());
 	characterStatus.currentValidHit = Hit;
 	UpdateWallInfo();
+	// wallInfo.wallNormal=Hit.ImpactNormal;
+	// UpdateWallrunAndInfoIfRayHit();
 }
 
 void ACharacterController::Landed(const FHitResult& Hit) {
@@ -201,17 +193,22 @@ void ACharacterController::ApplyWallrunMovement() {
 		FVector wallrunVelocity;
 		wallrunVelocity=wallInfo.wallrunMoveDirection*Movement->MaxCustomMovementSpeed;
 		
-		// FVector newVelocity=MoveTowardsVector(
-		// 	GetVelocity(),
-		// 	wallrunVelocity, 
-		// 	movementAcceleration
-		// );
-		//
-		// SetVelocity(newVelocity);
 
-		// UCustomUtils::Print(GetVelocity().Size());
+		if(characterStatus.currentValidHit.Distance > Capsule->GetScaledCapsuleRadius()*1.05f) {
+			if(characterStatus.bShouldSnapToWall) {
+				StickToWall();
+			}
 
-		SetVelocity(wallrunVelocity);
+			SetVelocity(wallrunVelocity);
+		}else {
+			SetVelocity(MoveTowardsVector(
+			GetVelocity(),
+			wallrunVelocity, 
+				movementAcceleration)
+			);
+		}
+
+		
 	}
 }
 
@@ -261,6 +258,22 @@ void ACharacterController::ApplyWallrunJump() {
 
 	FVector launchVelocity=launchDirection * Movement->MaxFlySpeed * 2.f;
 
+	LaunchCharacter(launchVelocity, false, true);
+
+	ConsumeStamina(false);
+}
+
+void ACharacterController::ApplyWallrunEndingJump() {
+	UCustomUtils::Print("WallrunENDING Jump");
+
+	inputValues.bJumpInput=false;
+
+	FVector launchDirection=FVector::UpVector;
+
+	FVector launchVelocity=launchDirection * Movement->JumpZVelocity * 0.75f;
+
+	StartWallrunDelayTimer(wallrunDelay);
+
 	LaunchCharacter(launchVelocity, false, true); 
 }
 
@@ -300,16 +313,17 @@ void ACharacterController::ResetJumpCount(int jumps) {
 #pragma region WallrunFunctions
 
 bool ACharacterController::CanSurfaceBeWallran(FVector surfaceNormal) {
-	FVector upDir=FVector::UpVector;
-	float dotThreshold=0.80f;
-	float dotNormalUp=FVector::DotProduct(surfaceNormal, upDir);
-	//check similarity between impact normal and up direction
-	if(dotNormalUp > dotThreshold || dotNormalUp < -dotThreshold) {
-		// UCustomUtils::Print("Impact normal NOT valid: " + FString::SanitizeFloat(dotNormalUp));
-		return false;
-	}
+	// FVector upDir=FVector::UpVector;
+	// float dotThreshold=0.80f;
+	// float dotNormalUp=FVector::DotProduct(surfaceNormal, upDir);
+	//
+	// //check similarity between impact normal and up direction
+	// if(dotNormalUp > dotThreshold || dotNormalUp < -dotThreshold) {
+	// 	return false;
+	// }
 
 	//da togliere, ridondante
+
 	float thresholdZ = -0.05;
 	if(surfaceNormal.Z < thresholdZ) {
 		return false; //non wallrunnare su superfici rivolte verso il basso
@@ -329,11 +343,18 @@ bool ACharacterController::CanWallrun() {
 		return false;
 	}
 
-	if(!characterStatus.currentValidHit.bBlockingHit) {
+	if(!HasValidHit()) {
 		return false;
 	}
 
-	UpdateWallrunSide();
+	// UCustomUtils::Print("raycheck in can wallrun");
+
+	if(!RaycastInMoveDirection()) {
+		ResetHitAndWallInfo();
+		return false;
+	}
+	
+	// UpdateWallrunSide();
 	if(!MoveDirectionTowardsWall()) {
 		return false;
 	}
@@ -350,16 +371,31 @@ bool ACharacterController::CanWallrun() {
 }
 
 bool ACharacterController::ShouldEndWallrun() {
+	if(!HasValidHit()) {
+		// UCustomUtils::Print("should end wallrun: no hit");
+		SetLastEndreason(EWallrunEndreason::NoHit);
+		return true;
+	}
+	//
+	// if(wallInfo.wallNormal.IsNearlyZero()) {
+	// 	UCustomUtils::Print("should end wallrun: normale nulla");
+	// 	SetLastEndreason(EWallrunEndreason::NoHit);
+	// 	return true;
+	// }
+
+	if(characterStatus.lookingDirection.Z < -0.55f && wallInfo.wallrunMode!=desiredHorizontalMode) {
+		// UCustomUtils::Print("should end wallrun: no hit");
+		SetLastEndreason(EWallrunEndreason::Fall);
+		return true;
+	}
+
 	if(!MoveDirectionTowardsWall()) {
+		// UCustomUtils::Print("should end wallrun: not moving towards wall");
 		SetLastEndreason(EWallrunEndreason::WrongDirection);
 		return true;
 	}
 
-	if(!characterStatus.currentValidHit.bBlockingHit) {
-		SetLastEndreason(EWallrunEndreason::NoHit);
-		return true;
-	}
-
+	
 	if(wallInfo.startingLateralWallSide != wallInfo.wallrunSide && wallInfo.wallrunSide!=EWallrunSide::Front) {
 		SetLastEndreason(EWallrunEndreason::SideChange);
 		return true;
@@ -413,47 +449,38 @@ void ACharacterController::UpdateWallrunSide() {
 	// float dotForward=FVector2D::DotProduct(-wallNormal2D, characterForward2D);
 	float absDotSideward=FMath::Abs(dotSideward);
 	// float sideChangeTolerance=0.05f;
-	float sideChangeThreshold=0.25f;
-	
+	// float sideChangeThreshold=0.75f;
 	
 	
 	switch (wallInfo.wallrunSide) {
 		case EWallrunSide::Right:
-			if(absDotSideward < sideChangeThreshold) {
-				wallInfo.wallrunSide=EWallrunSide::Front;
+			if(dotSideward < 0) {
+				wallInfo.wallrunSide=EWallrunSide::Left;
 			}
 
 			break;
 		
 		case EWallrunSide::Left:
-			if(absDotSideward < sideChangeThreshold) {
-				wallInfo.wallrunSide=EWallrunSide::Front;
+			if(dotSideward > 0) {
+				wallInfo.wallrunSide=EWallrunSide::Right;
 			}
 
 			break;
 
 		case EWallrunSide::Front:
-			if(dotSideward < -sideChangeThreshold) {
+			if(dotSideward < -frontSideThreshold) {
 				wallInfo.wallrunSide=EWallrunSide::Left;
-
-				if(wallInfo.startingLateralWallSide==EWallrunSide::None) {
-					wallInfo.startingLateralWallSide=EWallrunSide::Left;
-				}
 			}
-			else if(dotSideward > sideChangeThreshold) {
+			else if(dotSideward > frontSideThreshold) {
 				wallInfo.wallrunSide=EWallrunSide::Right;
-
-				if(wallInfo.startingLateralWallSide==EWallrunSide::None) {
-					wallInfo.startingLateralWallSide=EWallrunSide::Right;
-				}
 			}
 
 			break;
 
 		default:
-			if(absDotSideward < sideChangeThreshold) {
+			if(absDotSideward < frontSideThreshold) {
 				wallInfo.wallrunSide=EWallrunSide::Front;
-				wallInfo.startingLateralWallSide=EWallrunSide::None;
+				wallInfo.startingLateralWallSide=EWallrunSide::Front;
 			}
 			else if(dotSideward < 0) {
 				wallInfo.wallrunSide=EWallrunSide::Left;
@@ -466,6 +493,57 @@ void ACharacterController::UpdateWallrunSide() {
 
 			break;
 	}
+
+	// float sideChangeThreshold=0.25f;
+	// switch (wallInfo.wallrunSide) {
+	// 	case EWallrunSide::Right:
+	// 		if(absDotSideward < sideChangeThreshold) {
+	// 			wallInfo.wallrunSide=EWallrunSide::Front;
+	// 		}
+	//
+	// 		break;
+	// 	
+	// 	case EWallrunSide::Left:
+	// 		if(absDotSideward < sideChangeThreshold) {
+	// 			wallInfo.wallrunSide=EWallrunSide::Front;
+	// 		}
+	//
+	// 		break;
+	//
+	// 	case EWallrunSide::Front:
+	// 		if(dotSideward < -sideChangeThreshold) {
+	// 			wallInfo.wallrunSide=EWallrunSide::Left;
+	//
+	// 			if(wallInfo.startingLateralWallSide==EWallrunSide::None) {
+	// 				wallInfo.startingLateralWallSide=EWallrunSide::Left;
+	// 			}
+	// 		}
+	// 		else if(dotSideward > sideChangeThreshold) {
+	// 			wallInfo.wallrunSide=EWallrunSide::Right;
+	//
+	// 			if(wallInfo.startingLateralWallSide==EWallrunSide::None) {
+	// 				wallInfo.startingLateralWallSide=EWallrunSide::Right;
+	// 			}
+	// 		}
+	//
+	// 		break;
+	//
+	// 	default:
+	// 		if(absDotSideward < sideChangeThreshold) {
+	// 			wallInfo.wallrunSide=EWallrunSide::Front;
+	// 			wallInfo.startingLateralWallSide=EWallrunSide::None;
+	// 		}
+	// 		else if(dotSideward < 0) {
+	// 			wallInfo.wallrunSide=EWallrunSide::Left;
+	// 			wallInfo.startingLateralWallSide=EWallrunSide::Left;
+	// 		}
+	// 		else {
+	// 			wallInfo.wallrunSide=EWallrunSide::Right;
+	// 			wallInfo.startingLateralWallSide=EWallrunSide::Right;
+	// 		}
+	//
+	// 		break;
+	// }
 	
 }
 
@@ -502,7 +580,9 @@ void ACharacterController::UpdateWallrunDirection() {
 
 		case EWallrunMode::Visual:
 			wallInfo.lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(characterStatus.lookingDirection, wallInfo.wallNormal).GetSafeNormal();
-			wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(minimalVisualVerticalValue, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
+
+			wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(minimumVisualWallrunDirectionVerticalValue, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
+			// wallInfo.lookingMoveDirectionAlongWallAxis.X=FMath::Clamp(wallInfo.lookingMoveDirectionAlongWallAxis.X, -0.5f, 0.5f);
 
 			wallInfo.wallrunMoveDirection=wallInfo.lookingMoveDirectionAlongWallAxis;
 			break;
@@ -524,8 +604,8 @@ bool ACharacterController::MoveDirectionTowardsWall() {
 	}
 	else {
 		float dotVal=FVector::DotProduct(-wallInfo.wallNormal, characterStatus.moveDirection);
-		
-		if(dotVal>0) {
+
+		if(dotVal>0.15f) {
 			correctMoveDirection=true;
 		}else {
 			correctMoveDirection=false;
@@ -587,10 +667,11 @@ void ACharacterController::UpdateWallrunAndInfoIfRayHit() {
 	FHitResult Hit;
 	if(RaycastFromCapsule(Hit, vecToWall))
 	{
+
+		// UCustomUtils::Print("Update HIT from RayHit");
 		characterStatus.currentValidHit=Hit;
 		UpdateWallInfo();
-
-		// UpdateWallrunModeOnInputKeys();
+		
 		UpdateWallrunSide();
 		UpdateWallrunDirection();
 
@@ -630,9 +711,7 @@ void ACharacterController::EndWallrun() {
 	wallInfo.startingLateralWallSide=EWallrunSide::None;
 	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
 
-	if(characterStatus.currentValidHit.bBlockingHit) {
-		ResetHitAndWallInfo();
-	}
+	ResetHitAndWallInfo();
 	
 	switch (endreason) {
 		case EWallrunEndreason::Jump:
@@ -652,6 +731,7 @@ void ACharacterController::EndWallrun() {
 			break;
 	
 		default:
+			StartWallrunDelayTimer(wallrunDelay);
 			break;
 	}
 }
@@ -684,6 +764,16 @@ void ACharacterController::StartWallrunDelayTimer(float time) {
 	GetWorldTimerManager().SetTimer(wallrunDelayTimer, this, &ACharacterController::ResetWallrunTimer, time);
 }
 
+void ACharacterController::StickToWall() {
+	// UCustomUtils::Print("Stick to wall activated");
+
+	float distance=characterStatus.currentValidHit.Distance - Capsule->GetScaledCapsuleRadius();
+	FVector snap=-wallInfo.wallNormal * distance * 0.95f;
+	FVector adjustedPosition=GetActorLocation()+snap;
+
+	SetActorLocation(adjustedPosition, false);
+}
+
 #pragma endregion
 
 #pragma region StatusFunctions
@@ -711,7 +801,7 @@ void ACharacterController::UpdateMoveDirection() {
 		// 	wallInfo.moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
 		//
 		// 	wallInfo.lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(characterStatus.lookingDirection, wallInfo.wallNormal).GetSafeNormal();
-		// 	wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(minimalVisualVerticalValue, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
+		// 	wallInfo.lookingMoveDirectionAlongWallAxis.Z = FMath::Max(minimumVisualWallrunDirectionVerticalValue, wallInfo.lookingMoveDirectionAlongWallAxis.Z);
 		// }else {
 		// 	wallInfo.moveDirectionAlongWallAxis=FVector::ZeroVector;
 		// 	wallInfo.lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
@@ -758,14 +848,13 @@ void ACharacterController::PlatformOverlapLeft() {
 
 		characterStatus.bIsOverlappingPlatform=false;
 
-		if(characterStatus.currentValidHit.bBlockingHit) {
-			ResetHitAndWallInfo();
-		}
+		ResetHitAndWallInfo();
+		
 	}
 }
 
 bool ACharacterController::HasValidHit() {
-	return characterStatus.currentValidHit.bBlockingHit;
+	return (characterStatus.currentValidHit.bBlockingHit); // && (!wallInfo.wallNormal.IsNearlyZero());
 }
 
 bool ACharacterController::RaycastFromCapsule(FHitResult& Hit, FVector End) {
@@ -782,14 +871,20 @@ bool ACharacterController::RaycastFromCapsule(FHitResult& Hit, FVector End) {
 }
 
 void ACharacterController::UpdateWallInfo() {
-	FHitResult Hit=characterStatus.currentValidHit;
+	// UCustomUtils::Print("UPDATE WALL INFO");
+	characterStatus.lastValidNormal=wallInfo.wallNormal;
 
-	wallInfo.wallNormal=Hit.ImpactNormal;
+	wallInfo.wallNormal=characterStatus.currentValidHit.ImpactNormal;
 	wallInfo.wallSideward=FVector::CrossProduct(wallInfo.wallNormal, FVector::UpVector).GetSafeNormal();
 	wallInfo.wallUpward=FVector::CrossProduct(wallInfo.wallSideward, wallInfo.wallNormal).GetSafeNormal();
 }
 
 void ACharacterController::ResetHitAndWallInfo() {
+	// UCustomUtils::Print("RESET WALL INFO");
+	if(!HasValidHit()) {
+		return;
+	}
+	
 	characterStatus.lastValidNormal=wallInfo.wallNormal;
 
 	characterStatus.currentValidHit = FHitResult();
@@ -823,6 +918,38 @@ float ACharacterController::GetStaminaRatio() {
 
 FString ACharacterController::GetWallSide() {
 	return FString(UEnum::GetDisplayValueAsText(wallInfo.wallrunSide).ToString());
+}
+
+bool ACharacterController::RaycastInMoveDirection() {
+	FVector vecToWall;
+	vecToWall=(characterStatus.moveDirection)*checkWallRayLength;
+	vecToWall = GetActorLocation()+vecToWall;
+	
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
+
+	FHitResult Hit;
+	return RaycastFromCapsule(Hit, vecToWall);
+}
+
+void ACharacterController::ConsumeStamina(bool useDeltaTime) {
+	float staminaChangeAmount=staminaLoseAmount;
+	if(useDeltaTime) {
+		staminaChangeAmount *= GetWorld()->DeltaTimeSeconds;
+
+		if(wallInfo.wallrunMoveDirection.Z > 0.5f) {
+			staminaChangeAmount*=2.f;
+		}
+	}
+
+	
+	characterStatus.stamina = FMath::Max(characterStatus.stamina-staminaChangeAmount , 0.f);
+}
+
+void ACharacterController::RecoverStamina() {
+	float staminaChangeAmount=GetWorld()->DeltaTimeSeconds*staminaRecoverAmount;
+	
+	characterStatus.stamina=FMath::Min(characterStatus.stamina+staminaChangeAmount , maxStamina);
 }
 
 #pragma endregion

@@ -15,3 +15,11 @@ void UCustomHUD::NativePreConstruct() {
 			UCustomUtils::Print("Custom HUD Character State Machine reference ready");
 	}
 }
+
+float UCustomHUD::GetStaminaRatio() {
+	if(CharacterController) {
+		return CharacterController->GetStaminaRatio();
+	}
+
+	return 0.0f;
+}

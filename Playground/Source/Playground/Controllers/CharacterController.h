@@ -55,7 +55,7 @@ struct FStatus {
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsGrounded;
+	bool bIsGrounded = true;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsWallrunning;
 
@@ -63,6 +63,9 @@ struct FStatus {
 	bool bIsOverlappingPlatform;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float overlapBodyCount;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bShouldSnapToWall=true;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FHitResult currentValidHit;
@@ -85,6 +88,8 @@ struct FStatus {
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector lookingDirection;
+
+
 	
 };
 
@@ -106,7 +111,7 @@ struct FWallrun {
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector lookingMoveDirectionAlongWallAxis;
 
-	bool wallrunTimerExpired;
+	bool wallrunTimerExpired = true;
 	bool wrongKeysTimeElapsed;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -187,7 +192,7 @@ public: //Struct
 #pragma region Parameters
 public: //Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float cameraRotationSpeed = 50.f;
+	float cameraRotationSpeed = 100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float maxStamina=100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
@@ -201,13 +206,19 @@ public: //Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float checkWallRayLength=75.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float minimalVisualVerticalValue=0.25f;
+	float minimumVisualWallrunDirectionVerticalValue=0.175f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float vectorMoveTowardsRatio=100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float movementAcceleration=100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float movementDeceleration=100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float frontSideThreshold=0.175f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float staminaLoseAmount=25.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float staminaRecoverAmount=10.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EWallrunMode desiredHorizontalMode = EWallrunMode::Horizontal;
@@ -290,6 +301,12 @@ public: //Input Functions
 	UFUNCTION(BlueprintCallable)
 	FString GetWallSide();
 
+	bool RaycastInMoveDirection();
+
+	void ConsumeStamina(bool useDeltaTime=true);
+
+	void RecoverStamina();
+
 #pragma endregion
 
 #pragma region WallrunFunctions
@@ -329,6 +346,8 @@ public: //Input Functions
 	void ClearWrongKeysTimer();
 
 	void StartWallrunDelayTimer(float time);
+
+	void StickToWall();
 	
 #pragma endregion
 
@@ -349,6 +368,8 @@ public: //Movement Functions
 	void ApplyAirJump();
 
 	void ApplyWallrunJump();
+
+	void ApplyWallrunEndingJump();
 
 	bool ConsumeJump();
 

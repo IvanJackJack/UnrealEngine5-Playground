@@ -33,6 +33,8 @@ void UWallrunMovingState::OnTick() {
 	context->characterController->ApplyWallrunMovement();
 
 	context->characterController->UpdateWallrunAndInfoIfRayHit();
+
+	// context->characterController->ConsumeStamina();
 }
 
 void UWallrunMovingState::OnExit() {

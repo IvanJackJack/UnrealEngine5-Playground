@@ -58,10 +58,12 @@ bool UAirFallingState::TransitionToGroundLanded() {
 }
 
 bool UAirFallingState::TransitionToWallrunMoving() {
-	if(context->characterController->CanWallrun()) {
-		return true;
+	if(context->characterController->HasValidHit()) {
+		if(context->characterController->CanWallrun()) {
+			return true;
+		}
 	}
-
+	
 	return false;
 }
 
