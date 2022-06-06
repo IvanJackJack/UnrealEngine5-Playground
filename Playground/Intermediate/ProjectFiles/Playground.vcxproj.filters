@@ -53,12 +53,6 @@
     <ClInclude Include="..\..\Source\Playground\PlaygroundCharacter.h">
       <Filter>Source\Playground</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\PlaygroundGameMode.cpp">
-      <Filter>Source\Playground</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\PlaygroundGameMode.h">
-      <Filter>Source\Playground</Filter>
-    </ClInclude>
     <Filter Include="Source\Playground\AnimInstances">
       <UniqueIdentifier>{AC6A6E5E-DA88-339E-8208-08218E408DFA}</UniqueIdentifier>
     </Filter>
