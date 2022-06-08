@@ -89,6 +89,15 @@
     <ClInclude Include="..\..\Source\Playground\Controllers\CustomMovementComponent.h">
       <Filter>Source\Playground\Controllers</Filter>
     </ClInclude>
+    <Filter Include="Source\Playground\CustomComponents">
+      <UniqueIdentifier>{08191962-3FAA-361F-B210-580EEEF1E027}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\CustomComponents\WallrunComponent.cpp">
+      <Filter>Source\Playground\CustomComponents</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Playground\CustomComponents\WallrunComponent.h">
+      <Filter>Source\Playground\CustomComponents</Filter>
+    </ClInclude>
     <Filter Include="Source\Playground\FiniteStateMachine">
       <UniqueIdentifier>{DD189DE1-DDF7-3184-9A5C-E7C922153522}</UniqueIdentifier>
     </Filter>

@@ -30,9 +30,11 @@ void UWallrunMovingState::OnEnter() {
 }
 
 void UWallrunMovingState::OnTick() {
+	context->characterController->UpdateWallrunAndInfoIfRayHit();
+
 	context->characterController->ApplyWallrunMovement();
 
-	context->characterController->UpdateWallrunAndInfoIfRayHit();
+	
 
 	// context->characterController->ConsumeStamina();
 }
@@ -52,7 +54,7 @@ bool UWallrunMovingState::TransitionToAirFalling() {
 }
 
 bool UWallrunMovingState::TransitionToAirRaising() {
-	if(context->characterController->inputValues.bJumpInput) {
+	if(context->characterController->characterStatus.bJumpRequested) {
 		context->characterController->SetLastEndreason(EWallrunEndreason::Jump);
 		return true;
 	}

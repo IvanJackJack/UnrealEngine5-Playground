@@ -60,6 +60,9 @@ struct FStatus {
 	bool bIsWallrunning;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bJumpRequested;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsOverlappingPlatform;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float overlapBodyCount;
@@ -113,6 +116,9 @@ struct FWallrun {
 
 	bool wallrunTimerExpired = true;
 	bool wrongKeysTimeElapsed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float wallAngle;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EWallrunSide wallrunSide;
@@ -214,11 +220,15 @@ public: //Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float movementDeceleration=100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float frontSideThreshold=0.175f;
+	float frontSideThreshold=0.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float lateralSideChangeThreshold=0.1f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float staminaLoseAmount=25.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float staminaRecoverAmount=10.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float velocityWallrunThreshold=100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EWallrunMode desiredHorizontalMode = EWallrunMode::Horizontal;
@@ -348,6 +358,8 @@ public: //Input Functions
 	void StartWallrunDelayTimer(float time);
 
 	void StickToWall();
+
+	bool WrongModeToSide();
 	
 #pragma endregion
 

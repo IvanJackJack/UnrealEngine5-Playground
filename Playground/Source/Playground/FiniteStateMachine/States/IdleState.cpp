@@ -46,7 +46,7 @@ bool UIdleState::TransitionToGroundMoving() {
 }
 
 bool UIdleState::TransitionToAirRaising() {
-	if(context->characterController->inputValues.bJumpInput) {
+	if(context->characterController->characterStatus.bJumpRequested) {
 		if(context->characterController->ConsumeJump()) {
 			return true;
 		}

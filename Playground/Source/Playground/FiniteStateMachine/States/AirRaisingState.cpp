@@ -56,7 +56,7 @@ void UAirRaisingState::OnEnter() {
 }
 
 void UAirRaisingState::OnTick() {
-	if(context->characterController->inputValues.bJumpInput) {
+	if(context->characterController->characterStatus.bJumpRequested) {
 		if(context->characterController->ConsumeJump()) {
 			context->characterController->ApplyAirJump();
 		}
