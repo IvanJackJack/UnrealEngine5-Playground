@@ -47,3 +47,8 @@ bool UCustomUtils::Raycast(FHitResult& Hit, FVector Start, FVector End, const AA
 		collisionParams,
 		FCollisionResponseParams::DefaultResponseParam );
 }
+
+FVector UCustomUtils::MoveTowardsVector(FVector current, FVector target, float accel) {
+	float deltaTime=GetWorld()->DeltaTimeSeconds;
+	return FMath::VInterpTo(current, target, deltaTime, accel);
+}

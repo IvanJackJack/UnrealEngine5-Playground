@@ -18,4 +18,5 @@ public:
 	static void Print(const float value);
 	static void Print(const FVector vector);
 	bool Raycast(FHitResult& Hit, FVector Start, FVector End, const AActor* Ignored);
+	FVector MoveTowardsVector(FVector current, FVector target, float accel);
 };

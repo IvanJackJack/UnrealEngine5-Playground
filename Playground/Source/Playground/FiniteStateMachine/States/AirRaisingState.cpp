@@ -7,6 +7,7 @@
 #include "Playground/Controllers/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
+#include "Playground/CustomComponents/WallrunComponent.h"
 
 void UAirRaisingState::Setup(FString newName, FFSMContext newContext) {
 	Super::Setup(newName, newContext);
@@ -34,11 +35,11 @@ void UAirRaisingState::OnEnter() {
 	}
 	else {
 		if(context->stateMachine->previousState == context->stateMachine->statesMap[FString("WallrunMovingState")].GetDefaultObject()) {
-			if(context->characterController->wallInfo.lastEndReason==EWallrunEndreason::Jump) {
+			if(context->characterController->WallrunComponent->lastEndReason==EWallrunEndreason::Jump) {
 				context->characterController->ApplyWallrunJump();
 				context->characterController->GroundLeft();
 			}
-			if(context->characterController->wallInfo.lastEndReason==EWallrunEndreason::NoHit 
+			if(context->characterController->WallrunComponent->lastEndReason==EWallrunEndreason::NoHit 
 				&& context->characterController->inputValues.moveInput.X > 0.9f) {
 				// UCustomUtils::Print("Salto dopo wallrun per no hit");
 				// context->characterController->ApplyGroundJump();
@@ -56,7 +57,7 @@ void UAirRaisingState::OnEnter() {
 }
 
 void UAirRaisingState::OnTick() {
-	if(context->characterController->characterStatus.bJumpRequested) {
+	if(context->characterController->bJumpRequested) {
 		if(context->characterController->ConsumeJump()) {
 			context->characterController->ApplyAirJump();
 		}
@@ -88,7 +89,7 @@ bool UAirRaisingState::TransitionToGroundLanded() {
 }
 
 bool UAirRaisingState::TransitionToWallrunMoving() {
-	if(context->characterController->CanWallrun()) {
+	if(context->characterController->WallrunComponent->CanWallrun()) {
 		return true;
 	}
 

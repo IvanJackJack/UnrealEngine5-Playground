@@ -6,35 +6,9 @@
 #include "GameFramework/Character.h"
 #include "CharacterController.generated.h"
 
-UENUM(BlueprintType)
-enum class EWallrunSide : uint8 {
-	Left UMETA(DisplayName = "Left"),
-	Right UMETA(DisplayName = "Right"),
-	Front UMETA(DisplayName = "Front"),
-
-	None UMETA(DisplayName = "None")
-};
-
-UENUM(BlueprintType)
-enum class EWallrunEndreason : uint8 {
-	Fall UMETA(DisplayName = "Fall"),
-	Jump UMETA(DisplayName = "Jump"),
-	WrongKeys UMETA(DisplayName = "WrongKeys"),
-	SideChange UMETA(DisplayName = "SideChange"),
-	NoHit UMETA(DisplayName = "NoHit"),
-	WrongDirection UMETA(DisplayName = "WrongDirection"),
-	WrongMode UMETA(DisplayName = "WrongMode")
-};
-
-UENUM(BlueprintType)
-enum class EWallrunMode : uint8 {
-	Horizontal UMETA(DisplayName = "Horizontal"),
-	Vertical UMETA(DisplayName = "Vertical"),
-	Diagonal UMETA(DisplayName = "Diagonal"),
-	Visual UMETA(DisplayName = "Visual"),
-
-	None UMETA(DisplayName = "None")
-};
+enum class EWallrunMode : uint8;
+enum class EWallrunEndreason : uint8;
+enum class EWallrunSide : uint8;
 
 USTRUCT(BlueprintType)
 struct FInput {
@@ -47,87 +21,7 @@ struct FInput {
 	bool bJumpInput;
 
 	UPROPERTY(VisibleAnywhere)
-	bool bWallrunInput;
-};
-
-USTRUCT(BlueprintType)
-struct FStatus {
-	GENERATED_BODY()
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsGrounded = true;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsWallrunning;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bJumpRequested;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsOverlappingPlatform;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float overlapBodyCount;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bShouldSnapToWall=true;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FHitResult currentValidHit;
-	FVector lastValidNormal;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector characterForward;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector characterSideward;
-
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector moveDirection;
-
-	FRotator characterRotation;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float stamina;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int jumpsLeft;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector lookingDirection;
-
-
-	
-};
-
-USTRUCT(BlueprintType)
-struct FWallrun {
-	GENERATED_BODY()
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector wallNormal;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector wallUpward;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector wallSideward;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector wallrunMoveDirection;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector moveDirectionAlongWallAxis;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector lookingMoveDirectionAlongWallAxis;
-
-	bool wallrunTimerExpired = true;
-	bool wrongKeysTimeElapsed;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float wallAngle;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	EWallrunSide wallrunSide;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	EWallrunSide startingLateralWallSide;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	EWallrunEndreason lastEndReason;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	EWallrunMode wallrunMode;
+	bool bSprintInput;
 };
 
 UCLASS()
@@ -180,79 +74,73 @@ public: //Components
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Component)
 	class ACharacterPlayerController* CharacterPlayerController;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Component)
+	class UWallrunComponent* WallrunComponent;
 	
 #pragma endregion
 
-#pragma region Structs
-public: //Struct
+#pragma region Status
+public: 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Structs)
 	FInput inputValues;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Structs)
-	FStatus characterStatus;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bIsGrounded = true;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bIsWallrunning;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Structs)
-	FWallrun wallInfo;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bJumpRequested;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	int jumpsLeft;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bIsOverlappingPlatform;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	float overlapBodyCount;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector characterForward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector characterSideward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector moveDirection;
+	FRotator characterRotation;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector lookingDirection;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	float stamina;
+
 #pragma endregion
 
 #pragma region Parameters
-public: //Variables
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float cameraRotationSpeed = 100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float maxStamina=100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	int jumpsMax = 2;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float initialAirControl=0.25f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallrunDelay=0.75f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wrongMoveKeysDelay=0.25f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float checkWallRayLength=75.f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float minimumVisualWallrunDirectionVerticalValue=0.175f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float vectorMoveTowardsRatio=100.f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float movementAcceleration=100.f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float movementDeceleration=100.f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float frontSideThreshold=0.f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float lateralSideChangeThreshold=0.1f;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float staminaLoseAmount=25.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float staminaRecoverAmount=10.f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float velocityWallrunThreshold=100.f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EWallrunMode desiredHorizontalMode = EWallrunMode::Horizontal;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EWallrunMode desiredVerticalMode = EWallrunMode::Vertical;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EWallrunMode desiredDiagonalMode = EWallrunMode::None;
 
 #pragma endregion
-
-#pragma region Timers
-
-	FTimerHandle wallrunDelayTimer;
-	FTimerHandle keysDelayTimer;
-
-#pragma endregion
-
+	
 #pragma region GettersSetters
-public: //Getters and Setters
+public: 
 	FORCEINLINE
 	class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	FORCEINLINE
 	class UCameraComponent* GetCamera() const { return Camera; }
+
+	FORCEINLINE
+	class UCapsuleComponent* GetCapsule() const { return Capsule; }
 
 	FORCEINLINE
 	FVector GetHorizontalVelocity() const { return FVector(GetVelocity().X, GetVelocity().Y, 0.f); }
@@ -261,13 +149,15 @@ public: //Getters and Setters
 
 	void SetVelocity(FVector velocity);
 
-	FORCEINLINE
-	void SetLastEndreason(EWallrunEndreason endReason) { wallInfo.lastEndReason = endReason; }
+	UFUNCTION(BlueprintCallable)
+	float GetStaminaRatio();
+
+
 	
 #pragma endregion
 
 #pragma region InputHandlingFunctions
-public: //Input Functions
+public: 
 	void ReadMoveForwardInput(float value);
 
 	void ReadMoveSidewardInput(float value);
@@ -291,81 +181,27 @@ public: //Input Functions
 
 	void UpdateMoveDirection();
 
-	void ClampVelocity();
-
-	void ClampHorizontalVelocity();
-
-	void PlatformOverlap();
-
-	void PlatformOverlapLeft();
-
-	bool HasValidHit();
-
-	bool RaycastFromCapsule(FHitResult& Hit, FVector End);
-
-	FVector MoveTowardsVector(FVector current, FVector target, float accel);
-
-	UFUNCTION(BlueprintCallable)
-	float GetStaminaRatio();
-
-	UFUNCTION(BlueprintCallable)
-	FString GetWallSide();
-
-	bool RaycastInMoveDirection();
-
 	void ConsumeStamina(bool useDeltaTime=true);
 
 	void RecoverStamina();
 
 #pragma endregion
 
-#pragma region WallrunFunctions
+#pragma region UtilitiesFunction
 
-	void ResetHitAndWallInfo();
+	void ClampVelocity();
 
-	void UpdateWallInfo();
+	void ClampHorizontalVelocity();
 
-	bool CanWallrun();
+	FVector MoveTowardsVector(FVector current, FVector target, float accel);
 
-	bool ShouldEndWallrun();
+	void CancelVerticalVelocity();
 
-	bool CanSurfaceBeWallran(FVector surfaceNormal);
-
-	bool MoveDirectionTowardsWall();
-
-	bool MoveKeysTowardsWall();
-
-	void UpdateWallrunModeOnInputKeys();
-
-	void UpdateWallrunAndInfoIfRayHit();
-
-	void BeginWallrun();
-
-	void EndWallrun();
-
-	void UpdateWallrunSide();
-
-	void UpdateWallrunDirection();
-
-	void ResetWallrunTimer();
-
-	void KeysTimerFinished();
-
-	void ActivateWrongKeysTimer();
-
-	void ClearWrongKeysTimer();
-
-	void StartWallrunDelayTimer(float time);
-
-	void StickToWall();
-
-	bool WrongModeToSide();
-	
 #pragma endregion
 
 #pragma region MovementFunctions
 
-public: //Movement Functions
+public:
 	void ApplyGroundMovement();
 
 	void ApplyAirMovement();

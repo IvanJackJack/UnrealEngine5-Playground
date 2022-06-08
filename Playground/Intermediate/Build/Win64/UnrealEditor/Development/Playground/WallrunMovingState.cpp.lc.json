@@ -27,7 +27,9 @@
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\finitestatemachine\\statemachinecomponent.h",
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\statemachinecomponent.generated.h",
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\utilities\\customutils.h",
-            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\customutils.generated.h"
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\customutils.generated.h",
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\customcomponents\\wallruncomponent.h",
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\wallruncomponent.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

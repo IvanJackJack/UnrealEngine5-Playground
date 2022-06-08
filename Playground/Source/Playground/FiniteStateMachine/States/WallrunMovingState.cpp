@@ -6,6 +6,7 @@
 #include "Playground/Controllers/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
+#include "Playground/CustomComponents/WallrunComponent.h"
 
 void UWallrunMovingState::Setup(FString newName, FFSMContext newContext) {
 	Super::Setup(newName, newContext);
@@ -26,11 +27,11 @@ void UWallrunMovingState::OnEnter() {
 	
 	context->characterController->WallrunLand();
 
-	context->characterController->BeginWallrun();
+	context->characterController->WallrunComponent->BeginWallrun();
 }
 
 void UWallrunMovingState::OnTick() {
-	context->characterController->UpdateWallrunAndInfoIfRayHit();
+	context->characterController->WallrunComponent->UpdateWallrunAndInfoIfRayHit();
 
 	context->characterController->ApplyWallrunMovement();
 
@@ -40,13 +41,13 @@ void UWallrunMovingState::OnTick() {
 }
 
 void UWallrunMovingState::OnExit() {
-	context->characterController->EndWallrun();
+	context->characterController->WallrunComponent->EndWallrun();
 
-	UCustomUtils::Print("Wallrun end cause of: " + UEnum::GetDisplayValueAsText(context->characterController->wallInfo.lastEndReason).ToString());
+	UCustomUtils::Print("Wallrun end cause of: " + UEnum::GetDisplayValueAsText(context->characterController->WallrunComponent->lastEndReason).ToString());
 }
 
 bool UWallrunMovingState::TransitionToAirFalling() {
-	if(context->characterController->ShouldEndWallrun() && context->characterController->GetVelocity().Z <= 0.f) {
+	if(context->characterController->WallrunComponent->ShouldEndWallrun() && context->characterController->GetVelocity().Z <= 0.f) {
 		return true;
 	}
 
@@ -54,12 +55,12 @@ bool UWallrunMovingState::TransitionToAirFalling() {
 }
 
 bool UWallrunMovingState::TransitionToAirRaising() {
-	if(context->characterController->characterStatus.bJumpRequested) {
-		context->characterController->SetLastEndreason(EWallrunEndreason::Jump);
+	if(context->characterController->bJumpRequested) {
+		context->characterController->WallrunComponent->SetLastEndreason(EWallrunEndreason::Jump);
 		return true;
 	}
 
-	if(context->characterController->ShouldEndWallrun() && context->characterController->GetVelocity().Z > 0.f) {
+	if(context->characterController->WallrunComponent->ShouldEndWallrun() && context->characterController->GetVelocity().Z > 0.f) {
 		return true;
 	}
 

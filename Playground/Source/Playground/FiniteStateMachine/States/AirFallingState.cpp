@@ -7,6 +7,7 @@
 #include "Playground/Controllers/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
+#include "Playground/CustomComponents/WallrunComponent.h"
 
 void UAirFallingState::Setup(FString newName, FFSMContext newContext) {
 	Super::Setup(newName, newContext);
@@ -29,7 +30,7 @@ void UAirFallingState::Setup(FString newName, FFSMContext newContext) {
 void UAirFallingState::OnEnter() {
 	Super::OnEnter();
 
-	if(context->characterController->characterStatus.bIsGrounded) {
+	if(context->characterController->bIsGrounded) {
 		context->characterController->GroundLeft();
 		// context->characterController->ConsumeJump();
 	}
@@ -58,8 +59,8 @@ bool UAirFallingState::TransitionToGroundLanded() {
 }
 
 bool UAirFallingState::TransitionToWallrunMoving() {
-	if(context->characterController->HasValidHit()) {
-		if(context->characterController->CanWallrun()) {
+	if(context->characterController->WallrunComponent->HasValidHit()) {
+		if(context->characterController->WallrunComponent->CanWallrun()) {
 			return true;
 		}
 	}
@@ -68,7 +69,7 @@ bool UAirFallingState::TransitionToWallrunMoving() {
 }
 
 bool UAirFallingState::TransitionToAirRaising() {
-	if(context->characterController->characterStatus.bJumpRequested) {
+	if(context->characterController->bJumpRequested) {
 		if(context->characterController->ConsumeJump()) {
 			return true;
 		}

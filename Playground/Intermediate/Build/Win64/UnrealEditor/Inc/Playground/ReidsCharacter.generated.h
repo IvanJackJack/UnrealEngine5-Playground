@@ -18,25 +18,15 @@ struct FHitResult;
 
 #define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_SPARSE_DATA
 #define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS \
-	virtual void EndCameraTilt_Implementation(); \
-	virtual void BeginCameraTilt_Implementation(); \
  \
-	DECLARE_FUNCTION(execEndCameraTilt); \
-	DECLARE_FUNCTION(execBeginCameraTilt); \
 	DECLARE_FUNCTION(execOnHit);
 
 
 #define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
-	virtual void EndCameraTilt_Implementation(); \
-	virtual void BeginCameraTilt_Implementation(); \
  \
-	DECLARE_FUNCTION(execEndCameraTilt); \
-	DECLARE_FUNCTION(execBeginCameraTilt); \
 	DECLARE_FUNCTION(execOnHit);
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_EVENT_PARMS
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_CALLBACK_WRAPPERS
 #define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAReidsCharacter(); \
@@ -79,16 +69,12 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AReidsCharacter)
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_8_PROLOG \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_EVENT_PARMS
-
-
+#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_8_PROLOG
 #define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_SPARSE_DATA \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_CALLBACK_WRAPPERS \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_STANDARD_CONSTRUCTORS \
 public: \
@@ -100,7 +86,6 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_SPARSE_DATA \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_CALLBACK_WRAPPERS \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS_NO_PURE_DECLS \
 	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_ENHANCED_CONSTRUCTORS \
 private: \
