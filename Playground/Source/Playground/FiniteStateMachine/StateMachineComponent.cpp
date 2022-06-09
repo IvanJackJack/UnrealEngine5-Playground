@@ -4,7 +4,7 @@
 #include "StateMachineComponent.h"
 #include "StateBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/Utilities/CustomUtils.h"
 
 UStateMachineComponent::UStateMachineComponent()

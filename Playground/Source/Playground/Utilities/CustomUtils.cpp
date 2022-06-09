@@ -52,3 +52,11 @@ FVector UCustomUtils::MoveTowardsVector(FVector current, FVector target, float a
 	float deltaTime=GetWorld()->DeltaTimeSeconds;
 	return FMath::VInterpTo(current, target, deltaTime, accel);
 }
+
+float UCustomUtils::GetHorizontalAngle(FVector direction) {
+	FVector horizontalDirection=FVector(direction.X, direction.Y, 0.f).GetSafeNormal();
+	float horizontalSlope=FVector::DotProduct(direction, horizontalDirection);
+	float horizontalAngle=FMath::RadiansToDegrees(FMath::Acos(horizontalSlope));
+
+	return horizontalAngle;
+}

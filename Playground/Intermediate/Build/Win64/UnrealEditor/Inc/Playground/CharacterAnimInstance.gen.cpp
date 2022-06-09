@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "Playground/AnimInstances/CharacterAnimInstance.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterAnimInstance.h"
 #include "Engine/Classes/Components/SkeletalMeshComponent.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeCharacterAnimInstance() {}
@@ -45,14 +45,14 @@ void EmptyLinkFunctionForGeneratedCodeCharacterAnimInstance() {}
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCharacterAnimInstance_Statics::Class_MetaDataParams[] = {
 		{ "Comment", "/**\n * \n */" },
 		{ "HideCategories", "AnimInstance" },
-		{ "IncludePath", "AnimInstances/CharacterAnimInstance.h" },
-		{ "ModuleRelativePath", "AnimInstances/CharacterAnimInstance.h" },
+		{ "IncludePath", "Controllers/CapsuleCharacter/CharacterAnimInstance.h" },
+		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterAnimInstance.h" },
 	};
 #endif
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCharacterAnimInstance_Statics::NewProp_speed_MetaData[] = {
 		{ "Category", "Movement" },
-		{ "ModuleRelativePath", "AnimInstances/CharacterAnimInstance.h" },
+		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterAnimInstance.h" },
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UCharacterAnimInstance_Statics::NewProp_speed = { "speed", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UCharacterAnimInstance, speed), METADATA_PARAMS(Z_Construct_UClass_UCharacterAnimInstance_Statics::NewProp_speed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UCharacterAnimInstance_Statics::NewProp_speed_MetaData)) };
@@ -90,15 +90,15 @@ void EmptyLinkFunctionForGeneratedCodeCharacterAnimInstance() {}
 		return UCharacterAnimInstance::StaticClass();
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UCharacterAnimInstance);
-	struct Z_CompiledInDeferFile_FID_Playground_Source_Playground_AnimInstances_CharacterAnimInstance_h_Statics
+	struct Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterAnimInstance_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_AnimInstances_CharacterAnimInstance_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCharacterAnimInstance, UCharacterAnimInstance::StaticClass, TEXT("UCharacterAnimInstance"), &Z_Registration_Info_UClass_UCharacterAnimInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCharacterAnimInstance), 3616637970U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterAnimInstance_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UCharacterAnimInstance, UCharacterAnimInstance::StaticClass, TEXT("UCharacterAnimInstance"), &Z_Registration_Info_UClass_UCharacterAnimInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCharacterAnimInstance), 2349491097U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_AnimInstances_CharacterAnimInstance_h_766688538(TEXT("/Script/Playground"),
-		Z_CompiledInDeferFile_FID_Playground_Source_Playground_AnimInstances_CharacterAnimInstance_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_AnimInstances_CharacterAnimInstance_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterAnimInstance_h_3464016158(TEXT("/Script/Playground"),
+		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterAnimInstance_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterAnimInstance_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

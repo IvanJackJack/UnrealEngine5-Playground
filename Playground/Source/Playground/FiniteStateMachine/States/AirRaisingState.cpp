@@ -4,7 +4,7 @@
 #include "AirRaisingState.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
 #include "Playground/CustomComponents/WallrunComponent.h"
@@ -40,7 +40,7 @@ void UAirRaisingState::OnEnter() {
 				context->characterController->GroundLeft();
 			}
 			if(context->characterController->WallrunComponent->lastEndReason==EWallrunEndreason::NoHit 
-				&& context->characterController->inputValues.moveInput.X > 0.9f) {
+				&& context->characterController->inputValues.moveInput.X > 0.1f) {
 				// UCustomUtils::Print("Salto dopo wallrun per no hit");
 				// context->characterController->ApplyGroundJump();
 				context->characterController->ApplyWallrunEndingJump();

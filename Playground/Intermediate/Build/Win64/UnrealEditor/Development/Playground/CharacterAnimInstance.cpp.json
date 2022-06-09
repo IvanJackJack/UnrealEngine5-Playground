@@ -1,12 +1,12 @@
 {
     "Version": "1.1",
     "Data": {
-        "Source": "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\animinstances\\characteraniminstance.cpp",
+        "Source": "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\controllers\\capsulecharacter\\characteraniminstance.cpp",
         "ProvidedModule": "",
         "PCH": "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\playgroundeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
         "Includes": [
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\development\\playground\\definitions.playground.h",
-            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\animinstances\\characteraniminstance.h",
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\controllers\\capsulecharacter\\characteraniminstance.h",
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\characteraniminstance.generated.h"
         ],
         "ImportedModules": [],

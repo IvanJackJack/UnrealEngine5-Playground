@@ -60,6 +60,8 @@ public:
 	FVector wallUpward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector wallSideward;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	float wallAngle;
 
 	FVector lastValidNormal;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
@@ -71,9 +73,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool wallrunTimerExpired = true;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	float wallAngle;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FHitResult currentValidHit;
@@ -101,11 +100,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float frontSideThreshold=0.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float lateralSideChangeThreshold=0.1f;
+	float lateralSideChangeThreshold=0.2f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float velocityWallrunThreshold=100.f;
+
+	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	// float wallAngleDotThreshold=0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallAngleDotThreshold=0.5f;
+	float maxWallrunAngle=45.f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float velocityAccelerationRatio=50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
@@ -197,6 +200,8 @@ public:
 	bool RaycastInMoveDirection();
 
 	FVector MoveTowardsVector(FVector current, FVector target, float accel);
+
+	float GetHorizontalAngle(FVector direction);
 
 #pragma endregion
 

@@ -17,6 +17,8 @@ public:
 	static void Print(const FString& toPrint, float time);
 	static void Print(const float value);
 	static void Print(const FVector vector);
+
 	bool Raycast(FHitResult& Hit, FVector Start, FVector End, const AActor* Ignored);
 	FVector MoveTowardsVector(FVector current, FVector target, float accel);
+	float GetHorizontalAngle(FVector direction);
 };

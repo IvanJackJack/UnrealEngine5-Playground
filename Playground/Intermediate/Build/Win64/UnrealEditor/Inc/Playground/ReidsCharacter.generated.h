@@ -16,18 +16,28 @@ struct FHitResult;
 #endif
 #define PLAYGROUND_ReidsCharacter_generated_h
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_SPARSE_DATA
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_SPARSE_DATA
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_RPC_WRAPPERS \
+	virtual void EndCameraTilt_Implementation(); \
+	virtual void BeginCameraTilt_Implementation(); \
  \
+	DECLARE_FUNCTION(execEndCameraTilt); \
+	DECLARE_FUNCTION(execBeginCameraTilt); \
 	DECLARE_FUNCTION(execOnHit);
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void EndCameraTilt_Implementation(); \
+	virtual void BeginCameraTilt_Implementation(); \
  \
+	DECLARE_FUNCTION(execEndCameraTilt); \
+	DECLARE_FUNCTION(execBeginCameraTilt); \
 	DECLARE_FUNCTION(execOnHit);
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_EVENT_PARMS
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_CALLBACK_WRAPPERS
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAReidsCharacter(); \
 	friend struct Z_Construct_UClass_AReidsCharacter_Statics; \
@@ -36,7 +46,7 @@ public: \
 	DECLARE_SERIALIZER(AReidsCharacter)
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_INCLASS \
 private: \
 	static void StaticRegisterNativesAReidsCharacter(); \
 	friend struct Z_Construct_UClass_AReidsCharacter_Statics; \
@@ -45,7 +55,7 @@ public: \
 	DECLARE_SERIALIZER(AReidsCharacter)
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_STANDARD_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AReidsCharacter(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AReidsCharacter) \
@@ -58,7 +68,7 @@ private: \
 public:
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_ENHANCED_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AReidsCharacter(AReidsCharacter&&); \
@@ -69,25 +79,30 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AReidsCharacter)
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_8_PROLOG
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_GENERATED_BODY_LEGACY \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_19_PROLOG \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_EVENT_PARMS
+
+
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_SPARSE_DATA \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_STANDARD_CONSTRUCTORS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_SPARSE_DATA \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_RPC_WRAPPERS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_CALLBACK_WRAPPERS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_INCLASS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_GENERATED_BODY \
+#define FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_SPARSE_DATA \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_INCLASS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h_11_ENHANCED_CONSTRUCTORS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_SPARSE_DATA \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_CALLBACK_WRAPPERS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_INCLASS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h_22_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -95,7 +110,21 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> PLAYGROUND_API UClass* StaticClass<class AReidsCharacter>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Playground_Source_Playground_Reids_Wallrun_ReidsCharacter_h
+#define CURRENT_FILE_ID FID_Playground_Source_Playground_Controllers_Reids_Wallrun_ReidsCharacter_h
 
+
+#define FOREACH_ENUM_EREIDSWALLRUNSIDE(op) \
+	op(EReidsWallrunSide::Left) \
+	op(EReidsWallrunSide::Right) 
+
+enum class EReidsWallrunSide : uint8;
+template<> PLAYGROUND_API UEnum* StaticEnum<EReidsWallrunSide>();
+
+#define FOREACH_ENUM_EREIDSWALLRUNENDREASON(op) \
+	op(EReidsWallrunEndreason::Fall) \
+	op(EReidsWallrunEndreason::Jump) 
+
+enum class EReidsWallrunEndreason : uint8;
+template<> PLAYGROUND_API UEnum* StaticEnum<EReidsWallrunEndreason>();
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

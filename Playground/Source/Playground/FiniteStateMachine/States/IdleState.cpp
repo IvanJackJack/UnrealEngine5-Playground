@@ -2,7 +2,7 @@
 
 
 #include "IdleState.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
 

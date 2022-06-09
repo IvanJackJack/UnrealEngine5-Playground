@@ -53,41 +53,41 @@
     <ClInclude Include="..\..\Source\Playground\PlaygroundCharacter.h">
       <Filter>Source\Playground</Filter>
     </ClInclude>
-    <Filter Include="Source\Playground\AnimInstances">
-      <UniqueIdentifier>{AC6A6E5E-DA88-339E-8208-08218E408DFA}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\Playground\AnimInstances\CharacterAnimInstance.cpp">
-      <Filter>Source\Playground\AnimInstances</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\AnimInstances\CharacterAnimInstance.h">
-      <Filter>Source\Playground\AnimInstances</Filter>
-    </ClInclude>
     <Filter Include="Source\Playground\Controllers">
       <UniqueIdentifier>{675C04E7-BD10-3519-8344-1C467A680BAF}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CharacterController.cpp">
-      <Filter>Source\Playground\Controllers</Filter>
+    <Filter Include="Source\Playground\Controllers\CapsuleCharacter">
+      <UniqueIdentifier>{27994D18-3486-382C-9CA5-43F520AB03CC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterAnimInstance.cpp">
+      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CharacterController.h">
-      <Filter>Source\Playground\Controllers</Filter>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterAnimInstance.h">
+      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CharacterPlayerController.cpp">
-      <Filter>Source\Playground\Controllers</Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterController.cpp">
+      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CharacterPlayerController.h">
-      <Filter>Source\Playground\Controllers</Filter>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterController.h">
+      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CustomCharacterMovementComponent.cpp">
-      <Filter>Source\Playground\Controllers</Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterPlayerController.cpp">
+      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CustomCharacterMovementComponent.h">
-      <Filter>Source\Playground\Controllers</Filter>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterPlayerController.h">
+      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CustomMovementComponent.cpp">
-      <Filter>Source\Playground\Controllers</Filter>
+    <Filter Include="Source\Playground\Controllers\Reids">
+      <UniqueIdentifier>{2C6F138C-92CC-3B32-83EC-3ADA23474DE2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Playground\Controllers\Reids\Wallrun">
+      <UniqueIdentifier>{074C6DF2-BEA5-31C2-A64B-E361B8B4D1D4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\Reids\Wallrun\ReidsCharacter.cpp">
+      <Filter>Source\Playground\Controllers\Reids\Wallrun</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CustomMovementComponent.h">
-      <Filter>Source\Playground\Controllers</Filter>
+    <ClInclude Include="..\..\Source\Playground\Controllers\Reids\Wallrun\ReidsCharacter.h">
+      <Filter>Source\Playground\Controllers\Reids\Wallrun</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\CustomComponents">
       <UniqueIdentifier>{08191962-3FAA-361F-B210-580EEEF1E027}</UniqueIdentifier>
@@ -163,39 +163,6 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunMovingState.h">
       <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunRaisingState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunRaisingState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClInclude>
-    <Filter Include="Source\Playground\Interfaces">
-      <UniqueIdentifier>{89A8F69B-AE5F-3FC3-BF20-168AF77507B6}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\Playground\Interfaces\IController.cpp">
-      <Filter>Source\Playground\Interfaces</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Interfaces\IController.h">
-      <Filter>Source\Playground\Interfaces</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\Interfaces\IMovementController.cpp">
-      <Filter>Source\Playground\Interfaces</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Interfaces\IMovementController.h">
-      <Filter>Source\Playground\Interfaces</Filter>
-    </ClInclude>
-    <Filter Include="Source\Playground\Reids">
-      <UniqueIdentifier>{2DD2FE0C-DF7F-3BED-9351-94EE6C76629E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Playground\Reids\Wallrun">
-      <UniqueIdentifier>{D81CFB09-5C67-3456-B06F-7486391062C9}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\Playground\Reids\Wallrun\ReidsCharacter.cpp">
-      <Filter>Source\Playground\Reids\Wallrun</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Reids\Wallrun\ReidsCharacter.h">
-      <Filter>Source\Playground\Reids\Wallrun</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\UI">
       <UniqueIdentifier>{B6693E14-E035-35AD-ABA5-535FCD8E9975}</UniqueIdentifier>

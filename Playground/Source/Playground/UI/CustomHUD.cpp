@@ -2,7 +2,7 @@
 
 
 #include "CustomHUD.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/Utilities/CustomUtils.h"
 
 void UCustomHUD::NativePreConstruct() {

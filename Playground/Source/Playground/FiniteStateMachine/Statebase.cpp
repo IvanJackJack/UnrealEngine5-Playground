@@ -3,7 +3,7 @@
 
 #include "StateBase.h"
 #include "StateMachineComponent.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/Utilities/CustomUtils.h"
 
 void UStateBase::Setup(FString newName, FFSMContext newContext) {

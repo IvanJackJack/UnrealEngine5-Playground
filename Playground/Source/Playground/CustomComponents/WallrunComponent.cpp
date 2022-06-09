@@ -3,7 +3,7 @@
 #include "WallrunComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "Playground/Controllers/CharacterController.h"
+#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
@@ -28,7 +28,7 @@ void UWallrunComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	checkWallRayLength=Character->GetCapsule()->GetScaledCapsuleRadius() * 2.5f;
+	checkWallRayLength=Character->GetCapsule()->GetScaledCapsuleRadius() * 3.f;
 	initialAirControl=Character->Movement->AirControl;
 	wallrunSide=EWallrunSide::None;
 	wallrunMode=EWallrunMode::None;
@@ -92,13 +92,9 @@ FVector UWallrunComponent::GetVelocityByMode() {
 #pragma region WallrunStatus
 
 void UWallrunComponent::UpdateWallInfo(const FHitResult& Hit) {
-	lastValidNormal=wallNormal;
-
 	currentValidHit=Hit;
 
-	wallNormal=Hit.ImpactNormal;
-	wallSideward=FVector::CrossProduct(wallNormal, FVector::UpVector).GetSafeNormal();
-	wallUpward=FVector::CrossProduct(wallSideward, wallNormal).GetSafeNormal();
+	UpdateWallInfo();
 }
 
 void UWallrunComponent::UpdateWallInfo() {
@@ -107,6 +103,7 @@ void UWallrunComponent::UpdateWallInfo() {
 	wallNormal=currentValidHit.ImpactNormal;
 	wallSideward=FVector::CrossProduct(wallNormal, FVector::UpVector).GetSafeNormal();
 	wallUpward=FVector::CrossProduct(wallSideward, wallNormal).GetSafeNormal();
+	wallAngle=GetHorizontalAngle(wallNormal);
 }
 
 void UWallrunComponent::ResetHitAndWallInfo() {
@@ -122,7 +119,7 @@ void UWallrunComponent::ResetHitAndWallInfo() {
 	wallNormal=FVector::ZeroVector;
 	wallSideward=FVector::ZeroVector;
 	wallUpward=FVector::ZeroVector;
-
+	wallAngle=0.f;
 	
 }
 
@@ -131,19 +128,18 @@ bool UWallrunComponent::HasValidHit() {
 }
 
 bool UWallrunComponent::IsValidForWallrun(FVector surfaceNormal) {
-	FVector upDir=FVector::UpVector;
-	float dotNormalUp=FVector::DotProduct(surfaceNormal, upDir);
-	
-	if(dotNormalUp < -0.05f) {
+	if(surfaceNormal.Z < -0.05f) {
 		return false;
 	}
 
-	// non muri troppo orizzontali, 0.5f sono 30gradi
-	if(dotNormalUp > wallAngleDotThreshold) {
-		return false;
-	}
+	float surfaceAngle=GetHorizontalAngle(surfaceNormal);
+	// if (surfaceAngle<=maxWallrunAngle){
+	// 	return true;
+	// }
+	//
+	// return false;
 
-	return true;
+	return (surfaceAngle<=maxWallrunAngle);
 }
 
 bool UWallrunComponent::CanWallrun() {
@@ -159,12 +155,12 @@ bool UWallrunComponent::CanWallrun() {
 		ResetHitAndWallInfo();
 		return false;
 	}
-	
-	if(!IsMoveDirectionTowardsWall()) {
+
+	if(CancelConditionsByMode()) {
 		return false;
 	}
 
-	if(CancelConditionsByMode()) {
+	if(!IsMoveDirectionTowardsWall()) {
 		return false;
 	}
 	
@@ -174,14 +170,7 @@ bool UWallrunComponent::CanWallrun() {
 bool UWallrunComponent::ShouldEndWallrun() {
 
 	if(!HasValidHit()) {
-		UCustomUtils::Print("should end wallrun: no hit");
 		SetLastEndreason(EWallrunEndreason::NoHit);
-		return true;
-	}
-	
-	if(!IsMoveDirectionTowardsWall()) {
-		// UCustomUtils::Print("should end wallrun: not moving towards wall");
-		SetLastEndreason(EWallrunEndreason::WrongDirection);
 		return true;
 	}
 
@@ -190,13 +179,17 @@ bool UWallrunComponent::ShouldEndWallrun() {
 		return true;
 	}
 
+	if(!IsMoveDirectionTowardsWall()) {
+		SetLastEndreason(EWallrunEndreason::WrongDirection);
+		return true;
+	}
+	
 	if(startingLateralWallSide != wallrunSide) {
 		SetLastEndreason(EWallrunEndreason::SideChange);
 		return true;
 	}
 
-	if(Character->GetVelocity().Size()<velocityWallrunThreshold) {
-		// UCustomUtils::Print("should end wallrun: low velocity, current is " + FString::SanitizeFloat(GetVelocity().Size()));
+	if(Character->GetActualVelocity().IsNearlyZero()) {
 		SetLastEndreason(EWallrunEndreason::Fall);
 		return true;
 	}
@@ -527,6 +520,14 @@ FVector UWallrunComponent::MoveTowardsVector(FVector current, FVector target, fl
 	float deltaTime=GetWorld()->DeltaTimeSeconds;
 
 	return FMath::VInterpTo(current, target, deltaTime, accel);
+}
+
+float UWallrunComponent::GetHorizontalAngle(FVector direction) {
+	FVector horizontalDirection=FVector(direction.X, direction.Y, 0.f).GetSafeNormal();
+	float horizontalSlope=FVector::DotProduct(direction, horizontalDirection);
+	float horizontalAngle=FMath::RadiansToDegrees(FMath::Acos(horizontalSlope));
+
+	return horizontalAngle;
 }
 
 #pragma endregion
