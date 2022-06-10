@@ -22,6 +22,9 @@ struct FInput {
 
 	UPROPERTY(VisibleAnywhere)
 	bool bSprintInput;
+
+	UPROPERTY(VisibleAnywhere)
+	bool bSlideInput;
 };
 
 UCLASS()
@@ -150,7 +153,7 @@ public:
 	void SetVelocity(FVector velocity);
 
 	FORCEINLINE
-	FVector GetActualVelocity() const { return AActor::GetVelocity(); }
+	FVector GetActorVelocity() const { return AActor::GetVelocity(); }
 
 	UFUNCTION(BlueprintCallable)
 	float GetStaminaRatio();

@@ -17,7 +17,7 @@ enum class EWallrunSide : uint8 {
 
 UENUM(BlueprintType)
 enum class EWallrunEndreason : uint8 {
-	Fall UMETA(DisplayName = "Fall"),
+	LowVelocity UMETA(DisplayName = "LowVelocity"),
 	Jump UMETA(DisplayName = "Jump"),
 	WrongKeys UMETA(DisplayName = "WrongKeys"),
 	SideChange UMETA(DisplayName = "SideChange"),
@@ -34,6 +34,20 @@ enum class EWallrunMode : uint8 {
 	Visual UMETA(DisplayName = "Visual"),
 
 	None UMETA(DisplayName = "None")
+};
+
+UENUM(BlueprintType)
+enum class EGravityMode : uint8 {
+	Zero UMETA(DisplayName = "Zero"),
+	Reduced UMETA(DisplayName = "Reduced"),
+	OverTime UMETA(DisplayName = "OverTime")
+};
+
+UENUM(BlueprintType)
+enum class EWallrunEndConditions : uint8 {
+	Standard UMETA(DisplayName = "Standard"),
+	Stamina UMETA(DisplayName = "Stamina"),
+	Time UMETA(DisplayName = "Time")
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -62,8 +76,11 @@ public:
 	FVector wallSideward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	float wallAngle;
+	FVector lastValidWallNormal;
 
-	FVector lastValidNormal;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FHitResult currentValidHit;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector wallrunMoveDirection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
@@ -72,10 +89,10 @@ public:
 	FVector lookingMoveDirectionAlongWallAxis;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	bool wallrunTimerExpired = true;
+	bool wallrunLockTimerExpired = true;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	FHitResult currentValidHit;
+	FVector playerToWallVector;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	EWallrunSide wallrunSide;
@@ -85,36 +102,49 @@ public:
 	EWallrunEndreason lastEndReason;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	EWallrunMode wallrunMode;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	EGravityMode gravityMode;
 #pragma endregion
 
 #pragma region Parameters
-public: 
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallrunDelay=0.5f;
+	bool bAlwaysStickToWall = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float checkWallRayLength;
+	bool bCancelWallrunWhenSideChanges = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float wallrunLockDelay=0.5f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Parameters)
+	float rayCheckForWallLength;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float visualWallrunMinVerticalValue=0.175f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+
+	//put this to -1 to wallrun even when looking down
 	float visualWallrunLookingDownThreshold=-0.5f;
+
+	//put this to 0 to remove front side, or a low value to enable front side
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float frontSideThreshold=0.f;
+	float frontSideDotThreshold=0.f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float lateralSideChangeThreshold=0.2f;
+	float lateralSideChangeDotThreshold=0.25f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float velocityWallrunThreshold=100.f;
 
-	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	// float wallAngleDotThreshold=0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float maxWallrunAngle=45.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float velocityAccelerationRatio=50.f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float initialAirControl;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	bool bAlwaysStickToWall;
+	float reducedGravity=0.2f;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EWallrunMode desiredHorizontalMode;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
@@ -138,8 +168,9 @@ public:
 
 	FVector GetVelocity();
 
+	//DA RIVEDERE SE FUNZIONA BENE, CAMBIALE MOVE ACCEL
 	FVector GetInterpVelocity();
-
+	//DA RIVEDERE
 	FVector GetVelocityByMode();
 
 	UFUNCTION(BlueprintCallable)
@@ -154,8 +185,6 @@ public:
 	void UpdateWallInfo(const FHitResult& Hit);
 
 	void UpdateWallInfo();
-
-	bool HasValidHit();
 
 	bool IsValidForWallrun(FVector surfaceNormal);
 
@@ -177,6 +206,12 @@ public:
 
 	bool LookingDownOverThreshold();
 
+	UFUNCTION(BlueprintCallable)
+	bool HasValidHit();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsCharacterNearWall();
+
 #pragma endregion
 
 #pragma region WallrunMovement
@@ -188,8 +223,6 @@ public:
 	void UpdateWallrunSide();
 
 	void UpdateWallrunDirection();
-	
-	void SnapToWall();
 	
 #pragma endregion
 

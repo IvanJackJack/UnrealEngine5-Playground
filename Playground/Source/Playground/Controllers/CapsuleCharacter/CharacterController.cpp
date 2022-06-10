@@ -72,6 +72,10 @@ void ACharacterController::Tick(float DeltaTime)
 	}else {
 		ConsumeStamina();
 	}
+
+	if(WallrunComponent->HasValidHit()) {
+		UCustomUtils::DrawLine(GetActorLocation(), WallrunComponent->currentValidHit.ImpactPoint);
+	}
 }
 
 void ACharacterController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -103,7 +107,7 @@ void ACharacterController::OnEndOverlap(UPrimitiveComponent* OverlappedComponent
 }
 
 void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
-	if(bIsWallrunning || !WallrunComponent->wallrunTimerExpired) {
+	if(bIsWallrunning || !WallrunComponent->wallrunLockTimerExpired) {
 		return;
 	}
 
@@ -186,13 +190,11 @@ void ACharacterController::ApplyAirMovement() {
 
 void ACharacterController::ApplyWallrunMovement() {
 	if(inputValues.moveInput.Size() != 0.f ) {
-		// FVector wallrunVelocity;
-		// wallrunVelocity=WallrunComponent->wallrunMoveDirection*Movement->MaxCustomMovementSpeed;
-		// wallrunVelocity=WallrunComponent->GetVelocity();
-		
+		// FVector wallrunVelocity=WallrunComponent->GetVelocityByMode();
 		// SetVelocity(wallrunVelocity);
 
-		SetVelocity(WallrunComponent->GetVelocity());
+		FVector wallrunVelocity=WallrunComponent->GetVelocity();
+		LaunchCharacter(wallrunVelocity, true, true);
 	}
 }
 
@@ -209,7 +211,7 @@ void ACharacterController::ApplyGroundJump() {
 
 	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
 
-	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunDelay);
+	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunLockDelay);
 
 	LaunchCharacter(launchVelocity, false, true); 
 }
@@ -223,7 +225,7 @@ void ACharacterController::ApplyAirJump() {
 
 	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
 
-	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunDelay);
+	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunLockDelay);
 
 	LaunchCharacter(launchVelocity, false, true); 
 }
@@ -235,7 +237,7 @@ void ACharacterController::ApplyWallrunJump() {
 
 	FVector wallNormal=WallrunComponent->wallNormal;
 	if(wallNormal.IsNearlyZero()) {
-		wallNormal=WallrunComponent->lastValidNormal;
+		wallNormal=WallrunComponent->lastValidWallNormal;
 	}
 	
 	FVector launchDirection=(wallNormal+FVector::UpVector).GetSafeNormal();
@@ -252,11 +254,13 @@ void ACharacterController::ApplyWallrunEndingJump() {
 
 	bJumpRequested=false;
 
-	FVector launchDirection=FVector::UpVector;
+	// FVector launchDirection=FVector::UpVector;
 
-	FVector launchVelocity=launchDirection * Movement->JumpZVelocity * 0.75f;
+	// FVector launchVelocity=launchDirection * Movement->JumpZVelocity * 0.75f;
 
-	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunDelay);
+	FVector launchVelocity=GetActorVelocity();
+
+	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunLockDelay);
 
 	LaunchCharacter(launchVelocity, false, true); 
 }

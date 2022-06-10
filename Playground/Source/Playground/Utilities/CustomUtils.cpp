@@ -2,6 +2,7 @@
 
 
 #include "CustomUtils.h"
+#include "DrawDebugHelpers.h"
 
 void UCustomUtils::Print(const FString& toPrint) {
 	if(GEngine)
@@ -39,7 +40,7 @@ bool UCustomUtils::Raycast(FHitResult& Hit, FVector Start, FVector End, const AA
 	FCollisionQueryParams collisionParams;
 	collisionParams.AddIgnoredActor(Ignored);
 
-	return GetWorld()->LineTraceSingleByChannel(
+	return GEngine->GameViewport->GetWorld()->LineTraceSingleByChannel(
 		Hit, 
 		Start, 
 		End,
@@ -49,7 +50,7 @@ bool UCustomUtils::Raycast(FHitResult& Hit, FVector Start, FVector End, const AA
 }
 
 FVector UCustomUtils::MoveTowardsVector(FVector current, FVector target, float accel) {
-	float deltaTime=GetWorld()->DeltaTimeSeconds;
+	float deltaTime=GEngine->GameViewport->GetWorld()->DeltaTimeSeconds;
 	return FMath::VInterpTo(current, target, deltaTime, accel);
 }
 
@@ -59,4 +60,17 @@ float UCustomUtils::GetHorizontalAngle(FVector direction) {
 	float horizontalAngle=FMath::RadiansToDegrees(FMath::Acos(horizontalSlope));
 
 	return horizontalAngle;
+}
+
+void UCustomUtils::DrawLine(FVector LineStart, FVector LineEnd, FColor Color, float LifeTime) {
+	DrawDebugLine(
+		GEngine->GameViewport->GetWorld(), 
+		LineStart,
+		LineEnd,
+		Color,
+		false,
+		LifeTime,
+		0,
+		5.f
+		);
 }
