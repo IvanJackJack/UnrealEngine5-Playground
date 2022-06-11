@@ -112,6 +112,8 @@ public:
 	bool bAlwaysStickToWall = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bCancelWallrunWhenSideChanges = false;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	bool bUseCharacterMaxWalkableAngle = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float wallrunLockDelay=0.5f;
@@ -126,16 +128,18 @@ public:
 
 	//put this to 0 to remove front side, or a low value to enable front side
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float frontSideDotThreshold=0.f;
+	float lateralSideDotThreshold=0.f;
 
+	//offset used to change side from left to right, and viceversa, when value 0 is approached
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float lateralSideChangeDotThreshold=0.25f;
+	float lateralSideChangeDotOffset=0.25f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float velocityWallrunThreshold=100.f;
 
+	//angle of wall normal with horizontal plane must be less than this value
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float maxWallrunAngle=45.f;
+	float wallrunAngleThreshold=40.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float velocityAccelerationRatio=50.f;
@@ -184,7 +188,7 @@ public:
 
 	void UpdateWallInfo(const FHitResult& Hit);
 
-	void UpdateWallInfo();
+	// void UpdateWallInfo(FString caller);
 
 	bool IsValidForWallrun(FVector surfaceNormal);
 
@@ -235,6 +239,8 @@ public:
 	FVector MoveTowardsVector(FVector current, FVector target, float accel);
 
 	float GetHorizontalAngle(FVector direction);
+
+	float GetVerticalAngle(FVector direction);
 
 #pragma endregion
 

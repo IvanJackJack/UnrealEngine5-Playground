@@ -114,7 +114,8 @@ void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* Othe
 	if(!WallrunComponent->IsValidForWallrun(Hit.ImpactNormal)) {
 		return;
 	}
-	
+
+	// UCustomUtils::Print("Update wall info from hit", 2);
 	// WallrunComponent->currentValidHit = Hit;
 	WallrunComponent->UpdateWallInfo(Hit);
 	

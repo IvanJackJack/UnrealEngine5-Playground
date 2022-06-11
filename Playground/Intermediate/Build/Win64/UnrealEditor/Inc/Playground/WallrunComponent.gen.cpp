@@ -558,6 +558,11 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		static void NewProp_bCancelWallrunWhenSideChanges_SetBit(void* Obj);
 		static const UECodeGen_Private::FBoolPropertyParams NewProp_bCancelWallrunWhenSideChanges;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bUseCharacterMaxWalkableAngle_MetaData[];
+#endif
+		static void NewProp_bUseCharacterMaxWalkableAngle_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bUseCharacterMaxWalkableAngle;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunLockDelay_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunLockDelay;
@@ -574,21 +579,21 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_visualWallrunLookingDownThreshold;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_frontSideDotThreshold_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_lateralSideDotThreshold_MetaData[];
 #endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_frontSideDotThreshold;
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_lateralSideDotThreshold;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_lateralSideChangeDotThreshold_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_lateralSideChangeDotOffset_MetaData[];
 #endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_lateralSideChangeDotThreshold;
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_lateralSideChangeDotOffset;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_velocityWallrunThreshold_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_velocityWallrunThreshold;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_maxWallrunAngle_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunAngleThreshold_MetaData[];
 #endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_maxWallrunAngle;
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunAngleThreshold;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_velocityAccelerationRatio_MetaData[];
 #endif
@@ -774,6 +779,17 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	}
 	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bCancelWallrunWhenSideChanges = { "bCancelWallrunWhenSideChanges", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bCancelWallrunWhenSideChanges_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bCancelWallrunWhenSideChanges_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bCancelWallrunWhenSideChanges_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_MetaData[] = {
+		{ "Category", "Parameters" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_SetBit(void* Obj)
+	{
+		((UWallrunComponent*)Obj)->bUseCharacterMaxWalkableAngle = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle = { "bUseCharacterMaxWalkableAngle", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData[] = {
 		{ "Category", "Parameters" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
@@ -804,21 +820,23 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunLookingDownThreshold = { "visualWallrunLookingDownThreshold", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, visualWallrunLookingDownThreshold), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunLookingDownThreshold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunLookingDownThreshold_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_frontSideDotThreshold_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideDotThreshold_MetaData[] = {
 		{ "Category", "Parameters" },
 		{ "Comment", "//put this to 0 to remove front side, or a low value to enable front side\n" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
 		{ "ToolTip", "put this to 0 to remove front side, or a low value to enable front side" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_frontSideDotThreshold = { "frontSideDotThreshold", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, frontSideDotThreshold), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_frontSideDotThreshold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_frontSideDotThreshold_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideDotThreshold = { "lateralSideDotThreshold", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, lateralSideDotThreshold), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideDotThreshold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideDotThreshold_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotThreshold_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotOffset_MetaData[] = {
 		{ "Category", "Parameters" },
+		{ "Comment", "//offset used to change side from left to right, and viceversa, when value 0 is approached\n" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+		{ "ToolTip", "offset used to change side from left to right, and viceversa, when value 0 is approached" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotThreshold = { "lateralSideChangeDotThreshold", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, lateralSideChangeDotThreshold), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotThreshold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotThreshold_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotOffset = { "lateralSideChangeDotOffset", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, lateralSideChangeDotOffset), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotOffset_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotOffset_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityWallrunThreshold_MetaData[] = {
 		{ "Category", "Parameters" },
@@ -827,12 +845,14 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityWallrunThreshold = { "velocityWallrunThreshold", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, velocityWallrunThreshold), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityWallrunThreshold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityWallrunThreshold_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_maxWallrunAngle_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunAngleThreshold_MetaData[] = {
 		{ "Category", "Parameters" },
+		{ "Comment", "//angle of wall normal with horizontal plane must be less than this value\n" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+		{ "ToolTip", "angle of wall normal with horizontal plane must be less than this value" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_maxWallrunAngle = { "maxWallrunAngle", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, maxWallrunAngle), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_maxWallrunAngle_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_maxWallrunAngle_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunAngleThreshold = { "wallrunAngleThreshold", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunAngleThreshold), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunAngleThreshold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunAngleThreshold_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityAccelerationRatio_MetaData[] = {
 		{ "Category", "Parameters" },
@@ -901,14 +921,15 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bAlwaysStickToWall,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bCancelWallrunWhenSideChanges,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_rayCheckForWallLength,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunMinVerticalValue,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunLookingDownThreshold,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_frontSideDotThreshold,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotThreshold,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideDotThreshold,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lateralSideChangeDotOffset,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityWallrunThreshold,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_maxWallrunAngle,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunAngleThreshold,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityAccelerationRatio,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_initialAirControl,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_reducedGravity,
@@ -963,9 +984,9 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		{ EWallrunEndConditions_StaticEnum, TEXT("EWallrunEndConditions"), &Z_Registration_Info_UEnum_EWallrunEndConditions, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2623553140U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UWallrunComponent, UWallrunComponent::StaticClass, TEXT("UWallrunComponent"), &Z_Registration_Info_UClass_UWallrunComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWallrunComponent), 3525873921U) },
+		{ Z_Construct_UClass_UWallrunComponent, UWallrunComponent::StaticClass, TEXT("UWallrunComponent"), &Z_Registration_Info_UClass_UWallrunComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWallrunComponent), 3055839819U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_259842273(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_2738056171(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo));

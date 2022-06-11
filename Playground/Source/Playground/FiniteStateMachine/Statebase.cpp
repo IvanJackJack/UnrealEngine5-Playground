@@ -3,8 +3,8 @@
 
 #include "StateBase.h"
 #include "StateMachineComponent.h"
-#include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
-#include "Playground/Utilities/CustomUtils.h"
+// #include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
+// #include "Playground/Utilities/CustomUtils.h"
 
 void UStateBase::Setup(FString newName, FFSMContext newContext) {
 	name=newName;
@@ -14,9 +14,9 @@ void UStateBase::Setup(FString newName, FFSMContext newContext) {
 					newContext.stateMachine
 	};
 
-	if(context->characterController && context->stateMachine) {
-		UCustomUtils::Print(name + TEXT(" setup correctly"));
-	}
+	// if(context->characterController && context->stateMachine) {
+	// 	UCustomUtils::Print(name + TEXT(" setup correctly"));
+	// }
 }
 
 void UStateBase::OnEnter() {
