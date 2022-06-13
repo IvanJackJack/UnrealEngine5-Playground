@@ -200,9 +200,10 @@ public:
 	FVector GetInterpVelocity();
 	//DA RIVEDERE
 	FVector GetVelocityByMode();
-
-	UFUNCTION(BlueprintCallable)
+	
 	FString GetWallSide();
+
+	float GetCancelTimerRatio();
 
 #pragma endregion
 
@@ -242,6 +243,8 @@ public:
 
 	FORCEINLINE
 	void ForceWallrunEnd() { bForceCancelWallrun=true; }
+
+	void UpdateGravityMode();
 
 #pragma endregion
 

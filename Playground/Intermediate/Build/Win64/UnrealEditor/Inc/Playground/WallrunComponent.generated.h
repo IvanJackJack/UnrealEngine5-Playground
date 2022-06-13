@@ -17,15 +17,13 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_56_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execIsCharacterNearWall); \
-	DECLARE_FUNCTION(execHasValidHit); \
-	DECLARE_FUNCTION(execGetWallSide);
+	DECLARE_FUNCTION(execHasValidHit);
 
 
 #define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_56_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execIsCharacterNearWall); \
-	DECLARE_FUNCTION(execHasValidHit); \
-	DECLARE_FUNCTION(execGetWallSide);
+	DECLARE_FUNCTION(execHasValidHit);
 
 
 #define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_56_INCLASS_NO_PURE_DECLS \

@@ -345,54 +345,14 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		*(bool*)Z_Param__Result=P_THIS->HasValidHit();
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(UWallrunComponent::execGetWallSide)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(FString*)Z_Param__Result=P_THIS->GetWallSide();
-		P_NATIVE_END;
-	}
 	void UWallrunComponent::StaticRegisterNativesUWallrunComponent()
 	{
 		UClass* Class = UWallrunComponent::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
-			{ "GetWallSide", &UWallrunComponent::execGetWallSide },
 			{ "HasValidHit", &UWallrunComponent::execHasValidHit },
 			{ "IsCharacterNearWall", &UWallrunComponent::execIsCharacterNearWall },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
-	}
-	struct Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics
-	{
-		struct WallrunComponent_eventGetWallSide_Parms
-		{
-			FString ReturnValue;
-		};
-		static const UECodeGen_Private::FStrPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(WallrunComponent_eventGetWallSide_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UWallrunComponent, nullptr, "GetWallSide", nullptr, nullptr, sizeof(Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::WallrunComponent_eventGetWallSide_Parms), Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UWallrunComponent_GetWallSide()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWallrunComponent_GetWallSide_Statics::FuncParams);
-		}
-		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_UWallrunComponent_HasValidHit_Statics
 	{
@@ -657,7 +617,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UWallrunComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UWallrunComponent_GetWallSide, "GetWallSide" }, // 705078425
 		{ &Z_Construct_UFunction_UWallrunComponent_HasValidHit, "HasValidHit" }, // 85955641
 		{ &Z_Construct_UFunction_UWallrunComponent_IsCharacterNearWall, "IsCharacterNearWall" }, // 3790568593
 	};
@@ -1075,9 +1034,9 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		{ EWallrunEndConditions_StaticEnum, TEXT("EWallrunEndConditions"), &Z_Registration_Info_UEnum_EWallrunEndConditions, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2623553140U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UWallrunComponent, UWallrunComponent::StaticClass, TEXT("UWallrunComponent"), &Z_Registration_Info_UClass_UWallrunComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWallrunComponent), 466608735U) },
+		{ Z_Construct_UClass_UWallrunComponent, UWallrunComponent::StaticClass, TEXT("UWallrunComponent"), &Z_Registration_Info_UClass_UWallrunComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWallrunComponent), 234860484U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_3031653948(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_1552765013(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo));

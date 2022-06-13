@@ -3,6 +3,7 @@
 
 #include "CustomHUD.h"
 #include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
+#include "Playground/CustomComponents/WallrunComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
 
 void UCustomHUD::NativePreConstruct() {
@@ -22,4 +23,26 @@ float UCustomHUD::GetStaminaRatio() {
 	}
 
 	return 0.0f;
+}
+
+float UCustomHUD::GetWallrunCancelTimerRatio() {
+	if(CharacterController) {
+		return CharacterController->WallrunComponent->GetCancelTimerRatio();
+	}
+
+	return 0.0f;
+}
+
+void UCustomHUD::SetGravityModeZero() {
+	if(CharacterController) {
+		CharacterController->WallrunComponent->gravityMode=EGravityMode::Zero;
+		CharacterController->WallrunComponent->UpdateGravityMode();
+	}
+}
+
+void UCustomHUD::SetGravityModeReduced() {
+	if(CharacterController) {
+		CharacterController->WallrunComponent->gravityMode=EGravityMode::Reduced;
+		CharacterController->WallrunComponent->UpdateGravityMode();
+	}
 }

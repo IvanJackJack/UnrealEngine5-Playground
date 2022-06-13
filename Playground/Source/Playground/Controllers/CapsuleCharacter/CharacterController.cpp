@@ -339,7 +339,7 @@ void ACharacterController::ClampVelocity() {
 	// 	FVector velocity=GetVelocity()/currentToMaxRatio;
 	// 	SetVelocity(velocity);
 	// }
-
+	
 	SetVelocity(GetVelocity().GetClampedToMaxSize(Movement->MaxFlySpeed));
 	
 }
@@ -363,11 +363,7 @@ void ACharacterController::SetVelocity(FVector velocity) {
 	Movement->Velocity=velocity;
 }
 
-FVector ACharacterController::MoveTowardsVector(FVector current, FVector target, float accel) {
-	float deltaTime=GetWorld()->DeltaTimeSeconds;
 
-	return FMath::VInterpTo(current, target, deltaTime, accel);
-}
 
 void ACharacterController::CancelVerticalVelocity() {
 	SetVelocity(GetHorizontalVelocity());
@@ -397,5 +393,13 @@ void ACharacterController::RecoverStamina() {
 	stamina=FMath::Min(stamina+staminaChangeAmount , maxStamina);
 }
 
+#pragma endregion
+
+#pragma region UtilityFunctions
+FVector ACharacterController::MoveTowardsVector(FVector current, FVector target, float accel) {
+	float deltaTime=GetWorld()->DeltaTimeSeconds;
+
+	return FMath::VInterpTo(current, target, deltaTime, accel);
+}
 #pragma endregion
 

@@ -254,30 +254,7 @@ void UWallrunComponent::BeginWallrun() {
 
 	Character->Movement->AirControl=1;
 
-	switch(gravityMode) {
-		case EGravityMode::Zero:
-			Character->Movement->GravityScale=0;
-			wallrunVelocityMult=1.f;
-			bLaunchOverrideXY=true;
-			bLaunchOverrideZ=true;
-
-			break;
-		case EGravityMode::Reduced:
-			Character->Movement->GravityScale=reducedGravity;
-			// wallrunVelocityMult=0.0334f;
-			wallrunVelocityMult=FMath::Pow(reducedGravity, 2) * 0.125f;
-			bLaunchOverrideXY=false;
-			bLaunchOverrideZ=false;
-
-		break;
-		case EGravityMode::OverTime:
-			Character->Movement->GravityScale=reducedGravity;
-			UCustomUtils::Print("Gravity mode over time to be implemented");
-			break;
-		default:
-			Character->Movement->GravityScale=0;
-			break;
-	}
+	UpdateGravityMode();
 	
 
 	//remove vertical velocity component at start
@@ -287,6 +264,8 @@ void UWallrunComponent::BeginWallrun() {
 	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
 	
 	startingLateralWallSide=wallrunSide;
+
+	Character->GetWorldTimerManager().SetTimer(wallrunCancelTimer, this, &UWallrunComponent::ForceWallrunEnd, wallrunCancelDelay);
 }
 
 void UWallrunComponent::EndWallrun() {
@@ -328,6 +307,9 @@ void UWallrunComponent::EndWallrun() {
 			StartWallrunDelayTimer(wallrunLockDelay);
 			break;
 	}
+
+	Character->GetWorldTimerManager().ClearTimer(wallrunCancelTimer);
+	
 }
 
 void UWallrunComponent::StartWallrunDelayTimer(float time) {
@@ -343,6 +325,13 @@ FString UWallrunComponent::GetWallSide() {
 	return FString(UEnum::GetDisplayValueAsText(wallrunSide).ToString());
 }
 
+float UWallrunComponent::GetCancelTimerRatio() {
+	if(Character->GetWorldTimerManager().IsTimerActive(wallrunCancelTimer)) {
+		return (Character->GetWorldTimerManager().GetTimerRemaining(wallrunCancelTimer) / wallrunCancelDelay);
+	}
+	return 1;
+}
+
 bool UWallrunComponent::IsCharacterNearWall() {
 	return (playerToWallVector.Length() <= Character->GetCapsule()->GetScaledCapsuleRadius() * 1.15f);
 }
@@ -353,6 +342,33 @@ bool UWallrunComponent::CanRegisterHit() {
 	}
 
 	return true;
+}
+
+void UWallrunComponent::UpdateGravityMode() {
+	switch(gravityMode) {
+		case EGravityMode::Zero:
+			Character->Movement->GravityScale=0;
+			wallrunVelocityMult=1.f;
+			bLaunchOverrideXY=true;
+			bLaunchOverrideZ=true;
+
+			break;
+		case EGravityMode::Reduced:
+			Character->Movement->GravityScale=reducedGravity;
+			// wallrunVelocityMult=0.0334f;
+			wallrunVelocityMult=FMath::Pow(reducedGravity, 2) * 0.125f;
+			bLaunchOverrideXY=false;
+			bLaunchOverrideZ=false;
+
+		break;
+		case EGravityMode::OverTime:
+			Character->Movement->GravityScale=reducedGravity;
+			UCustomUtils::Print("Gravity mode over time to be implemented");
+			break;
+		default:
+			Character->Movement->GravityScale=0;
+			break;
+	}
 }
 
 #pragma endregion

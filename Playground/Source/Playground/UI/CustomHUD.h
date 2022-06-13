@@ -25,4 +25,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetStaminaRatio();
+
+	UFUNCTION(BlueprintCallable)
+	float GetWallrunCancelTimerRatio();
+
+	UFUNCTION(BlueprintCallable)
+	void SetGravityModeZero();
+
+	UFUNCTION(BlueprintCallable)
+	void SetGravityModeReduced();
 };
