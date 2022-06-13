@@ -90,8 +90,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool bIsGrounded = true;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	bool bIsWallrunning;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool bJumpRequested;
@@ -131,6 +130,8 @@ public:
 	float staminaLoseAmount=25.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float staminaRecoverAmount=10.f;
+
+
 
 #pragma endregion
 	

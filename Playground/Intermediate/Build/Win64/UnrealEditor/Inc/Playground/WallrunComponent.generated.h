@@ -111,11 +111,11 @@ template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunSide>();
 #define FOREACH_ENUM_EWALLRUNENDREASON(op) \
 	op(EWallrunEndreason::LowVelocity) \
 	op(EWallrunEndreason::Jump) \
-	op(EWallrunEndreason::WrongKeys) \
 	op(EWallrunEndreason::SideChange) \
 	op(EWallrunEndreason::NoHit) \
 	op(EWallrunEndreason::WrongDirection) \
-	op(EWallrunEndreason::WrongMode) 
+	op(EWallrunEndreason::WrongMode) \
+	op(EWallrunEndreason::Forced) 
 
 enum class EWallrunEndreason : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunEndreason>();

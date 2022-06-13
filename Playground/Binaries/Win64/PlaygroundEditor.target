@@ -2193,6 +2193,18 @@
 			"Type": "DynamicLibrary"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/GeometryScripting/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/GeometryScripting/Binaries/Win64/UnrealEditor-GeometryScriptingCore.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/GeometryScripting/Binaries/Win64/UnrealEditor-GeometryScriptingEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/Interchange/Editor/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
 		},
@@ -23211,6 +23223,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/GeometryScripting/GeometryScripting.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/Interchange/Editor/InterchangeEditor.uplugin",
 			"Type": "UFS"
 		},
@@ -23480,6 +23496,10 @@
 		},
 		{
 			"Path": "$(ProjectDir)/Playground.uproject",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/LyraExampleContent/LyraExampleContent.uplugin",
 			"Type": "UFS"
 		}
 	],

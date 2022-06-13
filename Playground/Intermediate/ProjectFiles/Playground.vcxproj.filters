@@ -182,5 +182,14 @@
     <ClInclude Include="..\..\Source\Playground\Utilities\CustomUtils.h">
       <Filter>Source\Playground\Utilities</Filter>
     </ClInclude>
+    <Filter Include="Plugins">
+      <UniqueIdentifier>{BB38096A-B391-30DC-A0D4-4F3EA6B44507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\LyraExampleContent">
+      <UniqueIdentifier>{B0AEE50D-DE35-3EAE-B828-8B932102F59B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\LyraExampleContent\LyraExampleContent.uplugin">
+      <Filter>Plugins\LyraExampleContent</Filter>
+    </None>
   </ItemGroup>
 </Project>

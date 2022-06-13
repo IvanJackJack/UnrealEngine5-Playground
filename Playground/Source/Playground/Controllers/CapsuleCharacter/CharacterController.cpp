@@ -67,7 +67,7 @@ void ACharacterController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(!bIsWallrunning) {
+	if(!WallrunComponent->bIsWallrunning) {
 		RecoverStamina();
 	}else {
 		ConsumeStamina();
@@ -107,18 +107,11 @@ void ACharacterController::OnEndOverlap(UPrimitiveComponent* OverlappedComponent
 }
 
 void ACharacterController::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
-	if(bIsWallrunning || !WallrunComponent->wallrunLockTimerExpired) {
-		return;
+	if(WallrunComponent->CanRegisterHit()) {
+		if(WallrunComponent->IsValidForWallrun(Hit.ImpactNormal)) {
+			WallrunComponent->UpdateWallInfo(Hit);
+		}
 	}
-
-	if(!WallrunComponent->IsValidForWallrun(Hit.ImpactNormal)) {
-		return;
-	}
-
-	// UCustomUtils::Print("Update wall info from hit", 2);
-	// WallrunComponent->currentValidHit = Hit;
-	WallrunComponent->UpdateWallInfo(Hit);
-	
 }
 
 void ACharacterController::Landed(const FHitResult& Hit) {
@@ -194,8 +187,20 @@ void ACharacterController::ApplyWallrunMovement() {
 		// FVector wallrunVelocity=WallrunComponent->GetVelocityByMode();
 		// SetVelocity(wallrunVelocity);
 
+		ClampVelocity();
+		
+
+		// FVector wallrunVelocity=WallrunComponent->GetVelocity();
+
 		FVector wallrunVelocity=WallrunComponent->GetVelocity();
-		LaunchCharacter(wallrunVelocity, true, true);
+
+		UCustomUtils::Print(wallrunVelocity.Length());
+
+		LaunchCharacter(wallrunVelocity, 
+			WallrunComponent->bLaunchOverrideXY, 
+			WallrunComponent->bLaunchOverrideZ);
+
+		// ClampVelocity();
 	}
 }
 
@@ -273,15 +278,19 @@ void ACharacterController::GroundLeft() {
 void ACharacterController::GroundLand() {
 	bIsGrounded=true;
 	ResetJumpCount(jumpsMax);
+
+	bJumpRequested=false;
 }
 
 void ACharacterController::WallrunLand() {
 	bIsGrounded=true;
 	ResetJumpCount(FMath::Max(1,jumpsMax-1));
+
+	bJumpRequested=false;
 }
 
 bool ACharacterController::ConsumeJump() {
-	if(bIsWallrunning) { //always jump if wallrunning, even with 0 jumps left
+	if(WallrunComponent->bIsWallrunning) { //always jump if wallrunning, even with 0 jumps left
 		return true;
 	}
 	
@@ -325,23 +334,25 @@ void ACharacterController::UpdateMoveDirection() {
 }
 
 void ACharacterController::ClampVelocity() {
-	if(Movement->IsFalling()) {
-		float currentToMaxRatio=GetVelocity().Size() / Movement->MaxFlySpeed;
-		if(currentToMaxRatio>1) {
-			FVector velocity=GetVelocity()/currentToMaxRatio;
-			SetVelocity(velocity);
-		}
-	}
+	// float currentToMaxRatio=GetVelocity().Size() / Movement->MaxFlySpeed;
+	// if(currentToMaxRatio>1) {
+	// 	FVector velocity=GetVelocity()/currentToMaxRatio;
+	// 	SetVelocity(velocity);
+	// }
+
+	SetVelocity(GetVelocity().GetClampedToMaxSize(Movement->MaxFlySpeed));
+	
 }
 
 void ACharacterController::ClampHorizontalVelocity() {
-	if(Movement->IsFalling()) {
-		float currentToMaxRatio=GetHorizontalVelocity().Size() / Movement->MaxFlySpeed;
-		if(currentToMaxRatio>1) {
-			FVector velocity=GetHorizontalVelocity()/currentToMaxRatio;
-			SetHorizontalVelocity(velocity);
-		}
-	}
+	// float currentToMaxRatio=GetHorizontalVelocity().Size() / Movement->MaxFlySpeed;
+	// if(currentToMaxRatio>1) {
+	// 	FVector velocity=GetHorizontalVelocity()/currentToMaxRatio;
+	// 	SetHorizontalVelocity(velocity);
+	// }
+
+	SetHorizontalVelocity(GetHorizontalVelocity().GetClampedToMaxSize(Movement->MaxFlySpeed * 0.5f));
+	
 }
 
 void ACharacterController::SetHorizontalVelocity(FVector velocity) {
@@ -371,7 +382,7 @@ void ACharacterController::ConsumeStamina(bool useDeltaTime) {
 	if(useDeltaTime) {
 		staminaChangeAmount *= GetWorld()->DeltaTimeSeconds;
 
-		if(WallrunComponent->wallrunMoveDirection.Z > 0.5f) {
+		if(WallrunComponent->wallrunDirection.Z > 0.5f) {
 			staminaChangeAmount*=2.f;
 		}
 	}

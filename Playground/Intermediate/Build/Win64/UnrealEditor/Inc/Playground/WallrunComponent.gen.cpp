@@ -19,7 +19,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	PLAYGROUND_API UClass* Z_Construct_UClass_UWallrunComponent();
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
-	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 // End Cross Module References
 	static FEnumRegistrationInfo Z_Registration_Info_UEnum_EWallrunSide;
 	static UEnum* EWallrunSide_StaticEnum()
@@ -106,15 +105,17 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	const UECodeGen_Private::FEnumeratorParam Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enumerators[] = {
 		{ "EWallrunEndreason::LowVelocity", (int64)EWallrunEndreason::LowVelocity },
 		{ "EWallrunEndreason::Jump", (int64)EWallrunEndreason::Jump },
-		{ "EWallrunEndreason::WrongKeys", (int64)EWallrunEndreason::WrongKeys },
 		{ "EWallrunEndreason::SideChange", (int64)EWallrunEndreason::SideChange },
 		{ "EWallrunEndreason::NoHit", (int64)EWallrunEndreason::NoHit },
 		{ "EWallrunEndreason::WrongDirection", (int64)EWallrunEndreason::WrongDirection },
 		{ "EWallrunEndreason::WrongMode", (int64)EWallrunEndreason::WrongMode },
+		{ "EWallrunEndreason::Forced", (int64)EWallrunEndreason::Forced },
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UEnum_Playground_EWallrunEndreason_Statics::Enum_MetaDataParams[] = {
 		{ "BlueprintType", "true" },
+		{ "Forced.DisplayName", "Forced" },
+		{ "Forced.Name", "EWallrunEndreason::Forced" },
 		{ "Jump.DisplayName", "Jump" },
 		{ "Jump.Name", "EWallrunEndreason::Jump" },
 		{ "LowVelocity.DisplayName", "LowVelocity" },
@@ -126,8 +127,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		{ "SideChange.Name", "EWallrunEndreason::SideChange" },
 		{ "WrongDirection.DisplayName", "WrongDirection" },
 		{ "WrongDirection.Name", "EWallrunEndreason::WrongDirection" },
-		{ "WrongKeys.DisplayName", "WrongKeys" },
-		{ "WrongKeys.Name", "EWallrunEndreason::WrongKeys" },
 		{ "WrongMode.DisplayName", "WrongMode" },
 		{ "WrongMode.Name", "EWallrunEndreason::WrongMode" },
 	};
@@ -482,6 +481,11 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		static const UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bIsWallrunning_MetaData[];
+#endif
+		static void NewProp_bIsWallrunning_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bIsWallrunning;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallNormal_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_wallNormal;
@@ -498,13 +502,13 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallAngle;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_currentValidHit_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunDirection_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_currentValidHit;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_wallrunDirection;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunMoveDirection_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunVelocity_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_wallrunMoveDirection;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_wallrunVelocity;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_moveDirectionAlongWallAxis_MetaData[];
 #endif
@@ -514,14 +518,23 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_lookingMoveDirectionAlongWallAxis;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunLockTimerExpired_MetaData[];
-#endif
-		static void NewProp_wallrunLockTimerExpired_SetBit(void* Obj);
-		static const UECodeGen_Private::FBoolPropertyParams NewProp_wallrunLockTimerExpired;
-#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_playerToWallVector_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_playerToWallVector;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bLaunchOverrideXY_MetaData[];
+#endif
+		static void NewProp_bLaunchOverrideXY_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bLaunchOverrideXY;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bLaunchOverrideZ_MetaData[];
+#endif
+		static void NewProp_bLaunchOverrideZ_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bLaunchOverrideZ;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunVelocityMult_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunVelocityMult;
 		static const UECodeGen_Private::FBytePropertyParams NewProp_wallrunSide_Underlying;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunSide_MetaData[];
@@ -542,11 +555,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunMode_MetaData[];
 #endif
 		static const UECodeGen_Private::FEnumPropertyParams NewProp_wallrunMode;
-		static const UECodeGen_Private::FBytePropertyParams NewProp_gravityMode_Underlying;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_gravityMode_MetaData[];
-#endif
-		static const UECodeGen_Private::FEnumPropertyParams NewProp_gravityMode;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_bAlwaysStickToWall_MetaData[];
 #endif
@@ -562,10 +570,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 		static void NewProp_bUseCharacterMaxWalkableAngle_SetBit(void* Obj);
 		static const UECodeGen_Private::FBoolPropertyParams NewProp_bUseCharacterMaxWalkableAngle;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunLockDelay_MetaData[];
-#endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunLockDelay;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_rayCheckForWallLength_MetaData[];
 #endif
@@ -602,6 +606,11 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_initialAirControl_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_initialAirControl;
+		static const UECodeGen_Private::FBytePropertyParams NewProp_gravityMode_Underlying;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_gravityMode_MetaData[];
+#endif
+		static const UECodeGen_Private::FEnumPropertyParams NewProp_gravityMode;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_reducedGravity_MetaData[];
 #endif
@@ -621,6 +630,24 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_desiredDiagonalMode_MetaData[];
 #endif
 		static const UECodeGen_Private::FEnumPropertyParams NewProp_desiredDiagonalMode;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunLockDelay_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunLockDelay;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunLockTimerExpired_MetaData[];
+#endif
+		static void NewProp_wallrunLockTimerExpired_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_wallrunLockTimerExpired;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_wallrunCancelDelay_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_wallrunCancelDelay;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bForceCancelWallrun_MetaData[];
+#endif
+		static void NewProp_bForceCancelWallrun_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bForceCancelWallrun;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -642,6 +669,17 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
 	};
 #endif
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning_SetBit(void* Obj)
+	{
+		((UWallrunComponent*)Obj)->bIsWallrunning = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning = { "bIsWallrunning", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallNormal_MetaData[] = {
 		{ "Category", "Status" },
@@ -671,19 +709,19 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallAngle = { "wallAngle", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallAngle), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallAngle_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallAngle_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_currentValidHit_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunDirection_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_currentValidHit = { "currentValidHit", nullptr, (EPropertyFlags)0x0010008000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, currentValidHit), Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_currentValidHit_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_currentValidHit_MetaData)) }; // 1416937132
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunDirection = { "wallrunDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunDirection_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMoveDirection_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocity_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMoveDirection = { "wallrunMoveDirection", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunMoveDirection), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMoveDirection_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMoveDirection_MetaData)) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocity = { "wallrunVelocity", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunVelocity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocity_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocity_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_moveDirectionAlongWallAxis_MetaData[] = {
 		{ "Category", "Status" },
@@ -699,23 +737,41 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 #endif
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lookingMoveDirectionAlongWallAxis = { "lookingMoveDirectionAlongWallAxis", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, lookingMoveDirectionAlongWallAxis), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lookingMoveDirectionAlongWallAxis_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lookingMoveDirectionAlongWallAxis_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_MetaData[] = {
-		{ "Category", "Status" },
-		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
-	};
-#endif
-	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_SetBit(void* Obj)
-	{
-		((UWallrunComponent*)Obj)->wallrunLockTimerExpired = 1;
-	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired = { "wallrunLockTimerExpired", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_MetaData)) };
-#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_playerToWallVector_MetaData[] = {
 		{ "Category", "Status" },
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
 	};
 #endif
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_playerToWallVector = { "playerToWallVector", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, playerToWallVector), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_playerToWallVector_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_playerToWallVector_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY_SetBit(void* Obj)
+	{
+		((UWallrunComponent*)Obj)->bLaunchOverrideXY = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY = { "bLaunchOverrideXY", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ_SetBit(void* Obj)
+	{
+		((UWallrunComponent*)Obj)->bLaunchOverrideZ = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ = { "bLaunchOverrideZ", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocityMult_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocityMult = { "wallrunVelocityMult", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunVelocityMult), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocityMult_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocityMult_MetaData)) };
 	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunSide_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunSide_MetaData[] = {
@@ -739,7 +795,7 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason = { "lastEndReason", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, lastEndReason), Z_Construct_UEnum_Playground_EWallrunEndreason, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason_MetaData)) }; // 2874345878
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason = { "lastEndReason", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, lastEndReason), Z_Construct_UEnum_Playground_EWallrunEndreason, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason_MetaData)) }; // 577720531
 	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode_MetaData[] = {
@@ -748,14 +804,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	};
 #endif
 	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode = { "wallrunMode", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunMode), Z_Construct_UEnum_Playground_EWallrunMode, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode_MetaData)) }; // 1173612486
-	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_MetaData[] = {
-		{ "Category", "Status" },
-		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode = { "gravityMode", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, gravityMode), Z_Construct_UEnum_Playground_EGravityMode, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_MetaData)) }; // 338694445
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bAlwaysStickToWall_MetaData[] = {
 		{ "Category", "Parameters" },
@@ -789,13 +837,6 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		((UWallrunComponent*)Obj)->bUseCharacterMaxWalkableAngle = 1;
 	}
 	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle = { "bUseCharacterMaxWalkableAngle", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle_MetaData)) };
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData[] = {
-		{ "Category", "Parameters" },
-		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay = { "wallrunLockDelay", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunLockDelay), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_rayCheckForWallLength_MetaData[] = {
 		{ "Category", "Parameters" },
@@ -867,6 +908,14 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_initialAirControl = { "initialAirControl", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, initialAirControl), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_initialAirControl_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_initialAirControl_MetaData)) };
+	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_MetaData[] = {
+		{ "Category", "Parameters" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode = { "gravityMode", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, gravityMode), Z_Construct_UEnum_Playground_EGravityMode, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_MetaData)) }; // 338694445
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_reducedGravity_MetaData[] = {
 		{ "Category", "Parameters" },
@@ -898,17 +947,56 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	};
 #endif
 	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredDiagonalMode = { "desiredDiagonalMode", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, desiredDiagonalMode), Z_Construct_UEnum_Playground_EWallrunMode, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredDiagonalMode_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredDiagonalMode_MetaData)) }; // 1173612486
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData[] = {
+		{ "Category", "Parameters" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay = { "wallrunLockDelay", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunLockDelay), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_SetBit(void* Obj)
+	{
+		((UWallrunComponent*)Obj)->wallrunLockTimerExpired = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired = { "wallrunLockTimerExpired", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunCancelDelay_MetaData[] = {
+		{ "Category", "Parameters" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunCancelDelay = { "wallrunCancelDelay", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UWallrunComponent, wallrunCancelDelay), METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunCancelDelay_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunCancelDelay_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun_MetaData[] = {
+		{ "Category", "Status" },
+		{ "ModuleRelativePath", "CustomComponents/WallrunComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun_SetBit(void* Obj)
+	{
+		((UWallrunComponent*)Obj)->bForceCancelWallrun = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun = { "bForceCancelWallrun", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UWallrunComponent), &Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun_SetBit, METADATA_PARAMS(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UWallrunComponent_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bIsWallrunning,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallNormal,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallUpward,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallSideward,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallAngle,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_currentValidHit,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMoveDirection,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunDirection,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocity,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_moveDirectionAlongWallAxis,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lookingMoveDirectionAlongWallAxis,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_playerToWallVector,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideXY,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bLaunchOverrideZ,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunVelocityMult,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunSide_Underlying,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunSide,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_startingLateralWallSide_Underlying,
@@ -917,12 +1005,9 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_lastEndReason,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode_Underlying,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunMode,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_Underlying,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bAlwaysStickToWall,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bCancelWallrunWhenSideChanges,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bUseCharacterMaxWalkableAngle,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_rayCheckForWallLength,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunMinVerticalValue,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_visualWallrunLookingDownThreshold,
@@ -932,6 +1017,8 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunAngleThreshold,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_velocityAccelerationRatio,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_initialAirControl,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode_Underlying,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_gravityMode,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_reducedGravity,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredHorizontalMode_Underlying,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredHorizontalMode,
@@ -939,6 +1026,10 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredVerticalMode,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredDiagonalMode_Underlying,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_desiredDiagonalMode,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockDelay,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunLockTimerExpired,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_wallrunCancelDelay,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWallrunComponent_Statics::NewProp_bForceCancelWallrun,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UWallrunComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UWallrunComponent>::IsAbstract,
@@ -978,15 +1069,15 @@ void EmptyLinkFunctionForGeneratedCodeWallrunComponent() {}
 	};
 	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo[] = {
 		{ EWallrunSide_StaticEnum, TEXT("EWallrunSide"), &Z_Registration_Info_UEnum_EWallrunSide, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 3832065952U) },
-		{ EWallrunEndreason_StaticEnum, TEXT("EWallrunEndreason"), &Z_Registration_Info_UEnum_EWallrunEndreason, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2874345878U) },
+		{ EWallrunEndreason_StaticEnum, TEXT("EWallrunEndreason"), &Z_Registration_Info_UEnum_EWallrunEndreason, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 577720531U) },
 		{ EWallrunMode_StaticEnum, TEXT("EWallrunMode"), &Z_Registration_Info_UEnum_EWallrunMode, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1173612486U) },
 		{ EGravityMode_StaticEnum, TEXT("EGravityMode"), &Z_Registration_Info_UEnum_EGravityMode, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 338694445U) },
 		{ EWallrunEndConditions_StaticEnum, TEXT("EWallrunEndConditions"), &Z_Registration_Info_UEnum_EWallrunEndConditions, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2623553140U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UWallrunComponent, UWallrunComponent::StaticClass, TEXT("UWallrunComponent"), &Z_Registration_Info_UClass_UWallrunComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWallrunComponent), 3055839819U) },
+		{ Z_Construct_UClass_UWallrunComponent, UWallrunComponent::StaticClass, TEXT("UWallrunComponent"), &Z_Registration_Info_UClass_UWallrunComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWallrunComponent), 466608735U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_2738056171(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_3031653948(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_Statics::EnumInfo));

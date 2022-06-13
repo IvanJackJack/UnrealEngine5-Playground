@@ -19,11 +19,11 @@ UENUM(BlueprintType)
 enum class EWallrunEndreason : uint8 {
 	LowVelocity UMETA(DisplayName = "LowVelocity"),
 	Jump UMETA(DisplayName = "Jump"),
-	WrongKeys UMETA(DisplayName = "WrongKeys"),
 	SideChange UMETA(DisplayName = "SideChange"),
 	NoHit UMETA(DisplayName = "NoHit"),
 	WrongDirection UMETA(DisplayName = "WrongDirection"),
-	WrongMode UMETA(DisplayName = "WrongMode")
+	WrongMode UMETA(DisplayName = "WrongMode"),
+	Forced UMETA(DisplayName = "Forced")
 };
 
 UENUM(BlueprintType)
@@ -69,6 +69,9 @@ public:
 
 #pragma region Status
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bIsWallrunning;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector wallNormal;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector wallUpward;
@@ -77,22 +80,28 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	float wallAngle;
 	FVector lastValidWallNormal;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FHitResult currentValidHit;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	FVector wallrunMoveDirection;
+	FVector wallrunDirection;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	FVector wallrunVelocity;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector moveDirectionAlongWallAxis;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector lookingMoveDirectionAlongWallAxis;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	bool wallrunLockTimerExpired = true;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector playerToWallVector;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
+	bool bLaunchOverrideXY=true;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
+	bool bLaunchOverrideZ=true;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
+	float wallrunVelocityMult=1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	EWallrunSide wallrunSide;
@@ -102,8 +111,7 @@ public:
 	EWallrunEndreason lastEndReason;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	EWallrunMode wallrunMode;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	EGravityMode gravityMode;
+	
 #pragma endregion
 
 #pragma region Parameters
@@ -115,8 +123,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bUseCharacterMaxWalkableAngle = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallrunLockDelay=0.5f;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Parameters)
 	float rayCheckForWallLength;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
@@ -146,8 +153,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float initialAirControl;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	EGravityMode gravityMode;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float reducedGravity=0.2f;
+
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EWallrunMode desiredHorizontalMode;
@@ -159,7 +172,18 @@ public:
 #pragma endregion
 
 #pragma region Timers
-	FTimerHandle wallrunDelayTimer;
+	FTimerHandle wallrunLockTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float wallrunLockDelay=0.5f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool wallrunLockTimerExpired = true;
+
+	FTimerHandle wallrunCancelTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float wallrunCancelDelay=5.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bForceCancelWallrun = true;
+
 #pragma endregion
 	
 #pragma region GettersSetters
@@ -188,8 +212,6 @@ public:
 
 	void UpdateWallInfo(const FHitResult& Hit);
 
-	// void UpdateWallInfo(FString caller);
-
 	bool IsValidForWallrun(FVector surfaceNormal);
 
 	bool CanWallrun();
@@ -215,6 +237,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool IsCharacterNearWall();
+
+	bool CanRegisterHit();
+
+	FORCEINLINE
+	void ForceWallrunEnd() { bForceCancelWallrun=true; }
 
 #pragma endregion
 

@@ -49,16 +49,14 @@ void UWallrunComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 #pragma region GettersSetters
 
 FVector UWallrunComponent::GetVelocity() {
-	FVector wallrunVelocity=
-		wallrunMoveDirection*Character->Movement->MaxCustomMovementSpeed;
+	wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
 
 	if(bAlwaysStickToWall && !IsCharacterNearWall()) {
-			FVector pushToWallVelocity=playerToWallVector;
-			// wallrunVelocity=
-			// 	(playerToWallVector.GetSafeNormal() + wallrunVelocity.GetSafeNormal()).GetSafeNormal()
-			// 	*wallrunVelocity.Length();
-			wallrunVelocity+=pushToWallVelocity;
-		}
+		FVector pushToWallVelocity=playerToWallVector;
+		wallrunVelocity+=pushToWallVelocity;
+	}
+
+	wallrunVelocity*=wallrunVelocityMult;
 
 	return wallrunVelocity;
 }
@@ -137,7 +135,7 @@ bool UWallrunComponent::HasValidHit() {
 
 bool UWallrunComponent::IsValidForWallrun(FVector surfaceNormal) {
 	float surfaceAngle=GetVerticalAngle(surfaceNormal);
-	UCustomUtils::Print("Surface angle is " + FString::SanitizeFloat(surfaceAngle));
+	// UCustomUtils::Print("Surface angle is " + FString::SanitizeFloat(surfaceAngle));
 	
 	return (surfaceAngle>=wallrunAngleThreshold);
 }
@@ -248,7 +246,7 @@ bool UWallrunComponent::LookingDownOverThreshold() {
 }
 
 void UWallrunComponent::BeginWallrun() {
-	Character->bIsWallrunning=true;
+	bIsWallrunning=true;
 
 	// UpdateWallrunModeOnInputKeys();
 	UpdateWallrunSide();
@@ -259,10 +257,19 @@ void UWallrunComponent::BeginWallrun() {
 	switch(gravityMode) {
 		case EGravityMode::Zero:
 			Character->Movement->GravityScale=0;
+			wallrunVelocityMult=1.f;
+			bLaunchOverrideXY=true;
+			bLaunchOverrideZ=true;
+
 			break;
 		case EGravityMode::Reduced:
 			Character->Movement->GravityScale=reducedGravity;
-			break;
+			// wallrunVelocityMult=0.0334f;
+			wallrunVelocityMult=FMath::Pow(reducedGravity, 2) * 0.125f;
+			bLaunchOverrideXY=false;
+			bLaunchOverrideZ=false;
+
+		break;
 		case EGravityMode::OverTime:
 			Character->Movement->GravityScale=reducedGravity;
 			UCustomUtils::Print("Gravity mode over time to be implemented");
@@ -285,7 +292,9 @@ void UWallrunComponent::BeginWallrun() {
 void UWallrunComponent::EndWallrun() {
 	EWallrunEndreason endreason = lastEndReason;
 	
-	Character->bIsWallrunning=false;
+	bIsWallrunning=false;
+	bForceCancelWallrun=false;
+
 	Character->Movement->AirControl=initialAirControl;
 	Character->Movement->GravityScale=1;
 
@@ -294,7 +303,7 @@ void UWallrunComponent::EndWallrun() {
 	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
 
 	ResetHitAndWallInfo();
-	wallrunMoveDirection=FVector::ZeroVector;
+	wallrunDirection=FVector::ZeroVector;
 	moveDirectionAlongWallAxis=FVector::ZeroVector;
 	lookingMoveDirectionAlongWallAxis=FVector::ZeroVector;
 
@@ -307,8 +316,8 @@ void UWallrunComponent::EndWallrun() {
 			StartWallrunDelayTimer(wallrunLockDelay * 1.25f);
 			break;
 	
-		case EWallrunEndreason::WrongKeys:
-			StartWallrunDelayTimer(wallrunLockDelay * 0.5f);
+		case EWallrunEndreason::Forced:
+			StartWallrunDelayTimer(wallrunLockDelay);
 			break;
 
 		case EWallrunEndreason::WrongDirection:
@@ -323,7 +332,7 @@ void UWallrunComponent::EndWallrun() {
 
 void UWallrunComponent::StartWallrunDelayTimer(float time) {
 	wallrunLockTimerExpired=false;
-	Character->GetWorldTimerManager().SetTimer(wallrunDelayTimer, this, &UWallrunComponent::ResetWallrunTimer, time);
+	Character->GetWorldTimerManager().SetTimer(wallrunLockTimer, this, &UWallrunComponent::ResetWallrunTimer, time);
 }
 
 void UWallrunComponent::ResetWallrunTimer() {
@@ -336,6 +345,14 @@ FString UWallrunComponent::GetWallSide() {
 
 bool UWallrunComponent::IsCharacterNearWall() {
 	return (playerToWallVector.Length() <= Character->GetCapsule()->GetScaledCapsuleRadius() * 1.15f);
+}
+
+bool UWallrunComponent::CanRegisterHit() {
+	if(bIsWallrunning || !wallrunLockTimerExpired) {
+		return false;
+	}
+
+	return true;
 }
 
 #pragma endregion
@@ -429,20 +446,20 @@ void UWallrunComponent::UpdateWallrunDirection() {
 		case EWallrunMode::Horizontal:
 			switch (wallrunSide) {
 				case EWallrunSide::Right:
-					wallrunMoveDirection=wallSideward;
+					wallrunDirection=wallSideward;
 
 					break;
 				
 				case EWallrunSide::Left:
-					wallrunMoveDirection=-wallSideward;
+					wallrunDirection=-wallSideward;
 
 					break;
 					
 				default:
 					if(lookingMoveDirectionAlongWallAxis.Y < 0) {
-						wallrunMoveDirection=wallSideward;
+						wallrunDirection=wallSideward;
 					}else {
-						wallrunMoveDirection=-wallSideward;
+						wallrunDirection=-wallSideward;
 					}
 					break;
 			}
@@ -450,7 +467,7 @@ void UWallrunComponent::UpdateWallrunDirection() {
 			break;
 
 		case EWallrunMode::Vertical:
-			wallrunMoveDirection=wallUpward;
+			wallrunDirection=wallUpward;
 			break;
 
 		case EWallrunMode::Diagonal:
@@ -458,7 +475,7 @@ void UWallrunComponent::UpdateWallrunDirection() {
 			UpwardMovementAlongWallAxis=Character->inputValues.moveInput.X * wallUpward;
 			moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
 
-			wallrunMoveDirection=moveDirectionAlongWallAxis;
+			wallrunDirection=moveDirectionAlongWallAxis;
 			break;
 
 		case EWallrunMode::Visual:
@@ -466,7 +483,7 @@ void UWallrunComponent::UpdateWallrunDirection() {
 
 			lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
 			
-			wallrunMoveDirection=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
+			wallrunDirection=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
 			break;
 
 		default:
@@ -535,7 +552,7 @@ FVector UWallrunComponent::MoveTowardsVector(FVector current, FVector target, fl
 float UWallrunComponent::GetHorizontalAngle(FVector direction) {
 	FVector horizontalDirection=FVector(direction.X, direction.Y, 0.f).GetSafeNormal();
 	float horizontalSlope=FVector::DotProduct(direction, horizontalDirection);
-	float horizontalAngle=FMath::RadiansToDegrees(FMath::Acos(horizontalSlope)) * FMath::Sign(direction.Z);
+	float horizontalAngle=FMath::RadiansToDegrees(FMath::Acos(horizontalSlope)) * FMath::Sign(horizontalSlope);
 
 	return horizontalAngle;
 }
