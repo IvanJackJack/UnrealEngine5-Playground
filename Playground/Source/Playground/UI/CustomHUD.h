@@ -34,4 +34,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetGravityModeReduced();
+
+	UFUNCTION(BlueprintCallable)
+	void SetStaminaConsumption(float amount);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCancelDelay(float delay);
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateGravityScale(float scale);
+
+	UFUNCTION(BlueprintCallable)
+	void SetWallrunVisualZThreshold(float amount);
 };

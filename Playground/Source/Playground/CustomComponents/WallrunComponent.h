@@ -40,7 +40,7 @@ UENUM(BlueprintType)
 enum class EGravityMode : uint8 {
 	Zero UMETA(DisplayName = "Zero"),
 	Reduced UMETA(DisplayName = "Reduced"),
-	OverTime UMETA(DisplayName = "OverTime")
+	StaminaBased UMETA(DisplayName = "StaminaBased")
 };
 
 UENUM(BlueprintType)
@@ -70,6 +70,7 @@ public:
 #pragma region Status
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool bIsWallrunning;
+	bool bIsFirstVelocityRequest;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector wallNormal;
@@ -101,7 +102,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
 	bool bLaunchOverrideZ=true;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
-	float wallrunVelocityMult=1;
+	float reducedGravityMult=1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	EWallrunSide wallrunSide;
@@ -205,6 +206,20 @@ public:
 
 	float GetCancelTimerRatio();
 
+	FORCEINLINE
+	void SetWallrunCancelDelay(float delay){wallrunCancelDelay=delay;}
+
+	FORCEINLINE
+	void SetVisualWallrunMinVerticalValue(float value){ visualWallrunMinVerticalValue=value;}
+
+	FORCEINLINE
+	void SetVisualWallrunLookingDownThreshold(float value){ visualWallrunLookingDownThreshold=value;}
+
+	FORCEINLINE
+	void SetReducedGravity(float value){ reducedGravity=value;}
+
+	FORCEINLINE
+	void SetGravityMode(EGravityMode mode){gravityMode=mode;}
 #pragma endregion
 
 #pragma region WallrunStatus
@@ -244,7 +259,8 @@ public:
 	FORCEINLINE
 	void ForceWallrunEnd() { bForceCancelWallrun=true; }
 
-	void UpdateGravityMode();
+	void UpdateGravityParamsByMode();
+
 
 #pragma endregion
 
@@ -271,6 +287,18 @@ public:
 	float GetHorizontalAngle(FVector direction);
 
 	float GetVerticalAngle(FVector direction);
+
+	FORCEINLINE
+	float CalculateCombinationPowSqrtOfValue(float value, float halfPow=0.5f, float halfSqrt=0.334f) {
+		return ( halfSqrt*FMath::Sqrt(value) + halfPow*FMath::Pow(value, 2) );
+	}
+
+	FORCEINLINE
+	float CalculateCustomLogisticOfValue(float value, float logisticMax = 1, float logisticOffset = 0.75f, float logisticScale = 2.334f) {
+		return ( logisticMax / (1 + FMath::Exp(-logisticScale * (value - logisticOffset))) );
+	}
+
+	FVector ProjectVectorAlongWallPlane(FVector vector);
 
 #pragma endregion
 

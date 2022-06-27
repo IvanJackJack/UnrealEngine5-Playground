@@ -2,6 +2,8 @@
 
 
 #include "CustomHUD.h"
+
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/CustomComponents/WallrunComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
@@ -12,8 +14,8 @@ void UCustomHUD::NativePreConstruct() {
 	CharacterController=Cast<ACharacterController>(GetOwningPlayerPawn());
 	if(CharacterController) {
 		StateMachine=CharacterController->StateMachine;
-		if(StateMachine)
-			UCustomUtils::Print("Custom HUD Character State Machine reference ready");
+		// if(StateMachine)
+		// 	UCustomUtils::Print("Custom HUD Character State Machine reference ready");
 	}
 }
 
@@ -36,13 +38,40 @@ float UCustomHUD::GetWallrunCancelTimerRatio() {
 void UCustomHUD::SetGravityModeZero() {
 	if(CharacterController) {
 		CharacterController->WallrunComponent->gravityMode=EGravityMode::Zero;
-		CharacterController->WallrunComponent->UpdateGravityMode();
+		CharacterController->WallrunComponent->UpdateGravityParamsByMode();
 	}
 }
 
 void UCustomHUD::SetGravityModeReduced() {
 	if(CharacterController) {
 		CharacterController->WallrunComponent->gravityMode=EGravityMode::Reduced;
-		CharacterController->WallrunComponent->UpdateGravityMode();
+		CharacterController->WallrunComponent->UpdateGravityParamsByMode();
 	}
+}
+
+void UCustomHUD::SetStaminaConsumption(float amount) {
+	if(CharacterController) {
+		CharacterController->SetStaminaLoseAmount(amount);
+	}
+}
+
+void UCustomHUD::SetCancelDelay(float delay) {
+	if(CharacterController) {
+		CharacterController->WallrunComponent->SetWallrunCancelDelay(delay);
+	}
+}
+
+void UCustomHUD::UpdateGravityScale(float scale) {
+	check(CharacterController);
+
+	CharacterController->WallrunComponent->SetReducedGravity(scale);
+
+	if(CharacterController->WallrunComponent->bIsWallrunning)
+		CharacterController->WallrunComponent->UpdateGravityParamsByMode();
+}
+
+void UCustomHUD::SetWallrunVisualZThreshold(float amount) {
+	check(CharacterController);
+	
+	CharacterController->WallrunComponent->SetVisualWallrunLookingDownThreshold(amount);
 }

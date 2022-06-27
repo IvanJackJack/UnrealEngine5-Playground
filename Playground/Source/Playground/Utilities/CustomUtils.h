@@ -22,5 +22,6 @@ public:
 	static FVector MoveTowardsVector(FVector current, FVector target, float accel);
 	static float GetHorizontalAngle(FVector direction);
 
-	static void DrawLine(FVector LineStart, FVector LineEnd,	FColor Color = FColor::Orange, float LifeTime=1.f);
+	static void DrawLine(FVector LineStart, FVector LineEnd, FColor Color = FColor::Orange, float LifeTime=1.f);
+	static void DrawVectorFromActor(AActor* actor, FVector vector, FColor Color = FColor::Orange, float LifeTime=1.f);
 };

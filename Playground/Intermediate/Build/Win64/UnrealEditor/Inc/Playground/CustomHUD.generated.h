@@ -16,6 +16,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_SPARSE_DATA
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execSetWallrunVisualZThreshold); \
+	DECLARE_FUNCTION(execUpdateGravityScale); \
+	DECLARE_FUNCTION(execSetCancelDelay); \
+	DECLARE_FUNCTION(execSetStaminaConsumption); \
 	DECLARE_FUNCTION(execSetGravityModeReduced); \
 	DECLARE_FUNCTION(execSetGravityModeZero); \
 	DECLARE_FUNCTION(execGetWallrunCancelTimerRatio); \
@@ -24,6 +28,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execSetWallrunVisualZThreshold); \
+	DECLARE_FUNCTION(execUpdateGravityScale); \
+	DECLARE_FUNCTION(execSetCancelDelay); \
+	DECLARE_FUNCTION(execSetStaminaConsumption); \
 	DECLARE_FUNCTION(execSetGravityModeReduced); \
 	DECLARE_FUNCTION(execSetGravityModeZero); \
 	DECLARE_FUNCTION(execGetWallrunCancelTimerRatio); \

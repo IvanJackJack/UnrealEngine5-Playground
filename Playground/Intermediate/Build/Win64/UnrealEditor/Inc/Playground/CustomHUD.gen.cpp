@@ -16,6 +16,38 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 	PLAYGROUND_API UClass* Z_Construct_UClass_ACharacterController_NoRegister();
 	PLAYGROUND_API UClass* Z_Construct_UClass_UStateMachineComponent_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(UCustomHUD::execSetWallrunVisualZThreshold)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_amount);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->SetWallrunVisualZThreshold(Z_Param_amount);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UCustomHUD::execUpdateGravityScale)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_scale);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->UpdateGravityScale(Z_Param_scale);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UCustomHUD::execSetCancelDelay)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_delay);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->SetCancelDelay(Z_Param_delay);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UCustomHUD::execSetStaminaConsumption)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_amount);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->SetStaminaConsumption(Z_Param_amount);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UCustomHUD::execSetGravityModeReduced)
 	{
 		P_FINISH;
@@ -50,8 +82,12 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		static const FNameNativePtrPair Funcs[] = {
 			{ "GetStaminaRatio", &UCustomHUD::execGetStaminaRatio },
 			{ "GetWallrunCancelTimerRatio", &UCustomHUD::execGetWallrunCancelTimerRatio },
+			{ "SetCancelDelay", &UCustomHUD::execSetCancelDelay },
 			{ "SetGravityModeReduced", &UCustomHUD::execSetGravityModeReduced },
 			{ "SetGravityModeZero", &UCustomHUD::execSetGravityModeZero },
+			{ "SetStaminaConsumption", &UCustomHUD::execSetStaminaConsumption },
+			{ "SetWallrunVisualZThreshold", &UCustomHUD::execSetWallrunVisualZThreshold },
+			{ "UpdateGravityScale", &UCustomHUD::execUpdateGravityScale },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -119,6 +155,38 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics
+	{
+		struct CustomHUD_eventSetCancelDelay_Parms
+		{
+			float delay;
+		};
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_delay;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::NewProp_delay = { "delay", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CustomHUD_eventSetCancelDelay_Parms, delay), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::NewProp_delay,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "UI/CustomHUD.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCustomHUD, nullptr, "SetCancelDelay", nullptr, nullptr, sizeof(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::CustomHUD_eventSetCancelDelay_Parms), Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCustomHUD_SetCancelDelay()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	struct Z_Construct_UFunction_UCustomHUD_SetGravityModeReduced_Statics
 	{
 #if WITH_METADATA
@@ -163,6 +231,102 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics
+	{
+		struct CustomHUD_eventSetStaminaConsumption_Parms
+		{
+			float amount;
+		};
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_amount;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::NewProp_amount = { "amount", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CustomHUD_eventSetStaminaConsumption_Parms, amount), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::NewProp_amount,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "UI/CustomHUD.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCustomHUD, nullptr, "SetStaminaConsumption", nullptr, nullptr, sizeof(Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::CustomHUD_eventSetStaminaConsumption_Parms), Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics
+	{
+		struct CustomHUD_eventSetWallrunVisualZThreshold_Parms
+		{
+			float amount;
+		};
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_amount;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::NewProp_amount = { "amount", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CustomHUD_eventSetWallrunVisualZThreshold_Parms, amount), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::NewProp_amount,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "UI/CustomHUD.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCustomHUD, nullptr, "SetWallrunVisualZThreshold", nullptr, nullptr, sizeof(Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::CustomHUD_eventSetWallrunVisualZThreshold_Parms), Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics
+	{
+		struct CustomHUD_eventUpdateGravityScale_Parms
+		{
+			float scale;
+		};
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_scale;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::NewProp_scale = { "scale", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CustomHUD_eventUpdateGravityScale_Parms, scale), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::NewProp_scale,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "UI/CustomHUD.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCustomHUD, nullptr, "UpdateGravityScale", nullptr, nullptr, sizeof(Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::CustomHUD_eventUpdateGravityScale_Parms), Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCustomHUD_UpdateGravityScale()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_UpdateGravityScale_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UCustomHUD);
 	UClass* Z_Construct_UClass_UCustomHUD_NoRegister()
 	{
@@ -194,8 +358,12 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_UCustomHUD_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UCustomHUD_GetStaminaRatio, "GetStaminaRatio" }, // 695613423
 		{ &Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio, "GetWallrunCancelTimerRatio" }, // 3936882071
+		{ &Z_Construct_UFunction_UCustomHUD_SetCancelDelay, "SetCancelDelay" }, // 941145850
 		{ &Z_Construct_UFunction_UCustomHUD_SetGravityModeReduced, "SetGravityModeReduced" }, // 980298560
 		{ &Z_Construct_UFunction_UCustomHUD_SetGravityModeZero, "SetGravityModeZero" }, // 1088314330
+		{ &Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption, "SetStaminaConsumption" }, // 4199035405
+		{ &Z_Construct_UFunction_UCustomHUD_SetWallrunVisualZThreshold, "SetWallrunVisualZThreshold" }, // 1999361651
+		{ &Z_Construct_UFunction_UCustomHUD_UpdateGravityScale, "UpdateGravityScale" }, // 1668951994
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCustomHUD_Statics::Class_MetaDataParams[] = {
@@ -259,9 +427,9 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCustomHUD, UCustomHUD::StaticClass, TEXT("UCustomHUD"), &Z_Registration_Info_UClass_UCustomHUD, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCustomHUD), 475637933U) },
+		{ Z_Construct_UClass_UCustomHUD, UCustomHUD::StaticClass, TEXT("UCustomHUD"), &Z_Registration_Info_UClass_UCustomHUD, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCustomHUD), 3746173311U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_3357958381(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_3317287506(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

@@ -49,14 +49,39 @@ void UWallrunComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 #pragma region GettersSetters
 
 FVector UWallrunComponent::GetVelocity() {
-	wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
+	if(bIsFirstVelocityRequest) {
+		wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
+		bIsFirstVelocityRequest=false;
+		return wallrunVelocity;
+	}
+
+	switch(gravityMode) {
+		case EGravityMode::Zero:
+			wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
+			break;
+
+	case EGravityMode::Reduced:
+			wallrunVelocity=(wallrunDirection + ProjectVectorAlongWallPlane(Character->GetVelocity()).GetSafeNormal());
+			wallrunVelocity += FVector::DownVector * reducedGravityMult;
+			wallrunVelocity=wallrunVelocity.GetSafeNormal();
+
+			wallrunVelocity*=Character->Movement->MaxFlySpeed * reducedGravityMult * 0.125f;
+
+			// UCustomUtils::DrawVectorFromActor(Character, ProjectVectorAlongWallPlane(Character->GetVelocity()), FColor::Blue, GetWorld()->DeltaTimeSeconds);
+			// UCustomUtils::DrawVectorFromActor(Character, wallrunVelocity.GetSafeNormal() * Character->Movement->MaxFlySpeed, FColor::Emerald, GetWorld()->DeltaTimeSeconds);
+			// UCustomUtils::DrawVectorFromActor(Character, wallrunDirection * Character->Movement->MaxFlySpeed, FColor::Cyan, GetWorld()->DeltaTimeSeconds);
+
+		break;
+		
+		default:
+			wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
+			break;
+	}
 
 	if(bAlwaysStickToWall && !IsCharacterNearWall()) {
 		FVector pushToWallVelocity=playerToWallVector;
 		wallrunVelocity+=pushToWallVelocity;
 	}
-
-	wallrunVelocity*=wallrunVelocityMult;
 
 	return wallrunVelocity;
 }
@@ -254,7 +279,7 @@ void UWallrunComponent::BeginWallrun() {
 
 	Character->Movement->AirControl=1;
 
-	UpdateGravityMode();
+	UpdateGravityParamsByMode();
 	
 
 	//remove vertical velocity component at start
@@ -264,6 +289,8 @@ void UWallrunComponent::BeginWallrun() {
 	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
 	
 	startingLateralWallSide=wallrunSide;
+
+	bIsFirstVelocityRequest=true;
 
 	Character->GetWorldTimerManager().SetTimer(wallrunCancelTimer, this, &UWallrunComponent::ForceWallrunEnd, wallrunCancelDelay);
 }
@@ -344,24 +371,29 @@ bool UWallrunComponent::CanRegisterHit() {
 	return true;
 }
 
-void UWallrunComponent::UpdateGravityMode() {
+void UWallrunComponent::UpdateGravityParamsByMode() {
 	switch(gravityMode) {
 		case EGravityMode::Zero:
 			Character->Movement->GravityScale=0;
-			wallrunVelocityMult=1.f;
+			reducedGravityMult=1.f;
 			bLaunchOverrideXY=true;
 			bLaunchOverrideZ=true;
 
 			break;
-		case EGravityMode::Reduced:
+	case EGravityMode::Reduced:
+			reducedGravity=FMath::Clamp(reducedGravity, 0.1f, 0.9f);
 			Character->Movement->GravityScale=reducedGravity;
-			// wallrunVelocityMult=0.0334f;
-			wallrunVelocityMult=FMath::Pow(reducedGravity, 2) * 0.125f;
+			
+			// reducedGravityMult=CalculateCombinationPowSqrtOfValue(reducedGravity);
+			reducedGravityMult=CalculateCustomLogisticOfValue(reducedGravity);
+
+			// reducedGravityMult *= 0.1f;
+
 			bLaunchOverrideXY=false;
 			bLaunchOverrideZ=false;
 
 		break;
-		case EGravityMode::OverTime:
+		case EGravityMode::StaminaBased:
 			Character->Movement->GravityScale=reducedGravity;
 			UCustomUtils::Print("Gravity mode over time to be implemented");
 			break;
@@ -495,7 +527,7 @@ void UWallrunComponent::UpdateWallrunDirection() {
 			break;
 
 		case EWallrunMode::Visual:
-			lookingMoveDirectionAlongWallAxis=FVector::VectorPlaneProject(Character->lookingDirection, wallNormal);
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection);
 
 			lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
 			
@@ -584,5 +616,11 @@ float UWallrunComponent::GetVerticalAngle(FVector direction) {
 
 	return angle;
 }
+
+FVector UWallrunComponent::ProjectVectorAlongWallPlane(FVector vector) {
+	return FVector::VectorPlaneProject(vector, wallNormal);
+}
+
+
 
 #pragma endregion

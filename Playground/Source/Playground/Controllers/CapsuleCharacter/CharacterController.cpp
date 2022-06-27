@@ -194,6 +194,7 @@ void ACharacterController::ApplyWallrunMovement() {
 
 		FVector wallrunVelocity=WallrunComponent->GetVelocity();
 
+		// UCustomUtils::DrawLine(GetActorLocation(), (GetActorLocation()+wallrunVelocity)*100.f);
 		UCustomUtils::Print(wallrunVelocity.Length());
 
 		LaunchCharacter(wallrunVelocity, 
@@ -374,7 +375,7 @@ float ACharacterController::GetStaminaRatio() {
 }
 
 void ACharacterController::ConsumeStamina(bool useDeltaTime) {
-	float staminaChangeAmount=staminaLoseAmount;
+	float staminaChangeAmount=staminaLoseAmount*10.f;
 	if(useDeltaTime) {
 		staminaChangeAmount *= GetWorld()->DeltaTimeSeconds;
 
@@ -388,7 +389,7 @@ void ACharacterController::ConsumeStamina(bool useDeltaTime) {
 }
 
 void ACharacterController::RecoverStamina() {
-	float staminaChangeAmount=GetWorld()->DeltaTimeSeconds*staminaRecoverAmount;
+	float staminaChangeAmount=GetWorld()->DeltaTimeSeconds*staminaRecoverAmount*10.f;
 	
 	stamina=FMath::Min(stamina+staminaChangeAmount , maxStamina);
 }

@@ -127,9 +127,9 @@ public:
 	int jumpsMax = 2;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float staminaLoseAmount=25.f;
+	float staminaLoseAmount=2.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float staminaRecoverAmount=10.f;
+	float staminaRecoverAmount=2.5f;
 
 
 
@@ -162,7 +162,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	class UWallrunComponent* GetWallrun() const { return WallrunComponent; }
 
-	
+	FORCEINLINE
+	void SetStaminaLoseAmount(float maxTime){ staminaLoseAmount=maxStamina/maxTime; }
+
 #pragma endregion
 
 #pragma region InputHandlingFunctions

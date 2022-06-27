@@ -74,3 +74,16 @@ void UCustomUtils::DrawLine(FVector LineStart, FVector LineEnd, FColor Color, fl
 		5.f
 		);
 }
+
+void UCustomUtils::DrawVectorFromActor(AActor* actor, FVector vector, FColor Color, float LifeTime) {
+	DrawDebugLine(
+		GEngine->GameViewport->GetWorld(), 
+		actor->GetActorLocation(),
+		actor->GetActorLocation() + vector,
+		Color,
+		false,
+		LifeTime,
+		0,
+		5.f
+		);
+}

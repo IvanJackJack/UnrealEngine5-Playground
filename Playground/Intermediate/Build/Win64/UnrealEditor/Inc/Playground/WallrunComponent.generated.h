@@ -131,7 +131,7 @@ template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunMode>();
 #define FOREACH_ENUM_EGRAVITYMODE(op) \
 	op(EGravityMode::Zero) \
 	op(EGravityMode::Reduced) \
-	op(EGravityMode::OverTime) 
+	op(EGravityMode::StaminaBased) 
 
 enum class EGravityMode : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EGravityMode>();
