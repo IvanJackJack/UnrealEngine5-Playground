@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Playground/CustomComponents/WallrunComponent.h"
 #include "CharacterController.generated.h"
 
 enum class EWallrunMode : uint8;
@@ -161,6 +162,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	class UWallrunComponent* GetWallrun() const { return WallrunComponent; }
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetWallrunDirection(){return WallrunComponent->wallrunDirection;}
 
 	FORCEINLINE
 	void SetStaminaLoseAmount(float maxTime){ staminaLoseAmount=maxStamina/maxTime; }

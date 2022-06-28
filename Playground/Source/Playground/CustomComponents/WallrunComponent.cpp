@@ -487,9 +487,6 @@ void UWallrunComponent::UpdateWallrunSide() {
 }
 
 void UWallrunComponent::UpdateWallrunDirection() {
-	FVector SidewardMovementAlongWallAxis;
-	FVector UpwardMovementAlongWallAxis;
-
 	switch (wallrunMode) {
 		case EWallrunMode::Horizontal:
 			switch (wallrunSide) {
@@ -519,19 +516,112 @@ void UWallrunComponent::UpdateWallrunDirection() {
 			break;
 
 		case EWallrunMode::Diagonal:
-			SidewardMovementAlongWallAxis=-Character->inputValues.moveInput.Y * wallSideward;
-			UpwardMovementAlongWallAxis=Character->inputValues.moveInput.X * wallUpward;
-			moveDirectionAlongWallAxis=(UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
+			moveDirectionAlongWallAxis=ProjectVectorAlongWallAxis(Character->inputValues.moveInput);
+			moveDirectionAlongWallAxis.Y *= -1;
 
 			wallrunDirection=moveDirectionAlongWallAxis;
 			break;
 
 		case EWallrunMode::Visual:
-			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection);
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
+			// lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
+			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(lookingMoveDirectionAlongWallAxis.Z, visualWallrunMinVerticalValue, 1);
 
-			lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
+			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
 			
-			wallrunDirection=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
+			wallrunDirection=lookingMoveDirectionAlongWallAxis;
+			break;
+
+		case EWallrunMode::VisualHybrid:
+			moveDirectionAlongWallAxis=ProjectVectorAlongWallAxis(Character->inputValues.moveInput).GetSafeNormal();
+			moveDirectionAlongWallAxis.Y *= -1;
+
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
+			// lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
+
+			wallrunDirection=(lookingMoveDirectionAlongWallAxis + moveDirectionAlongWallAxis).GetSafeNormal();
+
+			break;
+
+		case EWallrunMode::VisualHorizontal:
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
+
+			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(
+				lookingMoveDirectionAlongWallAxis.Z, 
+				-0.15f, 
+				0.15f
+			);
+
+			lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
+				lookingMoveDirectionAlongWallAxis.Y, 
+				0.9f, 
+				1.f
+			);
+
+			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
+			
+			wallrunDirection=lookingMoveDirectionAlongWallAxis;
+
+			break;
+
+		case EWallrunMode::VisualVertical:
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
+
+			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(
+				lookingMoveDirectionAlongWallAxis.Z, 
+				0.85f, 
+				1.f
+			);
+
+			lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
+				lookingMoveDirectionAlongWallAxis.Y, 
+				-0.15f, 
+				0.15f
+			);
+
+			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
+			
+			wallrunDirection=lookingMoveDirectionAlongWallAxis;
+
+			break;
+
+		case EWallrunMode::VisualDiagonal:
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
+
+			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(
+				lookingMoveDirectionAlongWallAxis.Z, 
+				0.25f, 
+				0.75f
+			);
+
+			switch (wallrunSide) {
+				case EWallrunSide::Left:
+					lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
+						lookingMoveDirectionAlongWallAxis.Y, 
+						.25f, 
+						.65f
+					);
+					break;
+
+				case EWallrunSide::Right:
+					lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
+						lookingMoveDirectionAlongWallAxis.Y, 
+						-.65, 
+						-.25f
+					);
+					break;
+
+				case EWallrunSide::Front:
+					break;
+
+				default:
+					break;
+			}
+			
+			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
+			
+			wallrunDirection=lookingMoveDirectionAlongWallAxis;
+
 			break;
 
 		default:
@@ -619,6 +709,13 @@ float UWallrunComponent::GetVerticalAngle(FVector direction) {
 
 FVector UWallrunComponent::ProjectVectorAlongWallPlane(FVector vector) {
 	return FVector::VectorPlaneProject(vector, wallNormal);
+}
+
+FVector UWallrunComponent::ProjectVectorAlongWallAxis(FVector vector) {
+	FVector SidewardMovementAlongWallAxis=Character->inputValues.moveInput.Y * wallSideward;
+	FVector UpwardMovementAlongWallAxis=Character->inputValues.moveInput.X * wallUpward;
+
+	return (UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
 }
 
 

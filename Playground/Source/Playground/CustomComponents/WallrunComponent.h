@@ -32,6 +32,10 @@ enum class EWallrunMode : uint8 {
 	Vertical UMETA(DisplayName = "Vertical"),
 	Diagonal UMETA(DisplayName = "Diagonal"),
 	Visual UMETA(DisplayName = "Visual"),
+	VisualHybrid UMETA(DisplayName = "VisualHybrid"),
+	VisualHorizontal UMETA(DisplayName = "VisualHorizontal"),
+	VisualVertical UMETA(DisplayName = "VisualVertical"),
+	VisualDiagonal UMETA(DisplayName = "VisualDiagonal"),
 
 	None UMETA(DisplayName = "None")
 };
@@ -299,6 +303,8 @@ public:
 	}
 
 	FVector ProjectVectorAlongWallPlane(FVector vector);
+
+	FVector ProjectVectorAlongWallAxis(FVector vector);
 
 #pragma endregion
 

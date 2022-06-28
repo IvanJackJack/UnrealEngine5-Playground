@@ -49,7 +49,9 @@ void ACharacterController::BeginPlay()
 	Super::BeginPlay();
 
 	CharacterPlayerController=Cast<ACharacterPlayerController>(GetController());
-
+	
+	// WallrunComponent=FindComponentByClass<UWallrunComponent>();
+	// WallrunComponent->SetCharacter(this);
 	StateMachine->Setup(FFSMContext{this, StateMachine});
 
 	Capsule->OnComponentBeginOverlap.AddDynamic(this, &ACharacterController::OnBeginOverlap);
