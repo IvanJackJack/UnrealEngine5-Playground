@@ -27,14 +27,6 @@ float UCustomHUD::GetStaminaRatio() {
 	return 0.0f;
 }
 
-float UCustomHUD::GetWallrunCancelTimerRatio() {
-	if(CharacterController) {
-		return CharacterController->WallrunComponent->GetCancelTimerRatio();
-	}
-
-	return 0.0f;
-}
-
 void UCustomHUD::SetGravityModeZero() {
 	if(CharacterController) {
 		CharacterController->WallrunComponent->gravityMode=EGravityMode::Zero;
@@ -52,12 +44,6 @@ void UCustomHUD::SetGravityModeReduced() {
 void UCustomHUD::SetStaminaConsumption(float amount) {
 	if(CharacterController) {
 		CharacterController->SetStaminaLoseAmount(amount);
-	}
-}
-
-void UCustomHUD::SetCancelDelay(float delay) {
-	if(CharacterController) {
-		CharacterController->WallrunComponent->SetWallrunCancelDelay(delay);
 	}
 }
 

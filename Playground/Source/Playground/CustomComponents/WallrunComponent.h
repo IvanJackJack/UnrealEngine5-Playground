@@ -33,10 +33,6 @@ enum class EWallrunMode : uint8 {
 	Diagonal UMETA(DisplayName = "Diagonal"),
 	Visual UMETA(DisplayName = "Visual"),
 	VisualHybrid UMETA(DisplayName = "VisualHybrid"),
-	VisualHorizontal UMETA(DisplayName = "VisualHorizontal"),
-	VisualVertical UMETA(DisplayName = "VisualVertical"),
-	VisualDiagonal UMETA(DisplayName = "VisualDiagonal"),
-
 	None UMETA(DisplayName = "None")
 };
 
@@ -50,8 +46,7 @@ enum class EGravityMode : uint8 {
 UENUM(BlueprintType)
 enum class EWallrunEndConditions : uint8 {
 	Standard UMETA(DisplayName = "Standard"),
-	Stamina UMETA(DisplayName = "Stamina"),
-	Time UMETA(DisplayName = "Time")
+	Stamina UMETA(DisplayName = "Stamina")
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -75,6 +70,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool bIsWallrunning;
 	bool bIsFirstVelocityRequest;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	bool bForceCancelWallrun = true;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector wallNormal;
@@ -95,9 +92,7 @@ public:
 	FVector moveDirectionAlongWallAxis;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector lookingMoveDirectionAlongWallAxis;
-
 	
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector playerToWallVector;
 
@@ -127,15 +122,20 @@ public:
 	bool bCancelWallrunWhenSideChanges = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bUseCharacterMaxWalkableAngle = false;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	bool bLaunchAtBegin = true;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Parameters)
 	float rayCheckForWallLength;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float visualWallrunMinVerticalValue=0.175f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	float wallrunLaunchForce=500.f;
+	
 	//put this to -1 to wallrun even when looking down
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float visualWallrunLookingDownThreshold=-0.5f;
 
 	//put this to 0 to remove front side, or a low value to enable front side
@@ -154,18 +154,12 @@ public:
 	float wallrunAngleThreshold=40.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float velocityAccelerationRatio=50.f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float initialAirControl;
-
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EGravityMode gravityMode;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float reducedGravity=0.2f;
-
-	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EWallrunMode desiredHorizontalMode;
@@ -183,11 +177,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool wallrunLockTimerExpired = true;
 
-	FTimerHandle wallrunCancelTimer;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallrunCancelDelay=5.f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
-	bool bForceCancelWallrun = true;
+	// FTimerHandle wallrunCancelTimer;
+	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	// float wallrunCancelDelay=5.f;
+	
 
 #pragma endregion
 	
@@ -208,10 +201,10 @@ public:
 	
 	FString GetWallSide();
 
-	float GetCancelTimerRatio();
+	// float GetCancelTimerRatio();
 
-	FORCEINLINE
-	void SetWallrunCancelDelay(float delay){wallrunCancelDelay=delay;}
+	// FORCEINLINE
+	// void SetWallrunCancelDelay(float delay){wallrunCancelDelay=delay;}
 
 	FORCEINLINE
 	void SetVisualWallrunMinVerticalValue(float value){ visualWallrunMinVerticalValue=value;}

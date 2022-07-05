@@ -32,14 +32,6 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		P_THIS->UpdateGravityScale(Z_Param_scale);
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(UCustomHUD::execSetCancelDelay)
-	{
-		P_GET_PROPERTY(FFloatProperty,Z_Param_delay);
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		P_THIS->SetCancelDelay(Z_Param_delay);
-		P_NATIVE_END;
-	}
 	DEFINE_FUNCTION(UCustomHUD::execSetStaminaConsumption)
 	{
 		P_GET_PROPERTY(FFloatProperty,Z_Param_amount);
@@ -62,13 +54,6 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		P_THIS->SetGravityModeZero();
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(UCustomHUD::execGetWallrunCancelTimerRatio)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetWallrunCancelTimerRatio();
-		P_NATIVE_END;
-	}
 	DEFINE_FUNCTION(UCustomHUD::execGetStaminaRatio)
 	{
 		P_FINISH;
@@ -81,8 +66,6 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		UClass* Class = UCustomHUD::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "GetStaminaRatio", &UCustomHUD::execGetStaminaRatio },
-			{ "GetWallrunCancelTimerRatio", &UCustomHUD::execGetWallrunCancelTimerRatio },
-			{ "SetCancelDelay", &UCustomHUD::execSetCancelDelay },
 			{ "SetGravityModeReduced", &UCustomHUD::execSetGravityModeReduced },
 			{ "SetGravityModeZero", &UCustomHUD::execSetGravityModeZero },
 			{ "SetStaminaConsumption", &UCustomHUD::execSetStaminaConsumption },
@@ -120,70 +103,6 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_GetStaminaRatio_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics
-	{
-		struct CustomHUD_eventGetWallrunCancelTimerRatio_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CustomHUD_eventGetWallrunCancelTimerRatio_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "UI/CustomHUD.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCustomHUD, nullptr, "GetWallrunCancelTimerRatio", nullptr, nullptr, sizeof(Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::CustomHUD_eventGetWallrunCancelTimerRatio_Parms), Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics
-	{
-		struct CustomHUD_eventSetCancelDelay_Parms
-		{
-			float delay;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_delay;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::NewProp_delay = { "delay", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CustomHUD_eventSetCancelDelay_Parms, delay), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::NewProp_delay,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "UI/CustomHUD.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCustomHUD, nullptr, "SetCancelDelay", nullptr, nullptr, sizeof(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::CustomHUD_eventSetCancelDelay_Parms), Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UCustomHUD_SetCancelDelay()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCustomHUD_SetCancelDelay_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -357,8 +276,6 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UCustomHUD_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UCustomHUD_GetStaminaRatio, "GetStaminaRatio" }, // 695613423
-		{ &Z_Construct_UFunction_UCustomHUD_GetWallrunCancelTimerRatio, "GetWallrunCancelTimerRatio" }, // 3936882071
-		{ &Z_Construct_UFunction_UCustomHUD_SetCancelDelay, "SetCancelDelay" }, // 941145850
 		{ &Z_Construct_UFunction_UCustomHUD_SetGravityModeReduced, "SetGravityModeReduced" }, // 980298560
 		{ &Z_Construct_UFunction_UCustomHUD_SetGravityModeZero, "SetGravityModeZero" }, // 1088314330
 		{ &Z_Construct_UFunction_UCustomHUD_SetStaminaConsumption, "SetStaminaConsumption" }, // 4199035405
@@ -427,9 +344,9 @@ void EmptyLinkFunctionForGeneratedCodeCustomHUD() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCustomHUD, UCustomHUD::StaticClass, TEXT("UCustomHUD"), &Z_Registration_Info_UClass_UCustomHUD, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCustomHUD), 3746173311U) },
+		{ Z_Construct_UClass_UCustomHUD, UCustomHUD::StaticClass, TEXT("UCustomHUD"), &Z_Registration_Info_UClass_UCustomHUD, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCustomHUD), 370549936U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_3317287506(TEXT("/Script/Playground"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_2927679615(TEXT("/Script/Playground"),
 		Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_UI_CustomHUD_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

@@ -67,10 +67,6 @@ FVector UWallrunComponent::GetVelocity() {
 
 			wallrunVelocity*=Character->Movement->MaxFlySpeed * reducedGravityMult * 0.125f;
 
-			// UCustomUtils::DrawVectorFromActor(Character, ProjectVectorAlongWallPlane(Character->GetVelocity()), FColor::Blue, GetWorld()->DeltaTimeSeconds);
-			// UCustomUtils::DrawVectorFromActor(Character, wallrunVelocity.GetSafeNormal() * Character->Movement->MaxFlySpeed, FColor::Emerald, GetWorld()->DeltaTimeSeconds);
-			// UCustomUtils::DrawVectorFromActor(Character, wallrunDirection * Character->Movement->MaxFlySpeed, FColor::Cyan, GetWorld()->DeltaTimeSeconds);
-
 		break;
 		
 		default:
@@ -90,7 +86,7 @@ FVector UWallrunComponent::GetInterpVelocity() {
 	return (MoveTowardsVector(
 		GetVelocity(),
 		Character->GetVelocity(),
-		velocityAccelerationRatio
+		0.5f
 	));
 }
 
@@ -292,7 +288,7 @@ void UWallrunComponent::BeginWallrun() {
 
 	bIsFirstVelocityRequest=true;
 
-	Character->GetWorldTimerManager().SetTimer(wallrunCancelTimer, this, &UWallrunComponent::ForceWallrunEnd, wallrunCancelDelay);
+	// Character->GetWorldTimerManager().SetTimer(wallrunCancelTimer, this, &UWallrunComponent::ForceWallrunEnd, wallrunCancelDelay);
 }
 
 void UWallrunComponent::EndWallrun() {
@@ -334,8 +330,6 @@ void UWallrunComponent::EndWallrun() {
 			StartWallrunDelayTimer(wallrunLockDelay);
 			break;
 	}
-
-	Character->GetWorldTimerManager().ClearTimer(wallrunCancelTimer);
 	
 }
 
@@ -352,12 +346,12 @@ FString UWallrunComponent::GetWallSide() {
 	return FString(UEnum::GetDisplayValueAsText(wallrunSide).ToString());
 }
 
-float UWallrunComponent::GetCancelTimerRatio() {
-	if(Character->GetWorldTimerManager().IsTimerActive(wallrunCancelTimer)) {
-		return (Character->GetWorldTimerManager().GetTimerRemaining(wallrunCancelTimer) / wallrunCancelDelay);
-	}
-	return 1;
-}
+// float UWallrunComponent::GetCancelTimerRatio() {
+// 	if(Character->GetWorldTimerManager().IsTimerActive(wallrunCancelTimer)) {
+// 		return (Character->GetWorldTimerManager().GetTimerRemaining(wallrunCancelTimer) / wallrunCancelDelay);
+// 	}
+// 	return 1;
+// }
 
 bool UWallrunComponent::IsCharacterNearWall() {
 	return (playerToWallVector.Length() <= Character->GetCapsule()->GetScaledCapsuleRadius() * 1.15f);
@@ -537,90 +531,10 @@ void UWallrunComponent::UpdateWallrunDirection() {
 			moveDirectionAlongWallAxis.Y *= -1;
 
 			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
-			// lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
+			// lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(lookingMoveDirectionAlongWallAxis.Z, visualWallrunMinVerticalValue, 1);
+			// lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
 
 			wallrunDirection=(lookingMoveDirectionAlongWallAxis + moveDirectionAlongWallAxis).GetSafeNormal();
-
-			break;
-
-		case EWallrunMode::VisualHorizontal:
-			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
-
-			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(
-				lookingMoveDirectionAlongWallAxis.Z, 
-				-0.15f, 
-				0.15f
-			);
-
-			lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
-				lookingMoveDirectionAlongWallAxis.Y, 
-				0.9f, 
-				1.f
-			);
-
-			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
-			
-			wallrunDirection=lookingMoveDirectionAlongWallAxis;
-
-			break;
-
-		case EWallrunMode::VisualVertical:
-			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
-
-			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(
-				lookingMoveDirectionAlongWallAxis.Z, 
-				0.85f, 
-				1.f
-			);
-
-			lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
-				lookingMoveDirectionAlongWallAxis.Y, 
-				-0.15f, 
-				0.15f
-			);
-
-			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
-			
-			wallrunDirection=lookingMoveDirectionAlongWallAxis;
-
-			break;
-
-		case EWallrunMode::VisualDiagonal:
-			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
-
-			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(
-				lookingMoveDirectionAlongWallAxis.Z, 
-				0.25f, 
-				0.75f
-			);
-
-			switch (wallrunSide) {
-				case EWallrunSide::Left:
-					lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
-						lookingMoveDirectionAlongWallAxis.Y, 
-						.25f, 
-						.65f
-					);
-					break;
-
-				case EWallrunSide::Right:
-					lookingMoveDirectionAlongWallAxis.Y=FMath::Clamp(
-						lookingMoveDirectionAlongWallAxis.Y, 
-						-.65, 
-						-.25f
-					);
-					break;
-
-				case EWallrunSide::Front:
-					break;
-
-				default:
-					break;
-			}
-			
-			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
-			
-			wallrunDirection=lookingMoveDirectionAlongWallAxis;
 
 			break;
 

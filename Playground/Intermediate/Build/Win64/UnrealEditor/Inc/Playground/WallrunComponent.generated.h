@@ -13,20 +13,20 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define PLAYGROUND_WallrunComponent_generated_h
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_SPARSE_DATA
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_RPC_WRAPPERS \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_SPARSE_DATA
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execIsCharacterNearWall); \
 	DECLARE_FUNCTION(execHasValidHit);
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execIsCharacterNearWall); \
 	DECLARE_FUNCTION(execHasValidHit);
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_INCLASS_NO_PURE_DECLS \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUWallrunComponent(); \
 	friend struct Z_Construct_UClass_UWallrunComponent_Statics; \
@@ -35,7 +35,7 @@ public: \
 	DECLARE_SERIALIZER(UWallrunComponent)
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_INCLASS \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_INCLASS \
 private: \
 	static void StaticRegisterNativesUWallrunComponent(); \
 	friend struct Z_Construct_UClass_UWallrunComponent_Statics; \
@@ -44,7 +44,7 @@ public: \
 	DECLARE_SERIALIZER(UWallrunComponent)
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_STANDARD_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UWallrunComponent(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UWallrunComponent) \
@@ -57,7 +57,7 @@ private: \
 public:
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_ENHANCED_CONSTRUCTORS \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UWallrunComponent(UWallrunComponent&&); \
@@ -68,25 +68,25 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UWallrunComponent)
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_57_PROLOG
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_GENERATED_BODY_LEGACY \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_52_PROLOG
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_SPARSE_DATA \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_RPC_WRAPPERS \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_INCLASS \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_STANDARD_CONSTRUCTORS \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_SPARSE_DATA \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_RPC_WRAPPERS \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_INCLASS \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_GENERATED_BODY \
+#define FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_SPARSE_DATA \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_INCLASS_NO_PURE_DECLS \
-	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_60_ENHANCED_CONSTRUCTORS \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_SPARSE_DATA \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_INCLASS_NO_PURE_DECLS \
+	FID_Playground_Source_Playground_CustomComponents_WallrunComponent_h_55_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -124,9 +124,6 @@ template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunEndreason>();
 	op(EWallrunMode::Diagonal) \
 	op(EWallrunMode::Visual) \
 	op(EWallrunMode::VisualHybrid) \
-	op(EWallrunMode::VisualHorizontal) \
-	op(EWallrunMode::VisualVertical) \
-	op(EWallrunMode::VisualDiagonal) \
 	op(EWallrunMode::None) 
 
 enum class EWallrunMode : uint8;
@@ -142,8 +139,7 @@ template<> PLAYGROUND_API UEnum* StaticEnum<EGravityMode>();
 
 #define FOREACH_ENUM_EWALLRUNENDCONDITIONS(op) \
 	op(EWallrunEndConditions::Standard) \
-	op(EWallrunEndConditions::Stamina) \
-	op(EWallrunEndConditions::Time) 
+	op(EWallrunEndConditions::Stamina) 
 
 enum class EWallrunEndConditions : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunEndConditions>();

@@ -18,11 +18,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
  \
 	DECLARE_FUNCTION(execSetWallrunVisualZThreshold); \
 	DECLARE_FUNCTION(execUpdateGravityScale); \
-	DECLARE_FUNCTION(execSetCancelDelay); \
 	DECLARE_FUNCTION(execSetStaminaConsumption); \
 	DECLARE_FUNCTION(execSetGravityModeReduced); \
 	DECLARE_FUNCTION(execSetGravityModeZero); \
-	DECLARE_FUNCTION(execGetWallrunCancelTimerRatio); \
 	DECLARE_FUNCTION(execGetStaminaRatio);
 
 
@@ -30,11 +28,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
  \
 	DECLARE_FUNCTION(execSetWallrunVisualZThreshold); \
 	DECLARE_FUNCTION(execUpdateGravityScale); \
-	DECLARE_FUNCTION(execSetCancelDelay); \
 	DECLARE_FUNCTION(execSetStaminaConsumption); \
 	DECLARE_FUNCTION(execSetGravityModeReduced); \
 	DECLARE_FUNCTION(execSetGravityModeZero); \
-	DECLARE_FUNCTION(execGetWallrunCancelTimerRatio); \
 	DECLARE_FUNCTION(execGetStaminaRatio);
 
 

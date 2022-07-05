@@ -75,7 +75,7 @@ void ACharacterController::Tick(float DeltaTime)
 		ConsumeStamina();
 	}
 
-	if(WallrunComponent->HasValidHit()) {
+	if(WallrunComponent->HasValidHit() && WallrunComponent->bIsWallrunning) {
 		UCustomUtils::DrawLine(GetActorLocation(), WallrunComponent->currentValidHit.ImpactPoint);
 	}
 }
