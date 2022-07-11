@@ -3,6 +3,7 @@
 
 #include "WallrunMovingState.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Playground/Controllers/CapsuleCharacter/CharacterController.h"
 #include "Playground/FiniteStateMachine/StateMachineComponent.h"
 #include "Playground/Utilities/CustomUtils.h"
@@ -20,6 +21,10 @@ void UWallrunMovingState::Setup(FString newName, FFSMContext newContext) {
 	stateName=FString("AirRaisingState");
 	Transitions.Add(stateName, BoolFunctionDelegate() );
 	Transitions[stateName].BindUObject(this, &UWallrunMovingState::TransitionToAirRaising);
+
+	stateName=FString("GroundMovingState");
+	Transitions.Add(stateName, BoolFunctionDelegate() );
+	Transitions[stateName].BindUObject(this, &UWallrunMovingState::TransitionToGroundMoving);
 }
 
 void UWallrunMovingState::OnEnter() {
@@ -61,6 +66,14 @@ bool UWallrunMovingState::TransitionToAirRaising() {
 	}
 
 	if(context->characterController->WallrunComponent->ShouldEndWallrun() && context->characterController->GetVelocity().Z > 0.f) {
+		return true;
+	}
+
+	return false;
+}
+
+bool UWallrunMovingState::TransitionToGroundMoving() {
+	if(!context->characterController->Movement->IsFalling()) {
 		return true;
 	}
 

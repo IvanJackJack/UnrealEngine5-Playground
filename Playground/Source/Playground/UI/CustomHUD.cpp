@@ -19,45 +19,4 @@ void UCustomHUD::NativePreConstruct() {
 	}
 }
 
-float UCustomHUD::GetStaminaRatio() {
-	if(CharacterController) {
-		return CharacterController->GetStaminaRatio();
-	}
 
-	return 0.0f;
-}
-
-void UCustomHUD::SetGravityModeZero() {
-	if(CharacterController) {
-		CharacterController->WallrunComponent->gravityMode=EGravityMode::Zero;
-		CharacterController->WallrunComponent->UpdateGravityParamsByMode();
-	}
-}
-
-void UCustomHUD::SetGravityModeReduced() {
-	if(CharacterController) {
-		CharacterController->WallrunComponent->gravityMode=EGravityMode::Reduced;
-		CharacterController->WallrunComponent->UpdateGravityParamsByMode();
-	}
-}
-
-void UCustomHUD::SetStaminaConsumption(float amount) {
-	if(CharacterController) {
-		CharacterController->SetStaminaLoseAmount(amount);
-	}
-}
-
-void UCustomHUD::UpdateGravityScale(float scale) {
-	check(CharacterController);
-
-	CharacterController->WallrunComponent->SetReducedGravity(scale);
-
-	if(CharacterController->WallrunComponent->bIsWallrunning)
-		CharacterController->WallrunComponent->UpdateGravityParamsByMode();
-}
-
-void UCustomHUD::SetWallrunVisualZThreshold(float amount) {
-	check(CharacterController);
-	
-	CharacterController->WallrunComponent->SetVisualWallrunLookingDownThreshold(amount);
-}

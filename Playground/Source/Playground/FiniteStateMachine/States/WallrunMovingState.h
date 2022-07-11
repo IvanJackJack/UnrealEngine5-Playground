@@ -20,4 +20,5 @@ public:
 public:
 	bool TransitionToAirFalling();
 	bool TransitionToAirRaising();
+	bool TransitionToGroundMoving();
 };

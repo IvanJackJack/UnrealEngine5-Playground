@@ -14,26 +14,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define PLAYGROUND_CustomHUD_generated_h
 
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_SPARSE_DATA
-#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS \
- \
-	DECLARE_FUNCTION(execSetWallrunVisualZThreshold); \
-	DECLARE_FUNCTION(execUpdateGravityScale); \
-	DECLARE_FUNCTION(execSetStaminaConsumption); \
-	DECLARE_FUNCTION(execSetGravityModeReduced); \
-	DECLARE_FUNCTION(execSetGravityModeZero); \
-	DECLARE_FUNCTION(execGetStaminaRatio);
-
-
-#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
- \
-	DECLARE_FUNCTION(execSetWallrunVisualZThreshold); \
-	DECLARE_FUNCTION(execUpdateGravityScale); \
-	DECLARE_FUNCTION(execSetStaminaConsumption); \
-	DECLARE_FUNCTION(execSetGravityModeReduced); \
-	DECLARE_FUNCTION(execSetGravityModeZero); \
-	DECLARE_FUNCTION(execGetStaminaRatio);
-
-
+#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS
+#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS_NO_PURE_DECLS
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCustomHUD(); \

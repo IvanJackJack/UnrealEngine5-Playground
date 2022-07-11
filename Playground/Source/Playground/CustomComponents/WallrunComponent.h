@@ -28,19 +28,19 @@ enum class EWallrunEndreason : uint8 {
 
 UENUM(BlueprintType)
 enum class EWallrunMode : uint8 {
-	Horizontal UMETA(DisplayName = "Horizontal"),
-	Vertical UMETA(DisplayName = "Vertical"),
-	Diagonal UMETA(DisplayName = "Diagonal"),
+	// Horizontal UMETA(DisplayName = "Horizontal"),
+	// Vertical UMETA(DisplayName = "Vertical"),
+	Projected UMETA(DisplayName = "Projected"),
 	Visual UMETA(DisplayName = "Visual"),
-	VisualHybrid UMETA(DisplayName = "VisualHybrid"),
+	Hybrid UMETA(DisplayName = "Hybrid"),
 	None UMETA(DisplayName = "None")
 };
 
 UENUM(BlueprintType)
 enum class EGravityMode : uint8 {
 	Zero UMETA(DisplayName = "Zero"),
-	Reduced UMETA(DisplayName = "Reduced"),
-	StaminaBased UMETA(DisplayName = "StaminaBased")
+	Reduced UMETA(DisplayName = "Reduced")
+	// StaminaBased UMETA(DisplayName = "StaminaBased")
 };
 
 UENUM(BlueprintType)
@@ -81,7 +81,9 @@ public:
 	FVector wallSideward;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	float wallAngle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector lastValidWallNormal;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FHitResult currentValidHit;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
@@ -95,12 +97,16 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	FVector playerToWallVector;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	float rayCheckForWallLength;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
+	float initialAirControl;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool bLaunchOverrideXY=true;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	bool bLaunchOverrideZ=true;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Status)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
 	float reducedGravityMult=1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Status)
@@ -123,20 +129,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bUseCharacterMaxWalkableAngle = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	bool bUseCharacterMaxFlySpeed = true;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bLaunchAtBegin = true;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Parameters)
-	float rayCheckForWallLength;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float visualWallrunMinVerticalValue=0.175f;
+	float visualWallrunMinVerticalValue=0.f;
 	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float wallrunLaunchForce=500.f;
 	
 	//put this to -1 to wallrun even when looking down
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float visualWallrunLookingDownThreshold=-0.5f;
+	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
+	// float visualWallrunLookingDownThreshold=-0.667f;
 
 	//put this to 0 to remove front side, or a low value to enable front side
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
@@ -153,8 +160,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	float wallrunAngleThreshold=40.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float initialAirControl;
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	EGravityMode gravityMode;
@@ -196,8 +202,6 @@ public:
 
 	//DA RIVEDERE SE FUNZIONA BENE, CAMBIALE MOVE ACCEL
 	FVector GetInterpVelocity();
-	//DA RIVEDERE
-	FVector GetVelocityByMode();
 	
 	FString GetWallSide();
 
@@ -209,14 +213,26 @@ public:
 	FORCEINLINE
 	void SetVisualWallrunMinVerticalValue(float value){ visualWallrunMinVerticalValue=value;}
 
-	FORCEINLINE
-	void SetVisualWallrunLookingDownThreshold(float value){ visualWallrunLookingDownThreshold=value;}
+	// FORCEINLINE
+	// void SetVisualWallrunLookingDownThreshold(float value){ visualWallrunLookingDownThreshold=value;}
 
+	//FUNZIONI PER UI
 	FORCEINLINE
 	void SetReducedGravity(float value){ reducedGravity=value;}
 
 	FORCEINLINE
 	void SetGravityMode(EGravityMode mode){gravityMode=mode;}
+
+	FORCEINLINE
+	void SetDesiredHorizontalWallrunMode(EWallrunMode mode){desiredHorizontalMode=mode;}
+
+	FORCEINLINE
+	void SetDesiredVerticalWallrunMode(EWallrunMode mode){desiredVerticalMode=mode;}
+
+	FORCEINLINE
+	void SetDesiredDiagonalWallrunMode(EWallrunMode mode){desiredDiagonalMode=mode;}
+	//FUNZIONI PER UI
+
 #pragma endregion
 
 #pragma region WallrunStatus
@@ -243,7 +259,7 @@ public:
 
 	bool IsMoveDirectionTowardsWall();
 
-	bool LookingDownOverThreshold();
+	// bool LookingDownOverThreshold();
 
 	UFUNCTION(BlueprintCallable)
 	bool HasValidHit();
@@ -298,6 +314,8 @@ public:
 	FVector ProjectVectorAlongWallPlane(FVector vector);
 
 	FVector ProjectVectorAlongWallAxis(FVector vector);
+
+	FVector ProjectVectorAlongWallAxisSidewardInverted(FVector vector);
 
 #pragma endregion
 

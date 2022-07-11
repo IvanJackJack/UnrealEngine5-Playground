@@ -13,6 +13,8 @@
             "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\rootmotionsource.generated.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\character.generated.h",
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\customcomponents\\wallruncomponent.h",
+            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\wallruncomponent.generated.h",
             "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\charactercontroller.generated.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\camera\\cameracomponent.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\cameracomponent.generated.h",
@@ -59,9 +61,7 @@
             "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\dialoguetypes.generated.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystaticstypes.h",
             "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystaticstypes.generated.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystatics.generated.h",
-            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\source\\playground\\customcomponents\\wallruncomponent.h",
-            "c:\\users\\ivanc\\desktop\\git repos\\unreal repos\\unrealengine5-playground\\playground\\intermediate\\build\\win64\\unrealeditor\\inc\\playground\\wallruncomponent.generated.h"
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystatics.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

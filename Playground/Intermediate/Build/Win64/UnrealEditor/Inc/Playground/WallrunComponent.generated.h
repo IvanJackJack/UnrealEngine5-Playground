@@ -119,11 +119,9 @@ enum class EWallrunEndreason : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunEndreason>();
 
 #define FOREACH_ENUM_EWALLRUNMODE(op) \
-	op(EWallrunMode::Horizontal) \
-	op(EWallrunMode::Vertical) \
-	op(EWallrunMode::Diagonal) \
+	op(EWallrunMode::Projected) \
 	op(EWallrunMode::Visual) \
-	op(EWallrunMode::VisualHybrid) \
+	op(EWallrunMode::Hybrid) \
 	op(EWallrunMode::None) 
 
 enum class EWallrunMode : uint8;
@@ -131,8 +129,7 @@ template<> PLAYGROUND_API UEnum* StaticEnum<EWallrunMode>();
 
 #define FOREACH_ENUM_EGRAVITYMODE(op) \
 	op(EGravityMode::Zero) \
-	op(EGravityMode::Reduced) \
-	op(EGravityMode::StaminaBased) 
+	op(EGravityMode::Reduced) 
 
 enum class EGravityMode : uint8;
 template<> PLAYGROUND_API UEnum* StaticEnum<EGravityMode>();

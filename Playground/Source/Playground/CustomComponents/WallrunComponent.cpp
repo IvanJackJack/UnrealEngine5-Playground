@@ -14,15 +14,7 @@ UWallrunComponent::UWallrunComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
-	wallrunLockTimerExpired=true;
-
-	wallrunSide=EWallrunSide::None;
-	wallrunMode=EWallrunMode::None;
-	gravityMode=EGravityMode::Zero;
-
-	desiredHorizontalMode = EWallrunMode::Horizontal;
-	desiredVerticalMode = EWallrunMode::Visual;
-	desiredDiagonalMode = EWallrunMode::Visual;
+	
 }
 
 void UWallrunComponent::BeginPlay()
@@ -31,11 +23,18 @@ void UWallrunComponent::BeginPlay()
 
 	rayCheckForWallLength=Character->GetCapsule()->GetScaledCapsuleRadius() * 3.f;
 	initialAirControl=Character->Movement->AirControl;
+	wallrunLockTimerExpired=true;
+
 	wallrunSide=EWallrunSide::None;
 	wallrunMode=EWallrunMode::None;
+	// gravityMode=EGravityMode::Zero;
 
 	if(bUseCharacterMaxWalkableAngle) {
 		wallrunAngleThreshold=Character->Movement->GetWalkableFloorAngle();
+	}
+
+	if(bUseCharacterMaxFlySpeed) {
+		wallrunLaunchForce=Character->Movement->MaxFlySpeed;
 	}
 }
 
@@ -50,14 +49,14 @@ void UWallrunComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 
 FVector UWallrunComponent::GetVelocity() {
 	if(bIsFirstVelocityRequest) {
-		wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
 		bIsFirstVelocityRequest=false;
-		return wallrunVelocity;
+		return FVector::ZeroVector;
 	}
 
+	float dotMult;
 	switch(gravityMode) {
 		case EGravityMode::Zero:
-			wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
+			wallrunVelocity=wallrunDirection*wallrunLaunchForce;
 			break;
 
 	case EGravityMode::Reduced:
@@ -65,20 +64,26 @@ FVector UWallrunComponent::GetVelocity() {
 			wallrunVelocity += FVector::DownVector * reducedGravityMult;
 			wallrunVelocity=wallrunVelocity.GetSafeNormal();
 
-			wallrunVelocity*=Character->Movement->MaxFlySpeed * reducedGravityMult * 0.125f;
+			wallrunVelocity*=wallrunLaunchForce * reducedGravityMult * 0.125f;
 
+			dotMult=FMath::Max(0.334f, (1 - FMath::Pow(FVector::DotProduct(FVector::UpVector, wallrunDirection), 2)));
+			UCustomUtils::Print(dotMult);
+			wallrunVelocity *= dotMult;
 		break;
 		
 		default:
-			wallrunVelocity=wallrunDirection*Character->Movement->MaxFlySpeed;
+			wallrunVelocity=wallrunDirection*wallrunLaunchForce;
 			break;
 	}
 
 	if(bAlwaysStickToWall && !IsCharacterNearWall()) {
+		UCustomUtils::Print("Sticking to wall", 3.f);
 		FVector pushToWallVelocity=playerToWallVector;
 		wallrunVelocity+=pushToWallVelocity;
 	}
 
+	// UCustomUtils::Print(wallrunVelocity.Length());
+	// UCustomUtils::DrawVectorFromActor(Character, wallrunVelocity, FColor::Emerald, 0.5f);
 	return wallrunVelocity;
 }
 
@@ -88,30 +93,6 @@ FVector UWallrunComponent::GetInterpVelocity() {
 		Character->GetVelocity(),
 		0.5f
 	));
-}
-
-FVector UWallrunComponent::GetVelocityByMode() {
-	switch (wallrunMode) {
-		case EWallrunMode::Horizontal:
-			return GetVelocity();
-			break;
-		
-		case EWallrunMode::Vertical:
-			return GetVelocity();
-			break;
-		
-		case EWallrunMode::Diagonal:
-			return GetVelocity();
-			break;
-		
-		case EWallrunMode::Visual:
-			return GetVelocity();
-			break;
-		
-		default:
-			return GetVelocity();
-			break;
-	}
 }
 
 #pragma endregion
@@ -184,6 +165,11 @@ bool UWallrunComponent::CanWallrun() {
 		UCustomUtils::Print("IsMoveDirectionTowardsWall failed", 2);
 		return false;
 	}
+
+	// if(LookingDownOverThreshold()) {
+	// 	UCustomUtils::Print("looking down over threshold", 2);
+	// 	return false;
+	// }
 	
 	return true;
 }
@@ -229,10 +215,10 @@ bool UWallrunComponent::CancelConditionsByMode() {
 		return true;
 	}
 
-	if(LookingDownOverThreshold() && wallrunMode!=desiredHorizontalMode) {
-		SetLastEndreason(EWallrunEndreason::WrongMode);
-		return true;
-	}
+	// if(LookingDownOverThreshold() && wallrunMode!=desiredHorizontalMode) {
+	// 	SetLastEndreason(EWallrunEndreason::WrongMode);
+	// 	return true;
+	// }
 
 
 	return false;
@@ -252,7 +238,7 @@ bool UWallrunComponent::IsMoveDirectionTowardsWall() {
 		FVector horizontalWallNormal=FVector(wallNormal.X, wallNormal.Y, 0.f);
 		float dotVal=FVector::DotProduct(-horizontalWallNormal, Character->moveDirection);
 
-		if(dotVal>0.15f) {
+		if(dotVal>0.1f) {
 			correctMoveDirection=true;
 		}else {
 			correctMoveDirection=false;
@@ -262,15 +248,20 @@ bool UWallrunComponent::IsMoveDirectionTowardsWall() {
 	return correctMoveDirection;
 }
 
-bool UWallrunComponent::LookingDownOverThreshold() {
-	return Character->lookingDirection.Z < visualWallrunLookingDownThreshold;
-}
+// bool UWallrunComponent::LookingDownOverThreshold() {
+// 	return Character->lookingDirection.Z < visualWallrunLookingDownThreshold;
+// }
 
 void UWallrunComponent::BeginWallrun() {
 	bIsWallrunning=true;
 
-	// UpdateWallrunModeOnInputKeys();
+	// UpdateWallrunAndInfoIfRayHit();
+	UpdateWallrunModeOnInputKeys();
 	UpdateWallrunSide();
+
+	
+	// UCustomUtils::DrawVectorFromActor(Character, wallSideward*250.f, FColor::Blue, 15.f);
+	// UCustomUtils::DrawVectorFromActor(Character, wallUpward*250.f, FColor::Blue, 15.f);
 	UpdateWallrunDirection();
 
 	Character->Movement->AirControl=1;
@@ -278,17 +269,23 @@ void UWallrunComponent::BeginWallrun() {
 	UpdateGravityParamsByMode();
 	
 
-	//remove vertical velocity component at start
-	Character->CancelVerticalVelocity();
-
-	// Movement->SetPlaneConstraintNormal(FVector::UpVector);
-	// Movement->SetPlaneConstraintNormal(FVector::ZeroVector);
+	// Character->CancelVerticalVelocity();
 	
 	startingLateralWallSide=wallrunSide;
 
-	bIsFirstVelocityRequest=true;
+	if(bLaunchAtBegin) {
+		FVector initialVelocity=wallrunLaunchForce * wallrunDirection;
+		initialVelocity.Z=FMath::Max(0, initialVelocity.Z);
+		Character->LaunchCharacter(initialVelocity, true, true);
+		bIsFirstVelocityRequest=true;
+		UCustomUtils::DrawVectorFromActor(Character, initialVelocity, FColor::Red, 0.5f);
+	}
+	
+	// UCustomUtils::DrawVectorFromActor(Character, wallrunDirection * 500.f, FColor::Black, 10.f);
 
-	// Character->GetWorldTimerManager().SetTimer(wallrunCancelTimer, this, &UWallrunComponent::ForceWallrunEnd, wallrunCancelDelay);
+	// UCustomUtils::DrawVectorFromActor(Character, wallSideward*100, FColor::Red, 10);
+	// UCustomUtils::DrawVectorFromActor(Character, wallUpward*100, FColor::Green, 10);
+
 }
 
 void UWallrunComponent::EndWallrun() {
@@ -387,12 +384,15 @@ void UWallrunComponent::UpdateGravityParamsByMode() {
 			bLaunchOverrideZ=false;
 
 		break;
-		case EGravityMode::StaminaBased:
-			Character->Movement->GravityScale=reducedGravity;
-			UCustomUtils::Print("Gravity mode over time to be implemented");
-			break;
+		// case EGravityMode::StaminaBased:
+		// 	UCustomUtils::Print("Gravity mode NOT implemented, set to zero gravity");
+		// 	Character->Movement->GravityScale=0;
+		// 	reducedGravityMult=1.f;
+		// 	bLaunchOverrideXY=true;
+		// 	bLaunchOverrideZ=true;
+		//
+		// 	break;
 		default:
-			Character->Movement->GravityScale=0;
 			break;
 	}
 }
@@ -482,57 +482,56 @@ void UWallrunComponent::UpdateWallrunSide() {
 
 void UWallrunComponent::UpdateWallrunDirection() {
 	switch (wallrunMode) {
-		case EWallrunMode::Horizontal:
-			switch (wallrunSide) {
-				case EWallrunSide::Right:
-					wallrunDirection=wallSideward;
+		// case EWallrunMode::Horizontal:
+		// 	switch (wallrunSide) {
+		// 		case EWallrunSide::Right:
+		// 			wallrunDirection=wallSideward;
+		//
+		// 			break;
+		// 		
+		// 		case EWallrunSide::Left:
+		// 			wallrunDirection=-wallSideward;
+		//
+		// 			break;
+		// 			
+		// 		default:
+		// 			if(lookingMoveDirectionAlongWallAxis.Y < 0) {
+		// 				wallrunDirection=wallSideward;
+		// 			}else {
+		// 				wallrunDirection=-wallSideward;
+		// 			}
+		// 			break;
+		// 	}
+		// 	
+		// 	break;
+		//
+		// case EWallrunMode::Vertical:
+		// 	wallrunDirection=wallUpward;
+		// 	break;
+		
+	case EWallrunMode::Projected:
+			// UCustomUtils::DrawVectorFromActor(Character, wallSideward*250.f, FColor::Blue, 5.f);
+			// UCustomUtils::DrawVectorFromActor(Character, wallUpward*250.f, FColor::Blue, 5.f);
 
-					break;
-				
-				case EWallrunSide::Left:
-					wallrunDirection=-wallSideward;
-
-					break;
-					
-				default:
-					if(lookingMoveDirectionAlongWallAxis.Y < 0) {
-						wallrunDirection=wallSideward;
-					}else {
-						wallrunDirection=-wallSideward;
-					}
-					break;
-			}
-			
-			break;
-
-		case EWallrunMode::Vertical:
-			wallrunDirection=wallUpward;
-			break;
-
-		case EWallrunMode::Diagonal:
-			moveDirectionAlongWallAxis=ProjectVectorAlongWallAxis(Character->inputValues.moveInput);
-			moveDirectionAlongWallAxis.Y *= -1;
-
+			moveDirectionAlongWallAxis=ProjectVectorAlongWallAxisSidewardInverted(Character->inputValues.moveInput);
+		
 			wallrunDirection=moveDirectionAlongWallAxis;
 			break;
-
+			
 		case EWallrunMode::Visual:
 			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
-			// lookingMoveDirectionAlongWallAxis.Z = FMath::Max(visualWallrunMinVerticalValue, lookingMoveDirectionAlongWallAxis.Z);
 			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(lookingMoveDirectionAlongWallAxis.Z, visualWallrunMinVerticalValue, 1);
-
 			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
 			
 			wallrunDirection=lookingMoveDirectionAlongWallAxis;
 			break;
 
-		case EWallrunMode::VisualHybrid:
-			moveDirectionAlongWallAxis=ProjectVectorAlongWallAxis(Character->inputValues.moveInput).GetSafeNormal();
-			moveDirectionAlongWallAxis.Y *= -1;
+		case EWallrunMode::Hybrid:
+			moveDirectionAlongWallAxis=ProjectVectorAlongWallAxisSidewardInverted(Character->inputValues.moveInput).GetSafeNormal();
 
-			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection).GetSafeNormal();
-			// lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(lookingMoveDirectionAlongWallAxis.Z, visualWallrunMinVerticalValue, 1);
-			// lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
+			lookingMoveDirectionAlongWallAxis=ProjectVectorAlongWallPlane(Character->lookingDirection);
+			lookingMoveDirectionAlongWallAxis.Z=FMath::Clamp(lookingMoveDirectionAlongWallAxis.Z, visualWallrunMinVerticalValue, 1);
+			lookingMoveDirectionAlongWallAxis=lookingMoveDirectionAlongWallAxis.GetSafeNormal();
 
 			wallrunDirection=(lookingMoveDirectionAlongWallAxis + moveDirectionAlongWallAxis).GetSafeNormal();
 
@@ -627,6 +626,13 @@ FVector UWallrunComponent::ProjectVectorAlongWallPlane(FVector vector) {
 
 FVector UWallrunComponent::ProjectVectorAlongWallAxis(FVector vector) {
 	FVector SidewardMovementAlongWallAxis=Character->inputValues.moveInput.Y * wallSideward;
+	FVector UpwardMovementAlongWallAxis=Character->inputValues.moveInput.X * wallUpward;
+
+	return (UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();
+}
+
+FVector UWallrunComponent::ProjectVectorAlongWallAxisSidewardInverted(FVector vector) {
+	FVector SidewardMovementAlongWallAxis=-Character->inputValues.moveInput.Y * wallSideward;
 	FVector UpwardMovementAlongWallAxis=Character->inputValues.moveInput.X * wallUpward;
 
 	return (UpwardMovementAlongWallAxis + SidewardMovementAlongWallAxis).GetSafeNormal();

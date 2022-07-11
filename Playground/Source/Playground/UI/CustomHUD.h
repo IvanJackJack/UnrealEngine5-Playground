@@ -23,21 +23,4 @@ public:
 
 	virtual void NativePreConstruct() override;
 
-	UFUNCTION(BlueprintCallable)
-	float GetStaminaRatio();
-
-	UFUNCTION(BlueprintCallable)
-	void SetGravityModeZero();
-
-	UFUNCTION(BlueprintCallable)
-	void SetGravityModeReduced();
-
-	UFUNCTION(BlueprintCallable)
-	void SetStaminaConsumption(float amount);
-
-	UFUNCTION(BlueprintCallable)
-	void UpdateGravityScale(float scale);
-
-	UFUNCTION(BlueprintCallable)
-	void SetWallrunVisualZThreshold(float amount);
 };

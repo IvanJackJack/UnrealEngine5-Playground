@@ -69,14 +69,15 @@ void ACharacterController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(!WallrunComponent->bIsWallrunning) {
-		RecoverStamina();
-	}else {
-		ConsumeStamina();
-	}
+	// if(!WallrunComponent->bIsWallrunning) {
+	// 	RecoverStamina();
+	// }else {
+	// 	ConsumeStamina();
+	// }
 
 	if(WallrunComponent->HasValidHit() && WallrunComponent->bIsWallrunning) {
-		UCustomUtils::DrawLine(GetActorLocation(), WallrunComponent->currentValidHit.ImpactPoint);
+		// UCustomUtils::DrawLine(GetActorLocation(), WallrunComponent->currentValidHit.ImpactPoint);
+		UCustomUtils::DrawVectorFromActor(this, WallrunComponent->playerToWallVector);
 	}
 }
 
@@ -190,18 +191,14 @@ void ACharacterController::ApplyWallrunMovement() {
 		// SetVelocity(wallrunVelocity);
 
 		ClampVelocity();
-		
-
-		// FVector wallrunVelocity=WallrunComponent->GetVelocity();
 
 		FVector wallrunVelocity=WallrunComponent->GetVelocity();
 
-		// UCustomUtils::DrawLine(GetActorLocation(), (GetActorLocation()+wallrunVelocity)*100.f);
-		UCustomUtils::Print(wallrunVelocity.Length());
-
-		LaunchCharacter(wallrunVelocity, 
-			WallrunComponent->bLaunchOverrideXY, 
-			WallrunComponent->bLaunchOverrideZ);
+		
+		if(!wallrunVelocity.IsNearlyZero())
+			LaunchCharacter(wallrunVelocity, 
+				WallrunComponent->bLaunchOverrideXY, 
+				WallrunComponent->bLaunchOverrideZ);
 
 		// ClampVelocity();
 	}
@@ -212,21 +209,23 @@ void ACharacterController::ApplyWallrunMovement() {
 #pragma region JumpFunctions
 
 void ACharacterController::ApplyGroundJump() {
-	UCustomUtils::Print("Ground Jump");
+	// UCustomUtils::Print("Ground Jump");
 
 	bJumpRequested=false;
 
-	FVector launchDirection=FVector::UpVector;
-
-	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
+	// FVector launchDirection=FVector::UpVector;
+	FVector launchDirection=(moveDirection+FVector::UpVector).GetSafeNormal();
+	
+	FVector launchVelocity=launchDirection * Movement->MaxFlySpeed;
+	// UCustomUtils::DrawVectorFromActor(this, launchVelocity, FColor::Green, 3);
 
 	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunLockDelay);
 
-	LaunchCharacter(launchVelocity, false, true); 
+	LaunchCharacter(launchVelocity, false, false); 
 }
 
 void ACharacterController::ApplyAirJump() {
-	UCustomUtils::Print("Air Jump");
+	// UCustomUtils::Print("Air Jump");
 
 	bJumpRequested=false;
 
@@ -240,7 +239,7 @@ void ACharacterController::ApplyAirJump() {
 }
 
 void ACharacterController::ApplyWallrunJump() {
-	UCustomUtils::Print("Wallrun Jump");
+	// UCustomUtils::Print("Wallrun Jump");
 	
 	bJumpRequested=false;
 
@@ -249,9 +248,15 @@ void ACharacterController::ApplyWallrunJump() {
 		wallNormal=WallrunComponent->lastValidWallNormal;
 	}
 	
-	FVector launchDirection=(wallNormal+FVector::UpVector).GetSafeNormal();
-
+	FVector launchDirection=(
+			2 * wallNormal+
+			FVector::UpVector+
+			GetVelocity().GetSafeNormal()
+		).GetSafeNormal();
+	
 	FVector launchVelocity=launchDirection * Movement->MaxFlySpeed * 2.f;
+
+	// UCustomUtils::DrawVectorFromActor(this, launchVelocity, FColor::Green, 3);
 
 	LaunchCharacter(launchVelocity, false, true);
 
@@ -286,7 +291,7 @@ void ACharacterController::GroundLand() {
 }
 
 void ACharacterController::WallrunLand() {
-	bIsGrounded=true;
+	// bIsGrounded=true;
 	ResetJumpCount(FMath::Max(1,jumpsMax-1));
 
 	bJumpRequested=false;
