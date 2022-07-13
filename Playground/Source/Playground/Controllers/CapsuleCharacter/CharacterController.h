@@ -189,6 +189,8 @@ public:
 
 	void ReadSprintInputEnd();
 
+	void TogglePause();
+
 #pragma endregion
 
 #pragma region StatusFunctions

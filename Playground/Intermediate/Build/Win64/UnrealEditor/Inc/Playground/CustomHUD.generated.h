@@ -14,8 +14,22 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define PLAYGROUND_CustomHUD_generated_h
 
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_SPARSE_DATA
-#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS
-#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS_NO_PURE_DECLS
+#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execCloseGame); \
+	DECLARE_FUNCTION(execSetWallrunMode); \
+	DECLARE_FUNCTION(execSetGravityMode); \
+	DECLARE_FUNCTION(execSetReducedGravity);
+
+
+#define FID_Playground_Source_Playground_UI_CustomHUD_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execCloseGame); \
+	DECLARE_FUNCTION(execSetWallrunMode); \
+	DECLARE_FUNCTION(execSetGravityMode); \
+	DECLARE_FUNCTION(execSetReducedGravity);
+
+
 #define FID_Playground_Source_Playground_UI_CustomHUD_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCustomHUD(); \

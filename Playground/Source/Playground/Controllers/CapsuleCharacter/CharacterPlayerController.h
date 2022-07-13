@@ -18,12 +18,20 @@ public:
 	ACharacterPlayerController();
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Widgets)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=UI)
 	TSubclassOf<UCustomHUD> HUDOverlayAsset;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Widgets)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=UI)
 	UCustomHUD* HudOverlay;
 
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Status)
+	bool bIsGamePaused=false;
+
 protected:
-	virtual void BeginPlay() override; 
+	virtual void BeginPlay() override;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void TogglePauseState();
 };

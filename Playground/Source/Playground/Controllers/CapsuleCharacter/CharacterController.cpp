@@ -98,7 +98,8 @@ void ACharacterController::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &ACharacterController::TurnCamera);
 	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &ACharacterController::LookUpCamera);
-	
+
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &ACharacterController::TogglePause);
 }
 
 void ACharacterController::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
@@ -167,6 +168,10 @@ void ACharacterController::ReadSprintInputStart() {
 
 void ACharacterController::ReadSprintInputEnd() {
 	inputValues.bSprintInput=false;
+}
+
+void ACharacterController::TogglePause() {
+	CharacterPlayerController->TogglePauseState();
 }
 
 #pragma endregion
