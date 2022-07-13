@@ -158,7 +158,7 @@ public:
 
 	//angle of wall normal with horizontal plane must be less than this value
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallrunAngleThreshold=40.f;
+	float wallrunAngleThreshold=55.f;
 
 	
 	

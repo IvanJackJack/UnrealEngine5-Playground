@@ -219,7 +219,7 @@ void ACharacterController::ApplyGroundJump() {
 	bJumpRequested=false;
 
 	// FVector launchDirection=FVector::UpVector;
-	FVector launchDirection=(FVector::UpVector).GetSafeNormal();
+	FVector launchDirection=(moveDirection + FVector::UpVector).GetSafeNormal();
 	
 	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
 	// UCustomUtils::DrawVectorFromActor(this, launchVelocity, FColor::Green, 3);
