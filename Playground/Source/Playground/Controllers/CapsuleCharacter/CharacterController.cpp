@@ -219,9 +219,9 @@ void ACharacterController::ApplyGroundJump() {
 	bJumpRequested=false;
 
 	// FVector launchDirection=FVector::UpVector;
-	FVector launchDirection=(moveDirection+FVector::UpVector).GetSafeNormal();
+	FVector launchDirection=(FVector::UpVector).GetSafeNormal();
 	
-	FVector launchVelocity=launchDirection * Movement->MaxFlySpeed;
+	FVector launchVelocity=launchDirection * Movement->JumpZVelocity;
 	// UCustomUtils::DrawVectorFromActor(this, launchVelocity, FColor::Green, 3);
 
 	WallrunComponent->StartWallrunDelayTimer(WallrunComponent->wallrunLockDelay);
@@ -258,8 +258,9 @@ void ACharacterController::ApplyWallrunJump() {
 			FVector::UpVector+
 			GetVelocity().GetSafeNormal()
 		).GetSafeNormal();
-	
-	FVector launchVelocity=launchDirection * Movement->MaxFlySpeed * 2.f;
+
+	float dotMult=FVector::DotProduct(FVector::UpVector, GetVelocity().GetSafeNormal());
+	FVector launchVelocity=launchDirection * Movement->JumpZVelocity * (2.f - dotMult);
 
 	// UCustomUtils::DrawVectorFromActor(this, launchVelocity, FColor::Green, 3);
 

@@ -135,7 +135,7 @@ public:
 	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float visualWallrunMinVerticalValue=0.f;
+	float visualWallrunMinVerticalValue=0.01f;
 	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
