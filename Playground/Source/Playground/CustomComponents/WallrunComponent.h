@@ -123,13 +123,13 @@ public:
 #pragma region Parameters
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	bool bAlwaysStickToWall = false;
+	bool bAlwaysStickToWall = true;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bCancelWallrunWhenSideChanges = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bUseCharacterMaxWalkableAngle = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	bool bUseCharacterMaxFlySpeed = true;
+	bool bUseCharacterMaxFlySpeed = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
 	bool bLaunchAtBegin = true;
 	
@@ -139,7 +139,7 @@ public:
 	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float wallrunLaunchForce=500.f;
+	float wallrunLaunchForce=400.f;
 	
 	//put this to -1 to wallrun even when looking down
 	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
@@ -163,16 +163,16 @@ public:
 	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EGravityMode gravityMode;
+	EGravityMode gravityMode = EGravityMode::Zero;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	float reducedGravity=0.2f;
+	float reducedGravity=0.334f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EWallrunMode desiredHorizontalMode;
+	EWallrunMode desiredHorizontalMode = EWallrunMode::Hybrid;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EWallrunMode desiredVerticalMode;
+	EWallrunMode desiredVerticalMode = EWallrunMode::Hybrid;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Parameters)
-	EWallrunMode desiredDiagonalMode;
+	EWallrunMode desiredDiagonalMode = EWallrunMode::Hybrid;
 
 #pragma endregion
 
