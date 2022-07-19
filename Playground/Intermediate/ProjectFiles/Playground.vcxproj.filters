@@ -17,9 +17,6 @@
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
     </None>
-    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
-      <Filter>Config</Filter>
-    </None>
     <None Include="..\..\Config\DefaultEngine.ini">
       <Filter>Config</Filter>
     </None>
@@ -56,47 +53,20 @@
     <Filter Include="Source\Playground\Controllers">
       <UniqueIdentifier>{675C04E7-BD10-3519-8344-1C467A680BAF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Playground\Controllers\CapsuleCharacter">
-      <UniqueIdentifier>{27994D18-3486-382C-9CA5-43F520AB03CC}</UniqueIdentifier>
+    <Filter Include="Source\Playground\Controllers\CustomCharacterController">
+      <UniqueIdentifier>{DEA36BB3-ABA0-3E79-B7E3-462E04ACE208}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterAnimInstance.cpp">
-      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CustomCharacterController\CharacterController.cpp">
+      <Filter>Source\Playground\Controllers\CustomCharacterController</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterAnimInstance.h">
-      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CustomCharacterController\CharacterController.h">
+      <Filter>Source\Playground\Controllers\CustomCharacterController</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterController.cpp">
-      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
+    <ClCompile Include="..\..\Source\Playground\Controllers\CustomCharacterController\CharacterPlayerController.cpp">
+      <Filter>Source\Playground\Controllers\CustomCharacterController</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterController.h">
-      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterPlayerController.cpp">
-      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\CapsuleCharacter\CharacterPlayerController.h">
-      <Filter>Source\Playground\Controllers\CapsuleCharacter</Filter>
-    </ClInclude>
-    <Filter Include="Source\Playground\Controllers\Reids">
-      <UniqueIdentifier>{2C6F138C-92CC-3B32-83EC-3ADA23474DE2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Playground\Controllers\Reids\Wallrun">
-      <UniqueIdentifier>{074C6DF2-BEA5-31C2-A64B-E361B8B4D1D4}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\Playground\Controllers\Reids\Wallrun\ReidsCharacter.cpp">
-      <Filter>Source\Playground\Controllers\Reids\Wallrun</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\Controllers\Reids\Wallrun\ReidsCharacter.h">
-      <Filter>Source\Playground\Controllers\Reids\Wallrun</Filter>
-    </ClInclude>
-    <Filter Include="Source\Playground\CustomComponents">
-      <UniqueIdentifier>{08191962-3FAA-361F-B210-580EEEF1E027}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\Playground\CustomComponents\WallrunComponent.cpp">
-      <Filter>Source\Playground\CustomComponents</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\CustomComponents\WallrunComponent.h">
-      <Filter>Source\Playground\CustomComponents</Filter>
+    <ClInclude Include="..\..\Source\Playground\Controllers\CustomCharacterController\CharacterPlayerController.h">
+      <Filter>Source\Playground\Controllers\CustomCharacterController</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\FiniteStateMachine">
       <UniqueIdentifier>{DD189DE1-DDF7-3184-9A5C-E7C922153522}</UniqueIdentifier>
@@ -122,47 +92,38 @@
     <Filter Include="Source\Playground\FiniteStateMachine\States">
       <UniqueIdentifier>{5AC9DE27-DB53-3131-A6D2-B045DA4BE09B}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\AirFallingState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <Filter Include="Source\Playground\FiniteStateMachine\States\CharacterStates">
+      <UniqueIdentifier>{11C91977-C816-3CE5-A5E5-88247212A053}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\AirFallingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\AirFallingState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\AirFallingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\AirRaisingState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\AirRaisingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\AirRaisingState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\AirRaisingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\GroundLandedState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\GroundLandedState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\GroundLandedState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\GroundLandedState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\GroundMovingState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\GroundMovingState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\GroundMovingState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\GroundMovingState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\IdleState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\IdleState.cpp">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\IdleState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunLeftState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunLeftState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunMovingState.cpp">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\WallrunMovingState.h">
-      <Filter>Source\Playground\FiniteStateMachine\States</Filter>
+    <ClInclude Include="..\..\Source\Playground\FiniteStateMachine\States\CharacterStates\IdleState.h">
+      <Filter>Source\Playground\FiniteStateMachine\States\CharacterStates</Filter>
     </ClInclude>
     <Filter Include="Source\Playground\UI">
       <UniqueIdentifier>{B6693E14-E035-35AD-ABA5-535FCD8E9975}</UniqueIdentifier>

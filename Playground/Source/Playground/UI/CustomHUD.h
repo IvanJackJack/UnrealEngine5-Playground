@@ -22,16 +22,4 @@ public:
 	class UStateMachineComponent* StateMachine;
 
 	virtual void NativePreConstruct() override;
-
-	UFUNCTION(BlueprintCallable)
-	void SetReducedGravity(float value);
-
-	UFUNCTION(BlueprintCallable)
-	void SetGravityMode(int index);
-
-	UFUNCTION(BlueprintCallable)
-	void SetWallrunMode(int wallrunMode, int keyMode);
-
-	UFUNCTION(BlueprintCallable)
-	void CloseGame();
 };

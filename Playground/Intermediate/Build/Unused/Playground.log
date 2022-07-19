@@ -1,0 +1,50 @@
+﻿  Using bundled DotNet SDK
+  Log file: C:\Users\ivanc\AppData\Local\UnrealBuildTool\Log.txt
+  Using 'git status' to determine working set for adaptive non-unity build (C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground).
+  Creating makefile for PlaygroundEditor (no existing makefile)
+  Parsing headers for PlaygroundEditor
+    Running UnrealHeaderTool "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Playground.uproject" "C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\PlaygroundEditor\Development\PlaygroundEditor.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -abslog="C:\Users\ivanc\AppData\Local\UnrealBuildTool\Log_UHT.txt" -installed
+  Reflection code generated for PlaygroundEditor in 3,3686883 seconds
+  Building PlaygroundEditor...
+  Using Visual Studio 2022 14.30.30711 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.30.30705) and Windows 10.0.20348.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+  [Adaptive Build] Excluded from Playground unity file: CharacterController.cpp, CharacterPlayerController.cpp, AirFallingState.cpp, AirRaisingState.cpp, GroundLandedState.cpp, GroundMovingState.cpp, IdleState.cpp, CustomHUD.cpp
+  Determining max actions to execute in parallel (4 physical cores, 8 logical cores)
+    Executing up to 4 processes, one per physical core
+    Requested 1,5 GB free memory per action, 4,29 GB available: limiting max parallel actions to 2
+  Building 32 actions with 2 processes...
+  [1/32] Resource Default.rc2
+  [2/32] Compile SharedPCH.Engine.ShadowErrors.cpp
+  [3/32] Compile PlaygroundCharacter.gen.cpp
+  [4/32] Compile CharacterPlayerController.gen.cpp
+  [5/32] Compile AirRaisingState.cpp
+  [6/32] Compile Playground.cpp
+  [7/32] Compile StateMachineComponent.cpp
+  [8/32] Compile PlaygroundCharacter.cpp
+  [9/32] Compile GroundLandedState.gen.cpp
+  [10/32] Compile AirFallingState.cpp
+  [11/32] Compile Playground.init.gen.cpp
+  [12/32] Compile CharacterController.gen.cpp
+  [13/32] Compile CustomHUD.cpp
+  [14/32] Compile IdleState.cpp
+  [15/32] Compile Statebase.cpp
+  [16/32] Compile CustomUtils.gen.cpp
+  [17/32] Compile IdleState.gen.cpp
+  [18/32] Compile CustomUtils.cpp
+  [19/32] Compile AirRaisingState.gen.cpp
+  [20/32] Compile GroundMovingState.cpp
+  [21/32] Compile CharacterPlayerController.cpp
+  [22/32] Compile CharacterController.cpp
+  [23/32] Compile StateTransitions.cpp
+  [24/32] Compile AirFallingState.gen.cpp
+  [25/32] Compile StateMachineComponent.gen.cpp
+  [26/32] Compile CustomHUD.gen.cpp
+  [27/32] Compile GroundMovingState.gen.cpp
+  [28/32] Compile Statebase.gen.cpp
+  [29/32] Compile GroundLandedState.cpp
+  [30/32] Link UnrealEditor-Playground.lib
+     Creating library C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\UnrealEditor-Playground.lib and object C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\UnrealEditor-Playground.exp
+  [31/32] Link UnrealEditor-Playground.dll
+     Creating library C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\UnrealEditor-Playground.suppressed.lib and object C:\Users\ivanc\Desktop\Git repos\Unreal Repos\UnrealEngine5-Playground\Playground\Intermediate\Build\Win64\UnrealEditor\Development\Playground\UnrealEditor-Playground.suppressed.exp
+  [32/32] WriteMetadata PlaygroundEditor.target
+  Total time in Parallel executor: 94,85 seconds
+  Total execution time: 101,75 seconds

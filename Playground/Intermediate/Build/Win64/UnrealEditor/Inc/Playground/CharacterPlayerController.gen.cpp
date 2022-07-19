@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "Playground/Controllers/CapsuleCharacter/CharacterPlayerController.h"
+#include "Playground/Controllers/CustomCharacterController/CharacterPlayerController.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeCharacterPlayerController() {}
 // Cross Module References
@@ -40,7 +40,7 @@ void EmptyLinkFunctionForGeneratedCodeCharacterPlayerController() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ACharacterPlayerController_TogglePauseState_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterPlayerController.h" },
+		{ "ModuleRelativePath", "Controllers/CustomCharacterController/CharacterPlayerController.h" },
 	};
 #endif
 	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ACharacterPlayerController_TogglePauseState_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ACharacterPlayerController, nullptr, "TogglePauseState", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ACharacterPlayerController_TogglePauseState_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ACharacterPlayerController_TogglePauseState_Statics::Function_MetaDataParams)) };
@@ -87,19 +87,19 @@ void EmptyLinkFunctionForGeneratedCodeCharacterPlayerController() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_Playground,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ACharacterPlayerController_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_ACharacterPlayerController_TogglePauseState, "TogglePauseState" }, // 3447041244
+		{ &Z_Construct_UFunction_ACharacterPlayerController_TogglePauseState, "TogglePauseState" }, // 1019145765
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterPlayerController_Statics::Class_MetaDataParams[] = {
 		{ "HideCategories", "Collision Rendering Transformation" },
-		{ "IncludePath", "Controllers/CapsuleCharacter/CharacterPlayerController.h" },
-		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterPlayerController.h" },
+		{ "IncludePath", "Controllers/CustomCharacterController/CharacterPlayerController.h" },
+		{ "ModuleRelativePath", "Controllers/CustomCharacterController/CharacterPlayerController.h" },
 	};
 #endif
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HUDOverlayAsset_MetaData[] = {
 		{ "Category", "UI" },
-		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterPlayerController.h" },
+		{ "ModuleRelativePath", "Controllers/CustomCharacterController/CharacterPlayerController.h" },
 	};
 #endif
 	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HUDOverlayAsset = { "HUDOverlayAsset", nullptr, (EPropertyFlags)0x0014000000000005, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterPlayerController, HUDOverlayAsset), Z_Construct_UClass_UCustomHUD_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HUDOverlayAsset_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HUDOverlayAsset_MetaData)) };
@@ -107,14 +107,14 @@ void EmptyLinkFunctionForGeneratedCodeCharacterPlayerController() {}
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HudOverlay_MetaData[] = {
 		{ "Category", "UI" },
 		{ "EditInline", "true" },
-		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterPlayerController.h" },
+		{ "ModuleRelativePath", "Controllers/CustomCharacterController/CharacterPlayerController.h" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HudOverlay = { "HudOverlay", nullptr, (EPropertyFlags)0x00100000000a000d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ACharacterPlayerController, HudOverlay), Z_Construct_UClass_UCustomHUD_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HudOverlay_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_HudOverlay_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_bIsGamePaused_MetaData[] = {
 		{ "Category", "Status" },
-		{ "ModuleRelativePath", "Controllers/CapsuleCharacter/CharacterPlayerController.h" },
+		{ "ModuleRelativePath", "Controllers/CustomCharacterController/CharacterPlayerController.h" },
 	};
 #endif
 	void Z_Construct_UClass_ACharacterPlayerController_Statics::NewProp_bIsGamePaused_SetBit(void* Obj)
@@ -158,15 +158,15 @@ void EmptyLinkFunctionForGeneratedCodeCharacterPlayerController() {}
 		return ACharacterPlayerController::StaticClass();
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ACharacterPlayerController);
-	struct Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterPlayerController_h_Statics
+	struct Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CustomCharacterController_CharacterPlayerController_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterPlayerController_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ACharacterPlayerController, ACharacterPlayerController::StaticClass, TEXT("ACharacterPlayerController"), &Z_Registration_Info_UClass_ACharacterPlayerController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACharacterPlayerController), 3172684796U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CustomCharacterController_CharacterPlayerController_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_ACharacterPlayerController, ACharacterPlayerController::StaticClass, TEXT("ACharacterPlayerController"), &Z_Registration_Info_UClass_ACharacterPlayerController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACharacterPlayerController), 3213527552U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterPlayerController_h_1190047181(TEXT("/Script/Playground"),
-		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterPlayerController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CapsuleCharacter_CharacterPlayerController_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CustomCharacterController_CharacterPlayerController_h_972413909(TEXT("/Script/Playground"),
+		Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CustomCharacterController_CharacterPlayerController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Playground_Source_Playground_Controllers_CustomCharacterController_CharacterPlayerController_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
